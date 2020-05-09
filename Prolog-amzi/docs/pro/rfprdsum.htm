@@ -1,0 +1,636 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Predicate Summary</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><!AMZI_INDEX= Predicate Summary><A NAME="PredicateSummary"></A><FONT COLOR="#D2AA00">Predicate 
+  Summary</FONT></h1>
+
+<P>The last letter(s) of the parameter can be one or more of: </P>
+
+<PRE>A=Atom      C=Character List   F=Floating Point (double) Number </PRE>
+
+<PRE>N=Integer   L=List             T=Term </PRE>
+
+<PRE>V=Variable  S=String </PRE>
+
+<P>When there is a fixed set of options, they are shown in {}'s following
+the parameter. For example, SecNV means Sec can be an integer or a variable.
+</P>
+
+<H2><A NAME="Predicates"></A><FONT COLOR="#0000FF">Predicates</FONT></H2>
+
+<P><B>!</B> - cut, stops backtracking in this clause and its predicate.
+</P>
+
+<P><B>,</B> - conjunction (and), both clauses must be succeed </P>
+
+<P><B>;</B> - disjunction, (or), either clause must succeed </P>
+
+<P>IfGoal <B>-&gt;</B> ThenGoal - if-then, if IfGoal is true, then prove
+ThenGoal. Fails on backtracking. </P>
+
+<P><B>abolish</B>(NameA/ArityN) - abolish all clauses whose head is Name/Arity.
+</P>
+
+<P><B>abolish</B>(NameA, ArityN) - abolish all clauses whose head is Name/Arity.
+</P>
+
+<P><B>abort</B>(SeverityN) - depending on Severity, 0 aborts and restarts
+Prolog, 1 aborts back to DOS normally, 2 aborts back to DOS with abnormal
+return. </P>
+
+<P><B>arg</B>(N, TermT, ArgV) - unify Arg with the Nth argument of term
+Term. </P>
+
+<P><B>assert</B>(TermT) - assert Term to the dynamic database. </P>
+
+<P><B>asserta</B>(TermT) - assert Term to the dynamic database as first
+clause with its functor. </P>
+
+<P><B>assertz</B>(TermT) - assert Term to the dynamic database as last
+clause with its functor. </P>
+
+<P><B>atom</B>(X) - succeeds if X is an atom. </P>
+
+<P><B>atom_codes</B>(AtomAV, CharListCV) - convert back and forth between
+an atom and a list of characters. </P>
+
+<P><B>atom_uplow</B>(AtomUpperAV, AtomLowerAV) - creates a new upper case
+atom from a lower and vice versa. </P>
+
+<P><B>atomic</B>(X) - succeeds if X is an atom or integer, </P>
+
+<P><B>atom_length</B>(AtomA, LengthV) - unifies the Length of Atom. </P>
+
+<P><B>atomlist_concat</B>(AtomListL, AtomV) - concatenates all of the atoms
+in AtomList to create a single atom, Atom. </P>
+
+<P><B>atom_concat</B>(Atom1AV, Atom2AV, Atom3AV) - concatenates atoms Atom1
+and Atom2 and unifies with Atom3, or generates all possible pairs of atoms,
+Atom1/Atom2, from Atom3. </P>
+
+<P><B>bagof</B>(Instance, Goal, List) - create a List of unified Instances
+that satisfy Goal. Backtracking tries again if there are variables in Goal
+not in Instance. </P>
+
+<P><B>call</B>(Goal) - tries to prove Goal, equivalent to simply Goal.
+</P>
+
+<P><B>catch</B>(Goal, Catcher, Recover) - Tries to prove Goal, catching
+exception terms matching Catcher and proving Recover. </P>
+
+<P><B>clause</B>(Head, BodyV) - designed to backtrack through all the clauses
+in the dynamic database. </P>
+
+<P><B>closelog</B> - close the logging file. </P>
+
+<P><B>cntr_dec</B>(CounterN, ValueV) - unify Value with current value of
+Counter, then decrement Counter. </P>
+
+<P><B>cntr_get</B>(CounterN, ValueV) - unify Value with current value of
+Counter. </P>
+
+<P><B>cntr_inc</B>(CounterN, ValueV) - unify Value with current value of
+Counter, then increment Counter. </P>
+
+<P><B>cntr_set</B>(CounterN, ValueN) - set the value of Counter to Value.
+</P>
+
+<P><B>command_line</B>(ArgsListofListsV) - unifies the list ArgsListofLists
+with the command line arguments used to start the program. </P>
+
+<P><B>compare</B>(OpResultV, Term1, Term2) - compares the Term1 to Term2
+and unifies Result with the appropriate one of ==, &lt;, or &gt; </P>
+
+<P><B>compare_lists</B>(List1, List2, DiffListV) - DiffList is the elements
+of List1 that are not in List2. </P>
+
+<P><B>consult</B>(FileA) - consult source, object or load file, adding
+it onto the dynamic database. </P>
+
+<P><B>cputime</B> - a built-in atom that is a floating point number of
+the CPU seconds expired. </P>
+
+<P><B>current_atom</B>(Atom) - designed for a backtracking tour through
+all the atoms. </P>
+
+<P><B>current_prolog_flag</B>(FlagAV, ValueNV) - returns the values of
+various system limits. </P>
+
+<P><B>current_streams</B>(InputIdV, OutputIdV, ErrorIdV) - for each bound
+argument, sets the appropriate current stream, for unbound arguments, unifies
+the argument with the appropriate current stream. </P>
+
+<P><B>current_user</B>(InputIdV, OutputIdV, ErrorIdV) - for each bound
+argument, sets the appropriate user (default) stream, for unbound arguments,
+unifies the argument with the appropriate user (default) stream. </P>
+
+<P><B>cut_tag</B>(Term) - fails and cuts back to the last tag(Term) goal,
+useful for abandoning ship when dealing with error conditions </P>
+
+<P><B>date</B>(MonthNV, DayNV, YearNV) - returns the current date if unbound,
+or succeeds if it is today </P>
+
+<P><B>db_ref</B>(HeadTV, BodyTV, DBrefNV) - either finds the DBref for
+the clause Head :- Body, or finds the Head and Body at DBref. </P>
+
+<P><B>defined</B>(ExtendedPredicateA) - tests if an extended predicate
+is defined (loaded).</P>
+
+<P><B>display</B>(Term) - displays Term without expanding operators. </P>
+
+<P><B>e</B> - an atom representing the floating point value of e. </P>
+
+<P><B>erase</B>(DBref) - erase the term at DBref. </P>
+
+<P><B>eraseall</B>(KeyA) - erase all the terms stored under Key. </P>
+
+<P><B>err_raise</B>(-ErrorN) - raise the error condition for a negagive
+error number. </P>
+
+<P><B>expand_term</B>(DCGtermT, PROLOGtermV) - expands a DCG term into
+a Prolog term. </P>
+
+<P><B>fail</B> - fails when called </P>
+
+<P><B>fclose</B>(ID) - close the file identified by ID. </P>
+
+<P><B>fflush</B>(ID) - flush the I/O to file identified with ID </P>
+
+<P><B>file_exists</B>(FileACS) - succeeds if FileA exists. </P>
+
+<P><B>file_exists</B>(FileACS, TypeV{1=PLM,2=source}) - succeeds if FileA
+exists, returns Type, 1 = Prolog object file, 2 = ASCII file </P>
+
+<P><B>findall</B>(Instance, Goal, List) - create a List of unified Instances
+that satisfy Goal. </P>
+
+<P><B>float</B>(X) - succeeds if X is a floating point number. </P>
+
+<P><B>flush_in</B> - flushes the input stream. </P>
+
+<P><B>flush_out</B> - flushes the output stream. </P>
+
+<P><B>fopen</B>(HandleV, FileACS, ModeA {r,w,a,rb,wb,ab}) - opens file
+named FileA in read/write mode Mode, unifies Handle with resulting handle.
+</P>
+
+<P><B>for</B>(IndexN, StartN, EndN, IncrementN) - a for loop in Prolog,
+designed to increment the index on backtracking, succeeding if End hasn't
+yet been reached, failing if it has. </P>
+
+<P><B>fread</B>(ID, ValueV, TypeN {0=one byte, 1=two-byte integer, 2=four-byte
+float, 3=four-byte integer}) - read direct from file identified by ID a
+Value of length specified by Type. </P>
+
+<P><B>fseek</B>(ID, OffsetN, MethodN{0=start,1=current,2-end NewOff) -
+reposition file identified by ID according to Offset and Method. Unify
+NewOff with new position. </P>
+
+<P><B>functor</B>(TermV, FunctorAV, ArityNV) - split a term into its functor
+and arity, or build a term from a functor and arity. </P>
+
+<P><B>fwrite</B>(ID, ValueV, TypeN {0=one byte, 1=two-byte integer, 2=four-byte
+float, 3=four-byte integer}) - write direct to file identified by ID a
+Value of length specified by Type. </P>
+
+<P><B>gensym</B>(RootA, SymbolV) - generate a new atom from Root and unify
+it with Symbol. </P>
+
+<P><B>get</B>(CharV) - get next character from current input stream. </P>
+
+<P><B>get</B>(ID, CharV) - get next character from stream ID. </P>
+
+<P><B>get0</B>(CharV) - get next character from current input stream, return
+!EOF if end of file reached. </P>
+
+<P><B>get0</B>(ID, CharV) - get next character from stream ID, return !EOF
+if end of file reached. </P>
+
+<P><B>get1</B>(CharV) - gets the next character from the keyboard followed
+by [Enter] (for environments not supporting keyb/1. </P>
+
+<P><B>get_mode</B>(ModeA, OnOffV) - gets the current setting of Mode: on
+or off. </P>
+
+<P><B>get_preds</B>(PredList) - returns a list of the names/arities of
+all dynamic predicates. </P>
+
+<P><B>halt</B> - stop Prolog execution and return to either operating system
+or IDE. </P>
+
+<P><B>handle_name</B>(HandleNV, NameAV) - find either a streams Name or
+Handle from the other. </P>
+
+<P><B>highwater</B>(HeapV, LocalV, ControlV, TrailV) - returns the highwater
+marks for these heaps and stacks</P>
+
+<P><B>instance</B>(DBref, TermV) - unifies Term with term at DBref. </P>
+
+<P><B>integer</B>(X) - succeeds if X is an integer. </P>
+
+<P>Number <B>is</B> ArithExp - evaluate ArithExp and unify with Number.
+</P>
+
+<P><B>is_member</B>(ItemT, List) - tests if term is a member of list</P>
+
+<P><B>keyb</B>(AsciiV) - returns the ASCII code of the next key pressed.
+</P>
+
+<P><B>list</B>(X) - succeeds if X is a list. </P>
+
+<P><B>listing</B> - list all the clauses in the dynamic database. </P>
+
+<P><B>listing</B>(Predicate) - list all the clause of Predicate in the
+dynamic database. Predicate can be either of the form Functor, or Functor/Arity.
+</P>
+
+<P><B>load</B>(FileA) - load and object or load file, File, into the static
+database. </P>
+
+<P><B>long</B>(X) - succeeds if X is a long integer. </P>
+
+<P><B>name</B>(Atom, CharList) - convert back and forth between an atom
+and a list of characters. </P>
+
+<P><B>nl</B> - write a newline character to the current output stream.
+</P>
+
+<P><B>nl</B>(ID) - write a newline character to stream ID. </P>
+
+<P><B>nllog</B> - write a newline to the log file. </P>
+
+<P><B>nonblank_string</B>(String) - succeeds if String is not empty. </P>
+
+<P><B>nonvar</B>(X) - succeeds if X is not an unbound variable, </P>
+
+<P><B>not</B>(Goal) - succeeds if Goal fails. </P>
+
+<P><B>\+</B> Goal - synonym for not, succeeds if Goal cannot be proved.
+</P>
+
+<P><B>number</B>(X) - succeeds if X is an integer or floating point number.
+</P>
+
+<P><B>numbervars</B>(Term, StartN, EndV) - unify variables of Term with
+atoms of the form _n, where n is an integer starting at Start for the first
+unique variable and ending at End. Called with Start bound and End unbound.
+</P>
+
+<P><B>once</B>(Goal) - tries to prove Goal once (without backtracking).
+</P>
+
+<P><B>op</B>(PrecN, AssociativityA {xfx, xfy, yfx, yfy, fx, fy, xf, yf
+OpA) - defines operator Op of precedence Prec and associativity As. Op
+can be a list of operators of same precedence and associativity </P>
+
+<P><B>openlog</B>(FileA) - open File as a log file and turn logging on.
+</P>
+
+<P><B>pi</B> - an atom representing the floating point value of pi. </P>
+
+<P><B>pp</B>(Term) - pretty print Term. </P>
+
+<P><B>pro_control</B>(TopV, PosV) - returns current size, Top, and position,
+Pos, of the control stack. </P>
+
+<P><B>pro_db</B>(AllocatedV, UsedV) - returns the allocated and used sizes
+of the dynamic database. </P>
+
+<P><B>pro_heap</B>(TopV, PosV) - returns current size, Top, and position,
+Pos, of the heap. </P>
+
+<P><B>pro_local</B>(TopV, PosV) - returns current size, Top, and position,
+Pos, of the local stack. </P>
+
+<P><B>pro_trail</B>(TopV, PosV) - returns current size, Top, and position,
+Pos, of the trail stack. </P>
+
+<P><B>put</B>(CharN) - write the ASCII Char to the current output stream.
+</P>
+
+<P><B>put</B>(ID, CharN) - write the ASCII Char to the stream ID. </P>
+
+<P><B>random</B> - a built-in atom that is a floating point random number
+&gt;= 0.0 and &lt; 1.0. </P>
+
+<P><B>read</B>(TermV) - read the next Term from the current input stream.
+Note Term must end in a period. </P>
+
+<P><B>read</B>(ID, TermV) - read the next Term from the stream ID. Note
+Term must end in a period. </P>
+
+<P><B>read_string</B>(StringV) - read characters up to next newline character
+from current input stream, and unify with String. </P>
+
+<P><B>read_string</B>(ID, StringV) - read characters up to next newline
+character from stream ID, and unify with String. </P>
+
+<P><B>reconsult</B>(FileA) - reconsult, replacing old predicate definitions,
+the source, object or load file File. </P>
+
+<P><B>record</B>(KeyA, Term, DBrefV) - record Term as first term under
+Key, DBref is where it wound up. </P>
+
+<P><B>recorda</B>(KeyA, Term, DBrefV) - record Term as first term under
+Key, DBref is where it wound up. </P>
+
+<P><B>recorded</B>(KeyA, TermV, DBrefV) - finds Terms and their DBrefs
+stored under Key, backtracking finds them all. </P>
+
+<P><B>recordz</B>(KeyA, Term, DBrefV) - record Term as the last term under
+Key, DBref is where it wound up. </P>
+
+<P><B>remove_dups</B>(List, NoDupsListV) - remove duplicates from List,
+unify result with NoDupsList. </P>
+
+<P><B>repeat</B> - succeeds the first time called, succeeds every time
+it's backtracked into. </P>
+
+<P><B>respkey</B>(CharV) - gets a key using keyb/1 if possible, otherwise
+get1/1. </P>
+
+<P><B>retract</B>(Term) - retract the first term in the database that unifies
+with Term. On backtracking retract the next. </P>
+
+<P><B>retractall</B>(Term) - retract all dynamic database terms that unify
+with Term. </P>
+
+<P><B>see</B>(NameA) - set the current input stream to the named stream.
+</P>
+
+<P><B>seed_random</B>(Int) - seeds the random number generator. </P>
+
+<P><B>seeing</B>(NameA) - unify NameA with the current input stream. </P>
+
+<P><B>seetell</B>(NameA) - set the current input and output streams to
+NameA. </P>
+
+<P><B>seen</B> - close the current input stream, set current input stream
+to user. </P>
+
+<P><B>seentold</B> - close the current input and output streams, setting
+both to user. </P>
+
+<P><B>set_errors</B>(NameA) - sets the current_error stream to NameA. </P>
+
+<P><B>set_mode</B>(ModeA, OnOffA) - sets the Mode 'on' or 'off.' </P>
+
+<P><B>setof</B>(Instance, Goal, List) - create an ordered List of unified
+Instances that satisfy Goal. Backtracking tries again if there are variables
+in Goal not in Instance. </P>
+
+<P><B>short</B>(X) - succeeds if X is a short integer </P>
+
+<P><B>skip</B>(Char) - continuously read characters from current input
+stream until one matching Char is read. Fail if !EOF is reached. </P>
+
+<P><B>skip</B>(ID, Char) - continuously read characters from stream ID
+until one matching Char is read. Fail if !EOF is reached. </P>
+
+<P><B>sort</B>(List, SortedListV) - sort List into SortedList. </P>
+
+<P><B>stack_sizes</B>(HeapV, ControlV, LocalV, TrailV) - return number
+of cells used on each stack. </P>
+
+<P><B>strcat</B>(S1, S2, S3) - concatenates strings S1 and S2 to create
+S3. the first two arguments must be instantiated. </P>
+
+<P><B>stream_type</B>(ID, TypeN) - returns TypeI of stream, 0 - stdio,
+1 - file, 2 - window, 3 - redirected through a function, -1 - not defined.
+</P>
+
+<P><B>string</B>(X) - succeeds if X is a string. </P>
+
+<P><B>string_atom</B>(String, Atom) - convert between String and Atom name.
+</P>
+
+<P><B>string_icomp</B>(String1, String2) - case insensitive compare of
+two strings.</P>
+
+<P><B>string_integer</B>(String, Int) - converts between integer and string.
+</P>
+
+<P><B>string_length</B>(String, Length) - returns the length of a string.
+</P>
+
+<P><B>string_list</B>(String, CharList) - converts between string and list
+of characters. </P>
+
+<P><B>string_split</B>(String, DelmitersS, ListV) - splits a string by
+the delimiters.</P>
+
+<P><B>string_term</B>(String, Term) - converts between strings and terms.
+</P>
+
+<P><B>string_termq</B>(String, Term) - converts between strings and terms,
+but when going from term to string, it quotes atoms if necessary and puts
+strings in $ $ delimiters for rereading. </P>
+
+<P><B>string_tokens</B>(String, ListV) - parses a string into a list of
+tokens.</P>
+
+<P><B>string_tokens</B>(String, ListV, DelimetersS) - parses a string into
+a list of tokens delimited by the specified characters.</P>
+
+<P><B>string_trim</B>(String, StringV) - trims leading and trailing whitespace.</P>
+
+<P><B>stringlist_concat</B>(StringList, String) - concatenates the strings
+and atoms in StringList to create the single String. </P>
+
+<P><B>structure</B>(X) - succeeds if X is a structure, </P>
+
+<P><B>sub_atom</B>(Atom, IndexNV, LengthNV, SubatomV) - Subatom of Atom
+starting at Index of Length. </P>
+
+<P><B>sub_string</B>(String, IndexNV, LengthNV, SubstringV) - Substring
+of String starting at Index of Length. </P>
+
+<P><B>system</B>(CmdAS) - executes an operating system program or command.</P>
+
+<P><B>tab</B>(CountN) - write Count spaces to the current output stream.
+</P>
+
+<P><B>tab</B>(ID, CountN) - write Count spaces to the stream ID. </P>
+
+<P><B>tag</B>(Term) - defines a tag point which might be used later by
+cut-tag to escape from the depths of Prolog invocation </P>
+
+<P><B>tell</B>(NameA) - set current output to the stream named NameA. </P>
+
+<P><B>telling</B>(NameA) - unify NameA with the current output stream.
+</P>
+
+<P><B>throw</B>(Term) -search for a matching catch Term. </P>
+
+<P><B>time</B>(HourNV, MinNV, SecNV) - unifies arguments with current time,
+if any arguments are bound, then succeeds of fails if unification succeeds
+or fails. </P>
+
+<P><B>timer</B>(TicksV) - unifies Ticks with floating point seconds since
+whenever. </P>
+
+<P><B>told</B> - close the current output stream, resetting it to user.
+</P>
+
+<P><B>true</B> - succeeds when called, fails on backtracking </P>
+
+<P><B>univ</B> Term <B>=..</B> List - convert a term into a list whose
+head is the functor and tail is a list of the arguments, or take a list
+and reverse the process to create a term. (called univ) </P>
+
+<P><B>user_pp</B>(Term) - is called by pp/1 (if it exists) for your own
+pretty printer. </P>
+
+<P><B>var</B>(X) - succeeds if X is an unbound variable, </P>
+
+<P><B>varlist</B>(List) - a list of the variable names, each as a character
+list, when the predicate was called. </P>
+
+<P><B>varsof</B>(Term, List) - unify List with a list of all uninstantiated
+variables in Term </P>
+
+<P><B>version</B>(VersionS) - return current Amzi! version. </P>
+
+<P><B>write</B>(Term) - write Term to the current output stream. </P>
+
+<P><B>write</B>(ID, Term) - write Term to stream ID. </P>
+
+<P><B>writelog</B>(Term) - write Term to the log file, if logging. </P>
+
+<P><B>writeq</B>(Term) - write Term to the current output stream, quoting
+atoms as necessary. </P>
+
+<P><B>writeq</B>(ID, Term) - write Term to the stream ID, quoting atoms
+as necessary. </P>
+
+<H2><A NAME="DOSOnlyPredicates"></A><FONT COLOR="#0000FF">Extended Predicates</FONT></H2>
+
+<P><B>chdir</B>(DirACS) - changes directory to Dir, fails if an error occurs..
+</P>
+
+<P><B>chdir</B>(DirACS, ErrN) - changes directory to Dir, returns error
+code in Err. </P>
+
+<P><B>curdir</B>(DirS) - returns the current directory in Dir.</P>
+
+<P><B>command_line</B>(ArgsL) - returns the list of character lists which
+represent the command line arguments. </P>
+
+<P><B>delfile</B>(PathACS, ErrIN) - deletes file specified by Path returning
+the error code. </P>
+
+<P><B>findfiles</B>(MaskASC, AttrN, FileInfo(NameV, AttrV, time(HourV,
+MinV, SecV), date(YearV, MonthV, DayV), SizeV)) - returns file information
+in structure FileInfo for first file in current directory of type Attr,
+with name matching Mask. On backtracking returns next file. </P>
+
+<P><B>getdrive</B>(DirAS) - gets the current drive. </P>
+
+<P><B>mkdir</B>(DirACS, ErrN) - make a new directory, Dir, unify return
+code with Err. </P>
+
+<P><B>rename</B>(OldFileNameACL, NewFileNameACL, ErrN) - renames the old
+file name to the new file name, returning the error code in ErrN. </P>
+
+<P><B>rmdir</B>(DirACS, ErrN) - remove the directory Dir, unify the return
+code with Err. </P>
+
+<P><B>set_drive</B>(DriveAS) - sets the current drive. </P>
+
+<P><B>w_getfile</B>(FileS) - opens a Windows file dialog box, and returns
+result in FileS. 32-bit Windows only. </P>
+
+<P><B>w_msgbox</B>(Term) - writes Term in a Windows message box. Windows
+only. </P>
+
+<P><B>w_tfmsgbox</B>(Term) - write Term in a YES/NO Windows message box.
+YES causes success, NO failure. Windows only. </P>
+
+<H2><A NAME="ArithmeticOperators"></A><FONT COLOR="#0000FF">Arithmetic
+Operators</FONT></H2>
+
+<P><B>-</B> ArithExp - negates the expression </P>
+
+<P>ArithExp1 <B>+</B> ArithExp2 - adds the expressions </P>
+
+<P>ArithExp1 <B>-</B> ArithExp2 - subtracts ArithExp2 from ArithExp1 </P>
+
+<P>ArithExp1 <B>*</B> ArithExp2 - multiplies the expressions </P>
+
+<P>ArithExp1 <B>/</B> ArithExp2 - divides ArithExp1 by ArithExp2 </P>
+
+<P>ArithExp1 <B>//</B> ArithExp2 - divides ArithExp1 by ArithExp2 returning
+an integer </P>
+
+<P>ArithExp1 <B>mod</B> ArithExp2 - performs a modulus </P>
+
+<P>ArithExp1 <B>/\</B> ArithExp2 - performs a bitwise and of the expressions
+</P>
+
+<P>\ ArithExp <B>-</B> performs a bitwise complement on the expression
+</P>
+
+<P>ArithExp1 <B>\/</B> ArithExp2 - performs a bitwise or on the expressions
+</P>
+
+<P>ArithExp <B>&lt;&lt;</B> Places - bitshifts the expression left </P>
+
+<P>ArithExp <B>&gt;&gt;</B> Places - bitshifts the expression right </P>
+
+<H2><A NAME="ArithmeticComparisons"></A><FONT COLOR="#0000FF">Arithmetic
+Comparisons</FONT></H2>
+
+<P>ArithExp1 <B>=:=</B> ArithExp2 - succeeds if evaluation of ArithExp1
+and ArithExp2 are the same. </P>
+
+<P>ArithExp1 <B>=\=</B> ArithExp2 - evaluates both arithmetic expressions,
+succeeds if they're not equal, . </P>
+
+<P>ArithExp1 <B>&gt;</B> ArithExp2 - succeeds if evaluation of ArithExp1
+greater than evaluation of ArithExp2. </P>
+
+<P>ArithExp1 <B>&lt;</B> ArithExp2 - evaluates both arithmetic expressions,
+succeeds if second greater than first. </P>
+
+<P>ArithExp1 <B>&gt;=</B> ArithExp2 - succeeds if evaluation of ArithExp1
+greater than or equal to evaluation of ArithExp2. </P>
+
+<P>ArithExp1 <B>=&lt;</B> ArithExp2 - succeeds if evaluation of ArithExp1
+equal or less than evaluation of ArithExp2. </P>
+
+<H2><A NAME="TermComparisons"></A><FONT COLOR="#0000FF">Term Comparisons</FONT></H2>
+
+<P>Term1 <B>@&lt;</B> Term2 - succeeds if Term1 collates before Term2.
+</P>
+
+<P>Term1 <B>@=&lt;</B> Term2 - succeeds if Term1 collates before or at
+the same place as Term2. </P>
+
+<P>Term1 <B>@&gt;</B> Term2 - succeeds if Term1 collates after Term2. </P>
+
+<P>Term1 <B>@&gt;=</B> Term2 - succeeds if Term2 collates after or at the
+same place as Term2. </P>
+
+<P>Term1 <B>=</B> Term2 - succeeds if Term1 unifies with Term2. </P>
+
+<P>Term1 <B>\=</B> Term2 - succeeds if Term1 can/not be unified with Term2.
+</P>
+
+<P>Term1 <B>==</B> Term2 - succeeds if Term1 and Term2 are identical, meaning
+they unify without requiring variable bindings. </P>
+
+<P>Term1 <B>\==</B> Term2 - succeeds if Term1 not identical with Term2,
+meaning the terms cannot be unified without requiring variable bindings.
+</P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<p>&nbsp;</p>
+<P>&nbsp;</P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,187 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+   <TITLE>Installation</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1> <A NAME="RequirementsandInstallation"></A><FONT COLOR="#D2AA00">Requirements 
+  &amp; Installation</FONT></H1>
+
+<HR WIDTH="100%">
+<H2>
+<A NAME="Requirements"></A><FONT COLOR="#0000FF">Requirements</FONT><!AMZI_INDEX = Requirements></H2>
+
+<p>See <a href="platform_status.htm">Platform Status</a> for details about which 
+  interfaces and samples are supported on each of the following platforms.</p>
+<H3><A NAME="WindowsandDOSEditions"></A><FONT COLOR="#000080">Windows</FONT></H3>
+<!AMZI_INDEX =  Windows>Amzi! Prolog + Logic Server for the PC requires either 
+Windows '95, '98, NT 4.0 or 2000 (or later). Installation of the full Amzi! system, 
+including the libraries for all the supported environments, requires approximately 
+6mb of disk space. 
+<P>The Logic Server API supports:
+<UL>
+  <LI>Microsoft Visual C++</LI>
+  <LI> Borland C++</LI>
+  <LI> Java</LI>
+  <LI> Delphi</LI>
+  <LI> Visual Basic</LI>
+  <LI> MS-Office: Access, Excel, Word</LI>
+  <LI> Web servers</LI>
+  <LI> Any Windows development tool that can call a dynamic library (.dll)</LI>
+</UL>
+
+<H3> <A NAME="LinuxEditions"></A><FONT COLOR="#000080">Linux</FONT></H3>
+<!AMZI_INDEX = Linux> Amzi! Prolog + Logic Server runs on Linux kernel 2.2.X or 
+later. Installation requires approximately 6mb of disk space. The Logic Server 
+works with any compatible compiler including: 
+<ul>
+  <li> Gnu C/C++ </li>
+  <li>Java</li>
+  <li>Web servers (including Apache)</li>
+  <li>Any Unix development tool that can call a shared object (.so)</li>
+</ul>
+<h3><a name="SolarisEdition"></a><font color="#000080">Solaris</font></h3>
+<!AMZI_INDEX = Solaris>Amzi! Prolog + Logic Server runs on Solaris 7 or later 
+and requires the following patches: 
+<ul>
+  <li>libc 32-bit 106327-08 (or later)</li>
+  <li>libc 64-bit 106300-09 (or later)</li>
+</ul>
+<p>Installation requires approximately 6mb of disk space. The Logic Server works 
+  with any compatible compiler including: </p>
+<ul>
+  <li>Sun Visual Workshop C/C++</li>
+  <li>Java</li>
+  <li>Web servers</li>
+  <li>Any Unix development tool that can call a shared object (.so)</li>
+</ul>
+<h3><a name="HPUXEditions"></a><font color="#000080">HP/UX</font></h3>
+<p><!AMZI_INDEX = Linux> Amzi! Prolog + Logic Server runs on HP/UX 11 or later, 
+  and is available only by special request at this time. Installation requires 
+  approximately 3mb of disk space. The Logic Server works with any compatible 
+  compiler including: </p>
+<ul>
+  <li> Gnu C/C++ </li>
+  <li>Java</li>
+  <li>Web servers</li>
+  <li>Any Unix development tool that can call a shared object (.so)</li>
+</ul>
+<h3></h3>
+<H2> <a name="DistributionContents"></a><font color="#0000FF">Distribution Files</font></H2>
+<p>Amzi! Prolog + Logic Server as a compressed archive file that contains the 
+  following directory structure:</p>
+<blockquote> 
+  <pre><font color="#000080">a5-0-18
+  bin  - executable files, and, under Windows, .dll and .lsx files.
+&nbsp;&nbsp;&nbsp; acmp.exe - command line compiler
+&nbsp;&nbsp;&nbsp; alis.exe - command line listener
+&nbsp;&nbsp;&nbsp; alnk.exe - command line linker
+&nbsp;&nbsp;&nbsp; arun.exe - command line runtime
+&nbsp;&nbsp;&nbsp; amzi.dll - Amzi! windows DLL (Windows)
+&nbsp;&nbsp;&nbsp; amzijni.dll - Java 2.0 interface DLL (Windows)
+&nbsp;&nbsp;&nbsp; alnk.dll - IDE linker (Windows)
+&nbsp;&nbsp;&nbsp; aodbc.lsx - ODBC extended predicates (Windows)
+&nbsp;&nbsp;&nbsp;&nbsp;aosutils.lsx - Operating system dependent extended predicates (Windows)
+&nbsp;&nbsp;&nbsp; asock.lsx - Sockets interface LSX (Windows) 
+&nbsp;&nbsp;&nbsp; wideA.exe - Windows IDE (MBCS interface for Win95)
+&nbsp;&nbsp;&nbsp; wideW.exe - Windows IDE (Unicode interface for WinNT)
+  abin - Prolog executable files.
+  &nbsp; acmp.xpl - compiler load module
+    aidl.xpl - IDE listener load module
+&nbsp;&nbsp;&nbsp; alis.xpl - listener load module
+&nbsp;&nbsp;&nbsp; acgi.plm - Prolog interface to CGI
+&nbsp;&nbsp;&nbsp; alib.plm - Prolog library of built-ins
+&nbsp;&nbsp;&nbsp; aodbc.plm - Prolog ODBC predicates  abin - Prolog executable files, .plm and .xpl files.
+&nbsp;&nbsp;&nbsp; asock.plm - Sockets interface Prolog predicates
+&nbsp;&nbsp;&nbsp; bug.plm - Debugging library predicates
+&nbsp;&nbsp;&nbsp; list.plm - List library predicates
+    misc.plm - Miscellaneous predicates
+  docs - HTML documentation (see src if it's not here).
+&nbsp;&nbsp;&nbsp; amzidoc.htm - Master HTML document, points to all others
+  include - amzi.h C/C++ header file.
+&nbsp;&nbsp;&nbsp; amzi.h - C/C++ include file
+  lib  - under Unix, .so and .lsx files.
+    amzi.lib - Logic Server library for linking (Windows)
+    amzib.lib - Borland version of Logic Server library (Windows)
+    libamzi.so (Unix)
+    libamzijni.so (Unix)
+&nbsp;&nbsp;&nbsp;&nbsp;aosutils.lsx - Operating system dependent extended predicates (Unix)
+&nbsp;&nbsp;&nbsp; asock.lsx - Sockets interface LSX (Unix) 
+  lsapis - Logic Server interfaces for other languages/tools.
+    cgi - CGI executables
+    delphi - Delphi component (Windows)
+    java20 - amzi/ls class libraries and JNI interface
+    vb - VB module (Windows)
+  samples - various samples, including HTML documentation.
+&nbsp;&nbsp;&nbsp; c - C samples
+&nbsp;&nbsp;&nbsp; cpp - C++ samples
+&nbsp;&nbsp;&nbsp; delphi - Delphi samples
+&nbsp;&nbsp;&nbsp;&nbsp;internet - Internet samples
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cgi - CGI samples
+      servlet - Java servlets
+&nbsp;&nbsp;&nbsp;&nbsp;  sockets - Sockets samples
+&nbsp;&nbsp;&nbsp; java - Java samples
+&nbsp;&nbsp;&nbsp; odbc - ODBC samples
+&nbsp;&nbsp;&nbsp; prolog - Prolog samples
+&nbsp;&nbsp;&nbsp; vb - Visual Basic samples
+  src - source code for extensions and documentation.</font></pre>
+</blockquote>
+<h3></h3>
+<h2> <a name="Installation"></a><font color="#0000FF">Installation Instructions</font><!AMZI_INDEX = Procedure></h2>
+<p>Amzi! Prolog + Logic Server is distributed as a packed archive file (.exe, 
+  .zip or .tgz). The archives contain full pathnames for each file. This means 
+  that when you extract the files, the entire directory structure will be created 
+  (below the current directory) with each file in its proper subdirectory. Because 
+  the top-level directory name and executable program and library names include 
+  the major release number, you can run multiple releases of Amzi! Prolog+Logic 
+  Server at the same time without naming conflicts. </p>
+<p>To extract the files, put the archive(s) in your root or user directory or 
+  whatever directory you want to contain the directory tree. Then follow the appropriate 
+  instructions for your operating system. </p>
+<H3>
+<A NAME="Windows"></A><FONT COLOR="#000080">Windows</FONT></H3>
+
+<OL>
+  <LI><!AMZI_INDEX = Windows>Double-click on the self-extracting .exe file to 
+    run it and follow the prompts. This will extract the files and run a5-0-18\icons_path.exe 
+    to setup items 3 through 5.</LI>
+  <LI>Unzip the archive into the <i>install_dir</i> of your choice.</LI>
+  <li>Create an icon on the start menu or a shortcut on your desktop for the Amzi! 
+    IDE. There are two versions to choose from. One is a full Unicode development 
+    environment (with a Unicode program editor) and the other is a Multi-byte 
+    Character Set (MBCS) environment. Both support traditional ASCII characters 
+    as well. The Unicode environment can only be used with Windows NT 4.0/2000. 
+    It's executable is a5-0-18\bin\wideW<b></b>.exe. The MBCS IDE can be used 
+    with either Windows NT or Windows 95/98. It's executable is a5-0-18\bin\wideA<b></b>.exe. 
+  </li>
+  <li>Add<i> install_dir</i>\a5-0-18\bin on your PATH where <i>install_dir</i> 
+    is the directory you unzipped Amzi! into.</li>
+  <li>Add the environment variable AMZI_DIR=<i>install_dir</i>\a5-0-18.</li>
+  <li>If you are going to rebuild source code, add the environment variable AMZI_DEV_DIR=<i>install_dir</i>\a5-0-18.</li>
+  <li>Java users, add <i> install_dir</i>\a5-0-18\lsapis\java20 on your CLASSPATH.</li>
+  <li>Delphi users, see the <a href="ls/lsadelph.htm">instructions for installing 
+    the component</a>. </li>
+  <li>C/C++ users, add <i> install_dir</i>\a5-0-18\lib to your LIB environment 
+    variable and <i> install_dir</i>\a5-0-18\include to your INCLUDE environment 
+    variable. </li>
+</OL>
+<H3> <a name="Unix; Solaris; Linux; HP/UX"></a><font color="#000080">Unix</font></H3>
+<ol>
+  <li> <!AMZI_INDEX = Linux; Solaris; HP/UX>Gunzip the archive by typing 'gunzip 
+    amzi5-0-18c_linux.tgz'</li>
+  <li>Extract the file by typing 'tar -xvf amzi5-0-18c_linux.tar' to extract the 
+    files.</li>
+  <li>Add <i> install_dir</i>/a5-0-18/bin onto your path, where <i>install_dir</i> 
+    is the directory you installed Amzi! into. Alternatively, create links to 
+    the executables from a directory on your path.</li>
+  <li> Add the environment variable AMZI_DIR=<i>install_dir</i>/a5-0-18.</li>
+  <li>If you are going to rebuild source code, add the environment variable AMZI_DEV_DIR=<i>install_dir</i>/a5-0-18.</li>
+  <li>Add <i>install_dir</i>/a5-0-18/lib to the LD_LIBRARY_PATH environment variable. 
+    Alternatively, create links to the .so and .lsx files from a directory in 
+    your load library path.</li>
+</ol>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i><!-- #EndLibraryItem --> 
+<P><I></I> 
+</BODY>
+</HTML>

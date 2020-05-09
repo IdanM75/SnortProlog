@@ -1,0 +1,47 @@
+HERE = $(AMZI_DEV_DIR)\src\lsx
+
+all: _sockets _osutils _odbc
+
+_sockets:
+	echo === making sockets ===
+	cd sockets
+	bmake -f makefile.win
+	cd $(HERE)
+
+_osutils:
+	echo === making osutils ===
+	cd osutils
+	bmake -f makefile.win
+	cd $(HERE)
+	
+_odbc:
+	echo === making odbc ===
+	cd odbc
+	bmake -f makefile.win
+	cd $(HERE)
+
+clean:
+	cd sockets
+	bmake -f makefile.win clean
+	cd $(here)
+	cd osutils
+	bmake -f makefile.win clean
+	cd $(here)
+	cd odbc
+	bmake -f makefile.win clean
+	cd $(here)
+
+remove_cvs:
+	cd sockets
+	bmake -f makefile.win remove_cvs
+	cd $(here)
+	cd osutils
+	bmake -f makefile.win remove_cvs
+	cd $(here)
+	cd odbc
+	bmake -f makefile.win remove_cvs
+	cd $(here)
+
+   
+
+

@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Extended Predicates</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><A NAME="ExtendedPredicates"></A><FONT COLOR="#D2AA00">Extended Predicates 
+  </FONT></h1>
+
+<P><!AMZI_INDEX= Extended Predicates; Predicates; arun; aolsutil.lsx>The
+built-in predicates defined so far are part of the core Amzi! implementation.
+In addition to these, each environment has a collection of 'extended predicates'
+that are defined for that environment. These include, for example, predicates
+that manipulate files and directories and predicates that allow Windows
+programs to put up message boxes. </P>
+
+<P>Extended predicates are implemented using the Logic Server API, and
+come with full source code for Logic Server customers. They can be easily
+supplemented with your own definitions. They include predicates for:</P>
+
+<UL>
+  <LI><A HREF="#FileampDirectoryPredicates">Files and Directories</A></LI>
+  <LI><A HREF="#WindowsPredicates">Microsoft Windows-Only</A></LI>
+</UL>
+
+<P>The operating system dependent predicates are defined in osutil.cpp and are 
+  implemented as a Logic Server Extension (.lsx). The compiled file is aosutil.lsx, 
+  which is installed in the amzi/bin directory. It can be modified by any customers 
+  with the Logic Server. </P>
+
+<P>Using the Logic Server, one can add other .lsx's containing custom extended 
+  predicates. See the Logic Server reference for details. </P>
+
+<H2><A NAME="FileampDirectoryPredicates"></A><FONT COLOR="#0000FF">Files
+and Directories</FONT></H2>
+
+<P><!AMZI_INDEX= Files; Directories> The file/path names can be entered as strings, 
+  atoms or character lists. Take care to use double backslashes when string_esc 
+  is turned on, the default. </P>
+
+<H3><A NAME="chdirDirL"></A><FONT COLOR="#000080">chdir(DirL)</FONT></H3>
+
+<P><!AMZI_INDEX= chdir><B>chdir</B> attempts to change the current working
+directory to DirL, which is a character list, atom or string. If the change
+is successful, <B>chdir/1</B> suceeds, otherwise it fails. For example:
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- chdir(&quot;\\amzi5\\samples&quot;).</FONT></PRE>
+</UL>
+
+<H3><A NAME="chdirDirLErr"></A><FONT COLOR="#000080">chdir(DirL, Err)</FONT></H3>
+
+<P><!AMZI_INDEX= chdir><B>chdir/2</B> attempts to change the current working
+directory to DirL, which is a character list, atom or string. Err is unified
+with the operating system error code (which is usually 0 for no error).
+For example: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">?- chdir(&quot;/amzi5/samples&quot;, Ecode).</FONT></PRE>
+</UL>
+
+<H3><A NAME="curdirDirL"></A><FONT COLOR="#000080">curdir(DirS)</FONT></H3>
+
+<P><!AMZI_INDEX= curdir><B>curdir/1</B> attempts returns the current directory
+as a string in DirS. It fails if the operating system is unable to return
+the pathname. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- curdir(Path).
+Path = $C:\amzi5$</FONT></PRE>
+</UL>
+
+<H3><A NAME="delfilePathLErr"></A><FONT COLOR="#000080">delfile(PathL,
+Err)</FONT></H3>
+
+<P><!AMZI_INDEX=  delfile><B>delfile/2</B> attempts to delete the file
+specified by PathL, where PathL is a character list. Err is unified with
+the operating system error code (which is usually 0 for no error). For
+example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- delfile(&quot;a:\\ducks.tst&quot;, Ecode).</FONT></PRE>
+</UL>
+
+<H3><A NAME="mkdirDirLErr"></A><FONT COLOR="#000080">mkdir(DirL, Err)</FONT></H3>
+
+<P><!AMZI_INDEX= mkdir><B>mkdir/2</B> attempts to create subdirectory DirL,
+which is a character list, atom or string. Err is unified with the operating
+system error code (which is usually 0 for no error). For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- mkdir(&quot;NEWDIR&quot;, Err).</FONT></PRE>
+</UL>
+
+<H3><A NAME="renameOldNameNewNameErr"></A><FONT COLOR="#000080">rename(OldName,
+NewName, Err)</FONT></H3>
+
+<P><!AMZI_INDEX= rename><B>rename/3</B> renames the OldName file to NewName. Err 
+  is the error code returned from rename, which should be 0 if all went well. 
+</P>
+<ul>
+  <pre><font color="#000080">?- rename(&quot;oldfile.txt&quot;, &quot;newfile.txt&quot;, Err).</font></pre>
+</ul>
+
+<H3><A NAME="rmdirDirLErr"></A><FONT COLOR="#000080">rmdir(DirL, Err)</FONT></H3>
+
+<P><!AMZI_INDEX= rmdir><B>rmdir/2</B> attempts to remove subdirectory Dir,
+which is a character list, atom or string. Err is unified with the operating
+system error code (which is usually 0 for no error). For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- rmdir(&quot;\\temp&quot;, ErrCode).</FONT></PRE>
+</UL>
+
+<H3><A NAME="WindowsPredicates"></A><FONT COLOR="#0000FF">Microsoft Windows-Only 
+  <!AMZI_INDEX= Microsoft Windows></FONT></H3>
+
+<h3><A name="findfilesMaskAttrFileInfo"></A><font color="#000080">findfiles(Mask,
+  Attr, FileInfo)</font></h3>
+<p><!AMZI_INDEX=  findfiles><b>findfiles/3</b> is used to get file information 
+  from the current directory. </p>
+<p>Mask is an atom, string or character list giving the pattern to match, such 
+  as &quot;*.*&quot; for everything or $*.pro$ for all Prolog files. </p>
+<p>Attr is an integer defining what type of files to find. The values are: 0 - 
+  normal files, 1 - read only, 4 - system files, 8 - label, and 16 - directories. 
+  These values can be added together. </p>
+<p>FileInfo is a structure with the file information in the format: </p>
+<ul>
+  <pre><font color="#000080">fileinfo(Name, Attr, time(Hr, Min, Sec), date(Year, Mon, Day), Size).</font></pre>
+</ul>
+<p><b>findfiles/3</b> is designed to be backtracked into and fail when there are 
+  no more files. So, the query </p>
+<ul>
+  <pre><font color="#000080">?- findfiles('*.pro', 0, F), write(F), nl, fail.</font></pre>
+</ul>
+<p>will write all of the information about the Prolog files in the current directory. 
+</p>
+<p>To get a list of file information, <b>findall/3</b> can be used. For example, 
+  to get a list of just the names of the Prolog files </p>
+<ul>
+  <pre><font color="#000080">?- findall(Name, findfiles('*.pro', 0, fileinfo(Name, _, _, _, _)), FileNames).
+FileNames = [duck1.pro, duck2.pro, ...]</font></pre>
+</ul>
+<p>To get a list of directories </p>
+<ul>
+  <pre><font color="#000080">?- findall(DirName, 
+        findfiles('*.*', 16, fileinfo(DirName, _, _, _, _)), 
+        DirNames).
+DirNames = [., .., amzi, samples, ....]</font></pre>
+</ul>
+<h3><A name="getdriveDrive"></A><font color="#000080">getdrive(Drive)</font></h3>
+<p><!AMZI_INDEX=  getdrive><b>getdrive/1</b> returns the current drive as a string. 
+  For example: </p>
+<ul>
+  <pre><font color="#000080">?- getdrive(X).
+X = $c:$</font></pre>
+</ul>
+<H3><A name="setdriveDrive"></A><font color="#000080">setdrive(Drive)</font></H3>
+<p><!AMZI_INDEX= setdrive><b>setdrive/1</b> takes a drive specification and sets 
+  the current drive to it. For example: </p>
+<ul>
+  <pre><font color="#000080">?- setdrive(a). </font></pre>
+</ul>
+<p>or </p>
+<ul>
+  <pre><font color="#000080">?- setdrive('A:').</font></pre>
+</ul>
+<h3><A name="wgetfileFileStr"></A><font color="#000080">w_getfile(FileStr)</font></h3>
+<p><!AMZI_INDEX=  w_getfiler><b>w_getfile/1</b> calls the standard Windows file 
+  open dialog box, and unifies the file name with FileStr. FileStr is a string 
+  and the backslashes are all doubled to avoid problems with string_esc. (32-bit 
+  Windows platforms only.) </p>
+<h2></h2>
+<H3><A NAME="wmsgboxTerm"></A><FONT COLOR="#000080">w_msgbox(Term)</FONT></H3>
+
+<P><!AMZI_INDEX=  w_msgbox><B>w_msgbox/1</B> writes Term in a Windows message
+box, with an OK button. </P>
+
+<H3><A NAME="wtfmsgboxTerm"></A><FONT COLOR="#000080">w_tfmsgbox(Term)</FONT></H3>
+
+<P><!AMZI_INDEX=  w_tfmsgbox><B>w_tfmsgbox/1</B> write Term in a Windows message 
+  box with YES and NO buttons. If the user picks YES, the predicate succeeds, 
+  if the user picks NO the predicate fails. <br>
+</P>
+<P> <!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+</P>
+
+<P>&nbsp; </P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,403 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Atoms, Lists and Strings</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="ManipulatingTerms"></A><FONT COLOR="#D2AA00">Atoms, Lists and Strings</FONT> 
+</h1>
+<P>This section includes predicates for identifying, comparing and manipulating
+atoms, lists and strings. The categories are: </P>
+
+<MENU>
+<LI><A HREF="#Atom Processing">Atom Processing</A> </LI>
+
+<LI><A HREF="#List Processing">List Processing</A> </LI>
+
+<LI><A HREF="#StringProcessing">String Processing</A></LI>
+</MENU>
+
+<H2><A NAME="Atom Processing"></A><FONT COLOR="#0000FF">Atom Processing</FONT></H2>
+
+<P>A number of predicates are provides for manipulating and converting
+atoms. </P>
+
+<H3><A NAME="atomcodesAtomCharList"></A><FONT COLOR="#000080">atom_codes(Atom,
+CharList)</FONT></H3>
+
+<P><!AMZI_INDEX= Atoms; Character Lists; atom_codes; name><B>atom_codes/2</B>
+is an alternative to the poorly &quot;named&quot; <B>name/2</B> predicate.
+It converts between atoms and a list of character codes. If Atom is an
+atom then CharList is unified with the list of ASCII character codes for
+the name of Atom. If Atom is uninstantiated and CharList is a list of ASCII
+character codes, then instantiate Atom to the atom whose name is formed
+from CharList. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- name(abc, X).
+X = [97, 98, 99]
+?- name(X, &quot;abc&quot;).
+X = abc</FONT></PRE>
+</UL>
+
+<H3><A NAME="atomlistconcatAtomListAtom"></A><FONT COLOR="#000080">atomlist_concat(AtomList,
+Atom)</FONT></H3>
+
+<P><!AMZI_INDEX= Atoms; atomlist_concat><B>atomlist_concat/2</B> concatenates
+all of the atoms in AtomList to create a single atom, Atom. </P>
+
+<H3><A NAME="atomconcatAtomAtomAtomVar"></A><FONT COLOR="#000080">atom_concat(Atom1,
+Atom2, AtomVar3)</FONT></H3>
+
+<P><!AMZI_INDEX= atom_concat; Atoms>atom_concat/3 concatenates atoms Atom1
+and Atom2 and unifies that with variable AtomVar3. It can also generate
+all possible pairs of atoms, Atom1 and Atom2, from a given atom AtomVar3.
+</P>
+
+<H3><A NAME="atomlengthAtomLength"></A><FONT COLOR="#000080">atom_length(Atom,
+Length)</FONT></H3>
+
+<P><!AMZI_INDEX=  atom_length; Atoms><B>atom_length/2</B> unifies the length
+of Atom with Length. </P>
+
+<H3><A NAME="atomuplowAtomUpperAtomLower"></A><FONT COLOR="#000080">atom_uplow(AtomUpper,
+AtomLower)</FONT></H3>
+
+<P><!AMZI_INDEX= atom_uplow; Atoms><B>atom_uplow/2</B> creates a new uppercase
+atom, AtomUpper, from a lowercase atom, AtomLower, and vice versa. </P>
+
+<H3><A NAME="currentatomAtom"></A><FONT COLOR="#000080">current_atom(Atom)</FONT></H3>
+
+<P><!AMZI_INDEX=  current_atom; Atoms><B>current_atom/1</B> succeeds by
+unifying Atom with an atom known to the Prolog system. On backtracking
+it unifies Atom with another atom and so on until all known atoms have
+been exhausted, in which case it fails. </P>
+
+<H3><A NAME="nameAtomCharList"></A><FONT COLOR="#000080">name(Atom, CharList)</FONT></H3>
+
+<P><!AMZI_INDEX= Atoms; Character Lists; name><B>name/2</B> converts between
+atoms and a list of characters and is an alternative to <B>atom_codes/2</B>.
+If Atom is an atom then CharList is unified with the list of ASCII character
+codes for the name of Atom. If Atom is uninstantiated and CharList is a
+list of ASCII character codes, then instantiate Atom to the atom whose
+name is formed from CharList. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- name(abc, X).
+X = [97, 98, 99]
+?- name(X, &quot;abc&quot;).
+X = abc</FONT></PRE>
+</UL>
+
+<H3><A NAME="subatomAtomIndexLengthSubAtom"></A><FONT COLOR="#000080">sub_atom(Atom,
+Index, Length, SubAtom)</FONT></H3>
+
+<P><!AMZI_INDEX= Atoms; sub_atom><B>sub_atom/4</B> extracts parts of atoms
+like <B>sub_string/4</B> does for strings. The parameters are: </P>
+
+<DL COMPACT> 
+  <dl>
+    <dt>Atom</dt>
+    <dd>must be an atom </dd>
+    <dt>Index </dt>
+    <dd>the starting position, beginning with 1, of subatom </dd>
+    <dt>Length </dt>
+    <dd>the length of the subatom </dd>
+    <dt>SubAtom </dt>
+    <dd>the subatom </dd>
+  </dl>
+</DL>
+
+<P>In addition to the requirement that Atom be instantiated, either Index
+and Length must be instantiated, or SubAtom. In the first case the subatom
+is found, and in the second, the index andlength are found. Backtracking
+is fruitful in the second case if the subatom can be found more than once.
+</P>
+
+<P>If Index is instantiated and Length isn't, SubAtom becomes the rest
+of the Atom and Length is instantiated to its length. </P>
+
+<P>The instantiation requirements are somewhat more restrictive than the
+ISO standard which specifies that sub_atom can be used to generate all
+possible subatoms, with index and length, from a given atom. If you need/want
+this feature, let us know and we'll add it. </P>
+
+<P>Example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- sub_atom(ratatatat, 1, 3, X)
+X = ata
+?- sub_atom(ratatatat, I, L, tat)
+I = 3
+L = 3;
+I = 5
+L = 3;
+I = 7
+L = 3;
+no</FONT></PRE>
+</UL>
+
+<H2><A NAME="List Processing"></A><FONT COLOR="#0000FF">List Processing</FONT></H2>
+
+<P>A list may have its elements sorted according to the standard ordering
+described above: </P>
+
+<H3><A NAME="comparelistsListListDiffList"></A><FONT COLOR="#000080">compare_lists(List1,
+List2, DiffList)</FONT></H3>
+
+<P><!AMZI_INDEX= Lists; compare_lists><B>compare_lists</B> compares two
+lists returning the items that appear in the first list, but not the second.
+List1 and List2 should be bound to lists. DiffList is unified with the
+elements in List1 that are not present in List2. </P>
+
+<H3><A NAME="ismember"></A><FONT COLOR="#000080">is_member(Term, List)</FONT></H3>
+
+<P><!AMZI_INDEX= Lists; is_member><B>is_member</B> is a restricted version
+of the classic member/2 predicate (in the LIST.PLM library) than can be
+used for fast testing if Term is a member of List. It uses a strong unify
+(==) for testing the element. The definition is equivalent to:</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">is_member(X, [Y|_]) :- X == Y, !.
+is_member(X,[_|Z]) :- is_member(X,Z).</FONT></PRE>
+</UL>
+
+<P>Note, is_member cannot be backtracked into.</P>
+
+<H3><A NAME="removedupsListNoDupsList"></A><FONT COLOR="#000080">remove_dups(List,
+NoDupsList)</FONT></H3>
+
+<P><!AMZI_INDEX= Lists; Duplicates; remove_dups><B>remove_dups</B> removes
+duplicate entries from a list. List should be bound to a list. NoDupsList
+is unified with the list of distinct elements in List. </P>
+
+<H3><A NAME="sortListSortedList"></A><FONT COLOR="#000080">sort(List, SortedList)</FONT></H3>
+
+<P><!AMZI_INDEX= Lists; Standard Order; sort><B>sort</B> sorts a list.
+List should be bound to a list. SortedList gets unified with the list whose
+elements are those of List arranged in ascending order with respect to
+@&lt; above. </P>
+
+<H2><A NAME="StringProcessing"></A><FONT COLOR="#0000FF">String Processing</FONT></H2>
+
+<P>A number of predicates are designed to work with strings. </P>
+
+<H3><A NAME="nonblankstringString"></A><FONT COLOR="#000080">nonblank_string(String)</FONT></H3>
+
+<P><!AMZI_INDEX= Strings; nonblank_string><B>nonblank_string/1</B> takes
+a String as its argument and tests to make sure it contains at least one
+non-whitespace character (ASCII &gt; 32). It succeeds if the string is
+nonblank, and fails if it's blank. </P>
+
+<H3><A NAME="strcatStringAStringBStringAB"></A><FONT COLOR="#000080">strcat(StringA,
+StringB, StringAB)</FONT></H3>
+
+<P><!AMZI_INDEX= Strings; strcat><B>strcat</B> concatenates the first two
+strings to from the third. The first two arguments must be strings. </P>
+
+<H3><A NAME="stringlistconcatStringListStri"></A><FONT COLOR="#000080">stringlist_concat(StringList,
+String), stringlist_concat(StringList, Separator, String)</FONT></H3>
+
+<P><!AMZI_INDEX= Strings; stringlist_concat><B>stringlist_concat</B> concatenates
+all of the strings or atoms in StringList to create the output String.
+For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- stringlist_concat([ $one $, two, $ three$ ], X).
+X = $one two three$</FONT></PRE>
+</UL>
+
+<P><B>stringlist_concat/3</B> allows the use of a separator string that
+will appear between all of the elements in StringList</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- stringlist_concat([$one$,$two$,$three$], $..$, X).
+X = $one..two..three$ </FONT></PRE>
+</UL>
+
+<H3><A NAME="stringatomStringAtom"></A><FONT COLOR="#000080">string_atom(String,
+Atom)</FONT></H3>
+
+<P><!AMZI_INDEX= string_atom; Strings; Atoms><B>string_atom</B> is used
+to convert between a string and an atom. If String is bound to a string,
+then Atom is unified with the corresponding atom. If Atom is bound to an
+atom, then String is unified with the string representation. </P>
+
+<H3><A NAME="stringicomp"></A><FONT COLOR="#000080">string_icomp(String1,
+String2)</FONT></H3>
+
+<P><!AMZI_INDEX= string_icomp; Strings><B>string_icomp</B> Performs a case
+insensitive compare of two strings.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_icomp($ABC$, $abc$).
+yes</FONT></PRE>
+</UL>
+
+<H3><A NAME="stringintegerStringInteger"></A><FONT COLOR="#000080">string_integer(String,
+Integer)</FONT></H3>
+
+<P><!AMZI_INDEX= string_integer; Strings; Integers; Numbers><B>string_integer</B>
+converts back and forth between a string and its integer value (i.e., 33
+and $33$). </P>
+
+<P>If String is bound to a string of ASCII digits, then Integer is bound
+to the corresponding value. If Integer is bound to a value, then String
+is bound to the ASCII digits representing that value. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_integer(StrVal, 33).
+StrVal = $33$</FONT></PRE>
+</UL>
+
+<H3><A NAME="stringlengthStringLength"></A><FONT COLOR="#000080">string_length(String,
+Length)</FONT></H3>
+
+<P><!AMZI_INDEX= string_length; Strings ><B>string_length</B> requires
+that String be bound to a string. Length is unified with the length of
+the string. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_length($how long am i?$, Len).
+Len = 14</FONT></PRE>
+</UL>
+
+<H3><A NAME="stringlistStringList"></A><FONT COLOR="#000080">string_list(String,
+List)</FONT></H3>
+
+<P><!AMZI_INDEX= string_list; Strings; Lists><B>string_list</B> converts
+back and forth between a string and its representation as a list of ASCII
+characters (i.e., &quot;foo&quot; and $foo$). </P>
+
+<P>If String is bound to a string then <B>string_list</B> succeeds if it
+can unify List with the list of ASCII character codes of the characters
+in the string. </P>
+
+<P>If List is bound to a list of small integers (between 0 and 255) then
+this predicate succeeds if String can be unified with the string comprising
+the characters whose ASCII values are in List. </P>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_list(X, [70, 79, 79]).
+X = FOO </FONT></PRE>
+</UL>
+
+<H3><A NAME="stringsplit"></A><FONT COLOR="#000080">string_split(String,
+DelimitersS, List)</FONT></H3>
+
+<P><!AMZI_INDEX= string_split; Parsing; Strings; Lists><B>string_split
+</B>splits the String into a list of strings separated by the characters
+in the DelimiterS string. Unifies the result with List.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_split($one/two:three$, $/:$, X).
+X = [$one$,$two$,$three$] </FONT></PRE>
+</UL>
+
+<P>Note, <B>string_split</B> differs from <B>string_tokens</B> in that
+it preserves whitespace, and does not return the delimiters as part of
+the list.</P>
+
+<H3><A NAME="stringtermStringTerm"></A><FONT COLOR="#000080">string_term(String,
+Term)</FONT></H3>
+
+<P><!AMZI_INDEX= string_term; Strings; Terms><B>string_term</B> converts
+back and forth between a string and a term. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_term($whiz(bang)$, X).
+X = whiz(bang)
+?- string_term(X, whiz(bang)).
+X = $whiz(bang)$</FONT></PRE>
+</UL>
+
+<H3><A NAME="stringtermqStringQTerm"></A><FONT COLOR="#000080">string_termq(StringQ,
+Term)</FONT></H3>
+
+<P><!AMZI_INDEX= string_term; string_termq; Strings; Terms><B>string_termq</B>
+is exactly like string_term, except when creating a string from a term
+it quotes atoms that need it and puts $ $ around strings. This way the
+string can be converted to a term again. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_termq(S, person(name('Walter'), addr($Maple Way$))).
+S = $person(name('Walter'), addr($$Maple Way$$)))$</FONT></PRE>
+</UL>
+
+<H3><A NAME="stringtokens"></A><FONT COLOR="#000080">string_tokens(String,
+TokenList), string_tokens(String, TokenList, DelimitersS)</FONT></H3>
+
+<P><!AMZI_INDEX= string_tokens; Parsing; Strings><B>string_tokens</B> takes
+a string and parses it into a list of tokens, where a token is a sequence
+of alphanumeric characters, or a punctuation mark. Whitespace between the
+tokens is removed. For example </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_tokens($Don't go near, or in, the water!$, X). 
+X = ['Don','''',t,go,near,',',or,in,',',the,water,!] </FONT></PRE>
+</UL>
+
+<P>The three argument version allows you to specify the characters considered
+as punctuation marks. For example this query might be used to parse HTML
+strings:</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_tokens($&lt;H2&gt;This: A heading?&lt;/H2&gt;$, X, $&lt;&gt;/$).
+X = [&lt;,'H2',&gt;,'This:','A','heading?',&lt;,/,'H2',&gt;] </FONT></PRE>
+</UL>
+
+<P>Note, <B>string_tokens</B> differs from <B>string_split</B> in that
+all delimiters are returned in the TokenList, and whitespace is not preserved.</P>
+
+<H3><A NAME="stringtrim"></A><FONT COLOR="#000080">string_trim(String,
+TrimmedString)</FONT></H3>
+
+<P><!AMZI_INDEX= string_trim; Parsing; Strings><B>string_trim</B> Trims
+the leading and trailing white space from String and unifies the resulting
+string with TrimmedString.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- string_trim($ hello $, X).
+X = $hello$ </FONT></PRE>
+</UL>
+
+<H3><A NAME="substringStringIndexLengthSubS"></A><FONT COLOR="#000080">sub_string(String,
+Index, Length, SubString)</FONT></H3>
+
+<P><!AMZI_INDEX= sub_string; Strings><B>sub_string</B> is used to locate
+or generate a substring of a given string. String must be bound to a string.
+There are two cases to consider: </P>
+
+<UL>
+<LI>SubString is bound to a string. In this case <B>sub_string</B> looks
+for the first occurrence of SubString in String and unifies Index and Length
+with the position of the start of SubString in String and its length. Backtracking
+will attempt to find the next occurrence of SubString in String. Note that
+index 1 means the first character in StringIn. </LI>
+
+<LI>SubString is unbound. Index and Length are bound to valid integers
+(i.e., 1 &lt; Index &lt; length_of(String) and Index + Length =&lt; length_of(String)).
+The substring unifies SubString with the substring of String at the given
+Index and of the given Length. If Index is bound and Length is unbound,
+then the SubString is the rest of the string and Length is bound to its
+length. </LI>
+</UL>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- sub_string($i am hiding$, Where, Len, $am$).
+Where = 3
+Len = 2
+?- sub_string($1Q93$, 3, 2, Year).
+Year = 93</FONT></PRE>
+</UL>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P>&nbsp;</P>
+
+</BODY>
+</HTML>

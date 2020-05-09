@@ -1,0 +1,60 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: CubeMT - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x409 /fo".\Release/CubeMT.res" /d "NDEBUG" "D:\amzi\dev\a5\samples\cpp\win32_rubik_multi\CubeMT.rc"" 
+Creating temporary file "C:\TEMP\RSP69A.tmp" with contents
+[
+/nologo /MT /W3 /GX /Ob1 /I "d:\amzi\dev\a5\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp".\Release/CubeMT.pch" /Yu"stdafx.h" /Fo".\Release/" /Fd".\Release/" /FD /c 
+"D:\amzi\dev\a5\samples\cpp\win32_rubik_multi\CubeMT.cpp"
+"D:\amzi\dev\a5\samples\cpp\win32_rubik_multi\CubeThread.cpp"
+"D:\amzi\dev\a5\samples\cpp\win32_rubik_multi\CubeWnd.cpp"
+"D:\amzi\dev\a5\samples\cpp\win32_rubik_multi\Lstring.cpp"
+"D:\amzi\dev\a5\samples\cpp\win32_rubik_multi\MainFrm.cpp"
+"D:\amzi\dev\a5\samples\cpp\win32_rubik_multi\Rubik.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP69A.tmp" 
+Creating temporary file "C:\TEMP\RSP69B.tmp" with contents
+[
+/nologo /MT /W3 /GX /Ob1 /I "d:\amzi\dev\a5\include" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /Fp".\Release/CubeMT.pch" /Yc"stdafx.h" /Fo".\Release/" /Fd".\Release/" /FD /c 
+"D:\amzi\dev\a5\samples\cpp\win32_rubik_multi\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\TEMP\RSP69B.tmp" 
+Creating temporary file "C:\TEMP\RSP69C.tmp" with contents
+[
+d:\amzi\dev\a5\lib\amzi.lib /nologo /subsystem:windows /incremental:no /pdb:".\Release/CubeMT.pdb" /machine:I386 /out:".\Release/CubeMT.exe" 
+.\Release\CubeMT.obj
+.\Release\CubeThread.obj
+.\Release\CubeWnd.obj
+.\Release\Lstring.obj
+.\Release\MainFrm.obj
+.\Release\Rubik.obj
+.\Release\StdAfx.obj
+.\Release\CubeMT.res
+]
+Creating command line "link.exe @C:\TEMP\RSP69C.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+CubeMT.cpp
+CubeThread.cpp
+CubeWnd.cpp
+Lstring.cpp
+MainFrm.cpp
+Rubik.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+CubeMT.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

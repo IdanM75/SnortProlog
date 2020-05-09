@@ -1,0 +1,534 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; U) [Netscape]">
+   <TITLE>Compiler</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>
+<A NAME="Compiler"></A><FONT COLOR="#D2AA00">Compiler</FONT></H1>
+<!AMZI_INDEX =acmp; Compiler>The Amzi! Prolog compiler transforms Prolog source 
+code files (.pro) into object code files (.plm). Source files must be plain text 
+with no embedded control characters other than the newline. 
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>You may use
+an extension other than .pro for your source files, but then you must type
+it in each time, rather than using the default.</I>
+<H2>
+<A NAME="AdvantagesofCompiling"></A><FONT COLOR="#0000FF">Advantages</FONT></H2>
+<!AMZI_INDEX = Compiling>Amzi! Prolog offers a compiler which optimizes
+a great deal of the searching procedure used on dynamic (or interpreted)
+predicates. General pattern matches are replaced by specific test-and-branch
+sequences of code, and procedure calls are flattened with the result that
+compiled programs run in much less space than their interpreted counterparts,
+and groups of clauses are cross-indexed to provide rapid table look up.
+
+<P>The net result of all of this work is that compiled code can run twenty
+or thirty times faster than equivalent interpreted code, occupies less
+space in memory and consumes much less space to execute.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>We strongly
+recommend that as much code as possible be compiled once it has been developed.</I>
+<H2>
+<A NAME="DisadvantagesofCompiling"></A><FONT COLOR="#0000FF">Disadvantages</FONT></H2>
+<!AMZI_INDEX = Compiling >When code is compiled the code loses some features
+which may be important in some applications:
+<UL>
+<LI>
+The code cannot be listed or examined (using <A HREF="rfdatabs.htm">listing</A>
+or <A HREF="rfdatabs.htm">clause</A>).<!AMZI_INDEX=listing; clause></LI>
+
+<LI>
+Individual clauses in a compiled predicate cannot be changed--the whole
+predicate must be removed.</LI>
+</UL>
+Both of these restrictions can be ameliorated by selective intermixing
+of compiled and interpreted code in the same application.
+<H2>
+<A NAME="RequirementsonCompiledFiles"></A><FONT COLOR="#0000FF">Requirements</FONT></H2>
+<!AMZI_INDEX = Compiling >The compiler assumes that all clauses for a given
+predicate are contiguous and located in the same file. If they are not,
+then the source code containing the clauses must include the 'multifile'
+directive for all predicates that are defined in multiple files, and/or
+the 'discontiguous' directive for predicates whose clauses are not contiguous.
+(This is so the compiler can optimize the code for the various clauses.)
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>The compiler
+does not unintentional (no discontiguous or multifile specified) split
+definitions of predicates. When you try to load the compiled program, however,
+you will get an error message indicating you have attempted to redefine
+a compiled predicate.</I>
+<H2>
+<A NAME="CompilerDirectives"></A><FONT COLOR="#0000FF">Directives</FONT></H2>
+<!AMZI_INDEX = Directives; import; export; dynamic; multifile; discontiguous >Interpreted
+code is simply loaded into the dynamic database as it is 'consult'ed. The
+compiler, however, processes the code before compiling and may require
+you to specify certain directives on how you want it to proceed. The directives
+are summarized here and explained in greater detail in the following sections:
+<UL>
+<LI>
+import - lists the predicates imported into a Prolog module.</LI>
+
+<LI>
+export - lists the predicates exported from a Prolog module.</LI>
+
+<LI>
+dynamic - lists predicates that the compiler will not compile, and will
+store in the dynamic database instead.</LI>
+
+<LI>
+multifile - lists predicates whose clause definitions might occur in multiple
+files.</LI>
+
+<LI>
+discontiguous - lists predicates whose clause definitions are not contiguous
+in a given source file.</LI>
+</UL>
+
+<H2>
+<A NAME="StartingtheCompilerfromtheWind"></A><FONT COLOR="#0000FF">Running
+from the IDE</FONT></H2>
+<!AMZI_INDEX = acmp; IDE; Compiler >Normally the compiler is invoked when
+you build a project by either pressing the BLD button or choosing Build
+/ Build from the menu. This will compile and link all the modified files
+in the project. (See the <A HREF="prprojct.htm">Projects </A>section for
+more details.)
+
+<P>To compile a single file, select Build / Compile. The standard "file
+open" dialog box is displayed that allows you to select a source file to
+compile.
+
+<P>The compiler output and messages are displayed in a scrolling window
+for your perusal when compilation is completed.
+<H2>
+<A NAME="StartingtheCompilerfromtheComm"></A><FONT COLOR="#0000FF">Running
+from the Command-Line</FONT></H2>
+<!AMZI_INDEX =  acmp; Command-Line; Compiler >There are two ways of supplying
+the names of files to be compiled to the compiler:
+<UL>
+<LI>
+By specifying all the information on the command line</LI>
+
+<LI>
+By answering the prompts</LI>
+</UL>
+The command-line can take three arguments.
+<UL>
+<PRE><FONT COLOR="#000080">acmp [source], [object], [listing]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[source]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the name of the source file (.pro)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[object]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the name of the object file to be created (.plm)&nbsp;
+[listing]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; the name of the optional listing file (PAL)</FONT></PRE>
+</UL>
+To use compile in prompting mode, do not specify any arguments.
+<UL>
+<PRE><FONT COLOR="#000080">c>&nbsp; acmp
+source file [.PRO] :
+object file [.PLM] :
+listing file [.PAL] :</FONT></PRE>
+</UL>
+For example:
+<UL>
+  <PRE><FONT COLOR="#000080">c>&nbsp; acmp
+Amzi! Prolog Compiler
+Copyright (c) 1987-2000 Amzi! inc. All Rights Reserved.
+Source Code [.PRO]: duck2
+Object Code [duck2.PLM]:
+Listing File [NULL.PAL]: duck2
+Compiling duck2.pro
+|- main / 0
+|- go / 0
+|- go / 0
+|- go / 0
+[CodeSize 410 Bytes, Compile time 11 seconds.]</FONT></PRE>
+</UL>
+or
+<UL>
+<PRE><FONT COLOR="#000080">c>&nbsp; acmp duck1
+...</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="CompilerMessages"></A><FONT COLOR="#0000FF">Messages</FONT></H2>
+<!AMZI_INDEX = Compiling ; Messages>When the compiler begins compiling,
+it indicates which clause of which predicate is being compiled by using
+a display of the form:
+<UL>
+<PRE><FONT COLOR="#000080">|-&nbsp; Name / Arity_Pred_1_Clause_1
+|-&nbsp; Name / Arity_Pred_2_Clause_2
+|-&nbsp; ...</FONT></PRE>
+</UL>
+If an error occurs a message will be printed to the screen and the error
+handler will be invoked. Most errors will be syntax errors. In the case
+of a syntax error, the offending term will be listed along with the error
+message.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that
+when the compiler reads in clauses it does so by reading in all clauses
+for a given predicate and the </I>first clause of the following predicate<I>.
+Thus it is possible for a read error to occur in a clause which is not
+in the predicate being compiled but is in the next predicate to be compiled.</I>
+
+<P>Errors in a clause will cause the compilation of that clause to be skipped;
+compilation continues with the next clause.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>The compiler
+output is especially useful for tracking down errors due to unintentional
+split-definition clauses, or "missing" predicates lost by a misplaced period.
+By viewing the listing you can see if all the clause definitions are contiguous,
+and if all the predicates you thought were in the file actually were.</I>
+<H2>
+<A NAME="CompilationErrors"></A><FONT COLOR="#0000FF">Errors</FONT></H2>
+<!AMZI_INDEX = Compiling; Errors; maxclauses; destbuf; srcbuf>Other than
+syntax errors, the most common cause of errors will be caused by trying
+to compile clauses or predicates which are too complex. In these cases
+you will likely receive a fatal error of the form "XXX stack full" where
+XXX is heap or control or local or trail. The easiest way around this trouble
+is to use 32-bit mode to compile the program, and set your <A HREF="Prmemgmt.htm">stack
+sizes</A> large enough in the .cfg file.
+
+<P>You might also run into difficulties loading programs that contain predicates 
+  with large numbers of clauses. The <A HREF="prruntim.htm">.cfg file parameters</A> 
+  <B>maxclauses</B>, <B>destbuf</B> and <B>srcbuf</B> can all be used to increase 
+  the capacity of the Prolog engine when loading a compiled program. 
+<H3>
+<A NAME="ComplexClauses"></A><FONT COLOR="#000080">Complex Clauses</FONT></H3>
+<!AMZI_INDEX =  Compiling; Clauses>The complexity of a clause is determined
+approximately by the number of variables in the clause. If this number
+gets too large then the compiler may fill a stack and cause a fatal error.
+To correct this it may be necessary to take a clause and split it into
+a number of smaller clauses.
+
+<P>The compiler optimizes its processing of clauses with only one or zero
+goals in the body. This permits such clauses to be compiled more quickly.
+<I>This optimization has no effect on the resulting compiled code</I> (it
+just arrives at it sooner).
+
+<P>The downside of this is a slight chance that such a clause will cause
+a stack to overflow on compilation. This is usually due to having very
+complex clauses, e.g.,
+<UL>
+<PRE><FONT COLOR="#000080">options(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[option1, ..],&nbsp;&nbsp;
+[option2, ..],&nbsp;&nbsp;
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[option30, ..]&nbsp;&nbsp;
+).</FONT></PRE>
+</UL>
+To resolve this problem, cast the clause in the following form:
+<UL>
+<PRE><FONT COLOR="#000080">options(X1, X2, .., X30) :-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+X1 = [option1,..],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+X30 = [option30,..].</FONT></PRE>
+</UL>
+By forcing the clause to have a more complex body (and a simpler head)
+the optimization technique described above will not be used by the compiler.
+<H3>
+<A NAME="ComplexPredicates"></A><FONT COLOR="#000080">Complex Predicates</FONT></H3>
+<!AMZI_INDEX = Compiling; Predicates>Complex predicates generally occur
+because there are too many clauses in a given predicate. The precise number
+depends on the relative complexity of the individual clauses. The Amzi!
+Prolog Compiler can compile predicates with many hundreds of clauses, so
+in practice we do not expect this to be much of a problem.
+
+<P>Where it is a problem try dividing predicates into two or more predicates,
+e.g.,
+<UL>
+<PRE><FONT COLOR="#000080">head1 :- body1.
+head1 :- body2.
+..
+head1 :- body100.</FONT></PRE>
+</UL>
+can be replaced with a slight performance penalty by:
+<UL>
+<PRE><FONT COLOR="#000080">head1 :- body1.
+..
+head1 :- body50.
+head1 :- head2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % New link to remaining clauses
+head2 :- body51.
+..
+head2 :- body100.</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="DynamicClausesinCompiledCode"></A><FONT COLOR="#0000FF">Dynamic
+Clauses in Compiled Code</FONT></H2>
+<!AMZI_INDEX = Compiling; Clauses; dynamic>Sometimes it is desireable to
+have some predicates in an application be compiled and others maintained
+in the dynamic database (interpreted). The <B>dynamic</B> directive lets
+you tell the compiler which clauses are to remain in the dynamic database,
+so they can be manipulated dynamically by the application.
+
+<P>It's syntax is: 
+<UL>
+<PRE><FONT COLOR="#000080">:- dynamic f1/a1, f2/a2, ... fn/an.</FONT></PRE>
+</UL>
+You can have multiple dynamic directives if you prefer.
+
+<P>For example, in this code fragment the<B> loc/2</B> predicate will be interpreted 
+  while the other predicates are compiled: 
+<UL>
+<PRE><FONT COLOR="#000080">:- dynamic loc/2.
+
+main :- ...
+
+loc(you, house).
+loc(egg, pen).
+
+goto(...</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="MultifileClauses"></A><FONT COLOR="#0000FF">Multifile Directive</FONT></H2>
+<!AMZI_INDEX = Compiling; Clauses; multifile>Sometimes it is desireable
+to have the clauses that define a predicate to be split between several
+files. If this is the case, you must let the compiler know with the <B>multifile</B>
+directive.
+
+<P>It's syntax is:
+<UL>
+<PRE><FONT COLOR="#000080">:- multifile f1/a1, f2/a2, ... fn/an.</FONT></PRE>
+</UL>
+You can have multiple multifile directives if you prefer.
+<H2>
+<A NAME="DiscontiguousClauses"></A><FONT COLOR="#0000FF">Discontiguous
+Directive</FONT></H2>
+<!AMZI_INDEX = Compiling; Clauses; discontiguous>Sometimes it is desireable
+to have the clauses of some predicates defined in different places in a
+source file. In that case, the predicates must be listed in a <B>discontiguous</B>
+directive to avoid load errors.
+
+<P>It's syntax is: 
+<UL>
+<PRE><FONT COLOR="#000080">:- discontiguous f1/a1, f2/a2, ... fn/an.</FONT></PRE>
+</UL>
+You can have multiple discontiguous directives if you prefer.
+<H2>
+<A NAME="LatentExpressions"></A><FONT COLOR="#0000FF">Latent Expressions</FONT></H2>
+<!AMZI_INDEX = Compiling; Latent Expressions; op>A latent expression is a term 
+which again represents a goal. However latent expressions are executed <I>as the 
+file is loaded</I>. A latent expression is indicated using the prefix <b>:-</b>. 
+The compiler translates :- body. to the special goal latent_exp :- body. The Prolog 
+loader knows that as it encounters latent_exp :- .. clauses they are to be <I>executed</I> 
+and <I>not added</I> to the database. 
+<P>For example consider:
+<UL>
+<PRE><FONT COLOR="#000080">:- write('Starting loading the file\n').
+a :- b.
+:- write('Half way through\n').
+b :- c.
+:- write('All done').</FONT></PRE>
+</UL>
+This file is compiled. When it is loaded (either as part of an application
+or as a single Prolog Object file) it will print out three lines at the
+terminal:
+<UL>
+<PRE><FONT COLOR="#000080">Starting loading the file
+Half way through
+All done</FONT></PRE>
+</UL>
+while loading the two clauses. Then the listener will be entered.
+
+<P>The one exception to this treatment is if the body of :- is the single term 
+  <B>op</B>/3. In this case not only is latent expression latent_exp :- <B>op</B>(..) 
+  produced but <B>op</B>(..) is also executed as a compiler directive. This function 
+  is provided as a convenience. 
+<H2>
+<A NAME="MainPredicate"></A><FONT COLOR="#0000FF">Main Predicate</FONT></H2>
+<!AMZI_INDEX = Predicates; main>The Prolog system treats the predicate
+<B>main/0</B> in a special way. When Prolog initializes it looks to see
+if there is a definition for the predicate <B>main/0</B>. If there is a
+definition, then <B>main/0</B> is proved instead of entering the listener
+(see the section on alis). Thus for an application to "load and run" it
+should contain a definition:
+<UL>
+<PRE><FONT COLOR="#000080">main :- run_user_program.</FONT></PRE>
+</UL>
+Then when the application loads it will immediately try to prove the user-written
+predicate <B>run_user_program</B>.
+<H2>
+<A NAME="UsingModules"></A><FONT COLOR="#0000FF">Using Modules</FONT></H2>
+<!AMZI_INDEX = Modules>Amzi! Prolog supports the concept of modules. A
+module is a compiled file in which certain predicates are visible outside
+the file and other predicates are visible only inside the file. This permits
+reusable code modules to be written safe in the knowledge that the definition
+of predicates in one file will not interfere with the definition of a like-named
+predicate in another file when both are loaded into the Prolog runtime
+system.
+
+<P>A module is a compiled file which contains at least one of the following
+declarations in the source code:
+<UL>
+<PRE><FONT COLOR="#000080">:- export Name1/Arity1,... NameN/ArityN.
+:- import Name1/Arity1,... NameN/ArityN.</FONT></PRE>
+</UL>
+We refer to these declarations as import and export lists. There may be
+any number of import and export lists in one module.
+
+<P>Modules are an optional feature of Amzi! Prolog. If there are no import/export
+lists then all predicates in the file are 'visible' to predicates in all
+other files.
+<H3>
+<A NAME="ImportingPredicates"></A><FONT COLOR="#000080">Importing Predicates</FONT></H3>
+<!AMZI_INDEX = Predicates; import>The declaration:
+<UL>
+<PRE><FONT COLOR="#000080">:- import Name1/Arity1,.. Namen/Arityn.</FONT></PRE>
+</UL>
+in a compiled file indicates that the predicates listed are defined <I>externally</I>
+to this file but are <I>used</I> in the body of some clauses <I>within</I>
+this file. The file is made into a module upon compilation.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>It is not
+necessary to explicitly import any predicate contained in the Prolog runtime
+and consequently documented in this manual, although declaring such a predicate
+to be imported causes no harm.</I>
+<H3>
+<A NAME="ExportingPredicates"></A><FONT COLOR="#000080">Exporting Predicates</FONT></H3>
+<!AMZI_INDEX = Predicates; export>The declaration:
+<UL>
+<PRE><FONT COLOR="#000080">:- export Name1/Arity1,.. Namen/Arityn.</FONT></PRE>
+</UL>
+in a compiled file indicates that the predicates listed are defined <I>internally</I>
+in the file but are <I>to be made visible externally</I>. A module which
+wishes to use any of the predicates would have to, in turn, import them.
+The occurrence of the export declaration causes the file to be made into
+a module upon compilation.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>There is
+no difference between import and export. Both directives make predicates
+visible to other modules. Both names are provided for clarity and readability.</I>
+<H3>
+<A NAME="HiddenPredicates"></A><FONT COLOR="#000080">Hidden Predicates</FONT></H3>
+<!AMZI_INDEX = Predicates; append; member>Predicates defined inside modules
+which are not on the export list of the module are said to be <I>hidden</I>.
+This means that the predicate is invisible outside of the module in which
+it is defined. Indeed there may be several definitions of a predicate with
+a given Name/Arity in different modules, and these definitions will never
+conflict if the files are linked or loaded together.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note, this
+is not the case when the source file is loaded into the interpreter. The
+predicates only stay hidden in the compiled version of the file.</I>
+
+<P>This allows you to construct library modules and link or load them together
+in applications without having to worry about support-predicates hidden
+inside each module colliding. Typical offenders in this regard are <B>append/3</B>
+and <B>member/2</B> which are often needed to accomplish some goal within
+the definition of a "bigger" predicate, but are not required outside of
+these definitions.
+
+<P>It is an error for a goal to appear in the body of a clause in a module
+where the predicate of that goal is neither imported (explicitly or implicitly)
+nor defined within the module. Attempting to load such a module (or run
+an application containing this module) will cause an error to occur at
+load timea message will be printed out and you will be returned to the
+operating system.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM>&nbsp;<!AMZI_INDEX = call; bagof; findall; setof><I>There
+are some predicates which should always be exported even if they are used
+only inside a compiled module. These are any predicates which are arguments
+to </I>call/1 (the interpreter), bagof/3, findall/3 or setof/3<I> in the
+file.</I>
+<H3>
+<A NAME="ModulesExample"></A><FONT COLOR="#000080">Modules Example</FONT></H3>
+<!AMZI_INDEX = Modules>As an example, let's consider three files:
+<BR>&nbsp;
+<TABLE BORDER CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">:- export a1/0.
+a1 :- b.
+b :- write('First file\n').</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE BORDER CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">:- export a2/0, b/0.
+a2 :- b.
+b :- write('Second file\n').</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE BORDER CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">:- export doit.
+:- import a1/0, a2/0, b/0.
+doit :- a1, a2, b.</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+<p>Compile all three files and load then into the runtime system. Now give the 
+  goal: </p>
+<UL>
+<PRE><FONT COLOR="#000080">?- doit.
+First file
+Second file
+Second file&nbsp;
+yes</FONT></PRE>
+</UL>
+Notice that there are two definitions for <B>b/0</B>; however that definition
+in the first file is visible only in the first file (since it is not exported,
+and the first file is a module). Thus the <B>b/0</B> in the body of "a1
+:- b." refers to the code in the first file.
+
+<P>The <B>b/0</B> in the second file is exported. The <B>b/0</B> in the
+clause "a2 :- b/0." refers to the definition in the second file.
+
+<P>The third file is also a module which uses <B>a1/0</B> and <B>a2/0</B>.
+It also uses <B>b/0</B>. Which <B>b/0</B> does it use? <B>b/0</B> in the
+first file is not exported and so it cannot be the definition from file
+1, whereas the definition of <B>b/0</B> in the second file <I>is</I> visible
+(being exported) and so it is this definition used in the third file.
+
+<P>Notice that the predicate <B>write/1</B> is not explicitly declared
+to be imported it is a globally known as a built-in predicate.
+<H3>
+<A NAME="LoadtimeErrors"></A><FONT COLOR="#000080">Loadtime Errors</FONT></H3>
+<!AMZI_INDEX = Loading; Errors; main>Loading a compiled module with a hidden
+predicate which is not defined inside the module (or a linked file containing
+a module with this property) is a load time error.
+
+<P>When the loader (the portion of the runtime system responsible for loading
+compiled code) detects such a predicate it will print out its Name/Arity
+and then abort:
+<UL>
+<PRE><FONT COLOR="#000080">Cannot fixup local symbol foo/3
+ABORT: Missing local predicates</FONT></PRE>
+</UL>
+In the case where the loaded file is a linked file the name of the missing
+predicate will be preceded by a number (which is the number, in link order,
+of the file which contains the offending predicate):
+<UL>
+<PRE><FONT COLOR="#000080">Cannot fixup local symbol 4foo/3
+ABORT: Missing local predicates</FONT></PRE>
+</UL>
+In this example, <B>foo/3</B> was used in the 4th file linked into the
+application.
+
+<P>If a stand-alone application has not defined the predicate <B>main/0</B>,
+or the predicate <B>main/0</B> fails, then an error occurs and you are
+returned to the operating system with the message:
+<UL>
+<PRE><FONT COLOR="#000080">ERROR: main/0 did not succeed.</FONT></PRE>
+</UL>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --> 
+<hr>
+<div align="center"><a href="http://babelfish.altavista.com/translate.dyn">Deutsch&nbsp;&nbsp; 
+  Espa&ntilde;ol&nbsp;&nbsp; Fran&ccedil;ais&nbsp;&nbsp; Italiano&nbsp;&nbsp; 
+  Portugu&ecirc;s</a> 
+  <hr>
+<p align="center"><i><font size=-1>Copyright &copy;1995-2000 Amzi! inc. All Rights 
+  Reserved. <a href="mailto:info@amzi.com">info@amzi.com</a></font></i>
+</div>
+<p align="center"><font size="-2"><i>Amzi! is a registered trademark and Adventure 
+  in Prolog, Logic Server, Logic Explorer, Adventure in Prolog, SupportKT, Subscription 
+  Plus and WebLS are trademarks of Amzi! inc.</i></font> 
+<p></p>
+<p align="center">&nbsp; 
+<!-- #EndLibraryItem --><I></I> 
+</BODY>
+</HTML>

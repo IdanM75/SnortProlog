@@ -1,0 +1,618 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Amzi! Runtime</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="AmziPrologRuntime"></A><FONT COLOR="#D2AA00">Amzi! Runtime</FONT> 
+</h1>
+<P><!AMZI_INDEX = arun; Amzi! Runtime>The Amzi! runtime comes in many
+forms. </P>
+
+<UL>
+  <LI>As a built-in component of the Amzi! tools, including alis and the Windows 
+    IDE. </LI>
+
+<LI>As a standalone executable runtime that can be executed from the command-line,
+arun. </LI>
+
+  <LI>As a Windows dynamic library, amzi.dll</LI>
+  <LI>As a Unix library, libamzi.so.</LI>
+</UL>
+
+<P>Arun, in whatever form, executes .xpl Files. This section discusses how to 
+  use arun directly, and the operational parameters of the runtime system. </P>
+
+<P>Understanding its behavior is key to using the listener and compiler successfully 
+  because they are also Amzi! applications (.xpl files). </P>
+
+<P>(The source code for arun is included in the 'source' subdirectory.
+It is a relatively simple example of a C program with an embedded Prolog
+engine. It determines the name of a Prolog program to run, and fires up
+the engine and runs it.) </P>
+
+<H2><A NAME="StartingarunfromtheCommandLine"></A><FONT COLOR="#0000FF">Running
+arun from the Command-Line</FONT></H2>
+
+<P><!AMZI_INDEX = arun; Command-Line>Arun can be used in two ways. You can run 
+  it directly and specify the name of the .xpl file to execute as a parameter: 
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">c&gt;  arun wgene</FONT></PRE>
+</UL>
+
+<P>You can also copy arun to the same name as your application. In this
+case the .xpl file with the same name as the .exe will be executed: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">c&gt;  copy arun.exe wgene.exe
+c&gt;  wgene</FONT></PRE>
+</UL>
+
+<H2><A NAME="ConfigurationFiles"></A><FONT COLOR="#0000FF">Configuration Files</FONT></H2>
+
+<P><!AMZI_INDEX = Configuration Files; cfg Files>Configuration files (.cfg) give 
+  you the ability to customize your working environment on an application-by-application 
+  basis, most notably in deciding which runtime to use and what stacks to set. 
+  The .cfg files give you three layers of defaults. </P>
+
+<OL>
+<LI>The system as shipped has default values for stacks and the like that
+it uses if no .cfg files are found. </LI>
+
+<LI>The system looks first for a file called amzi.cfg. This is your tool
+for overriding the built-in system defaults. </LI>
+
+<LI>When an application runs, it first looks for a .cfg file with the same
+name as the application (.xpl file). If one exists, it is used to override
+the system defaults, either as set by you or built into the system. </LI>
+</OL>
+
+<P>A .cfg file is composed of lines of the form </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">parameter = value</FONT></PRE>
+</UL>
+
+<P>Comment lines begin with either &quot;%&quot; or &quot;;&quot;. </P>
+
+<P>Configuration&nbsp;parameters can also be set from a host language program 
+  via arguments, rather than through a .cfg file. To do this, use the entry point 
+  lsInit2() rather than lsInit(), with the argument being the parameters in character 
+  string format.</P>
+
+<H3><A NAME="CFGParameters"></A><FONT COLOR="#000080">Configuration Parameters</FONT></H3>
+
+<P><!AMZI_INDEX = cfg Files; heap; local; control; trail; heapbumper; readbuffer;
+readdepth; maxvars; maxclauses; destbuf; srcbuf; maxatoms; maxmem;
+thingblksz; verbose; logfile; errfile; lsxload; apitrace; string>These
+parameters affect the various control stacks used during Prolog program
+execution. </P>
+
+<MENU>
+<LI><B>heap -- </B>The number of cells (4-bytes each) in the Prolog heap
+stack. </LI>
+
+<LI><B>local</B> <B>-- </B>The number of cells in the local stack. </LI>
+
+<LI><B>control</B> <B>-- </B>The number of cells in the control stack.
+</LI>
+
+<LI><B>trail</B> <B>-- </B>The number of cells in the trail stack.</LI>
+
+<LI><B>heapbumper -- </B>The percentage of the heap used as a garbage collection
+buffer.</LI>
+</MENU>
+
+<P>These parameters affect the size of Prolog terms that can be read, by
+either the listener, compiler, or any other Prolog program. </P>
+
+<MENU>
+<LI><B>readbuffer</B> <B>-- </B>The maximum size in bytes of a term or
+a string. </LI>
+
+<LI><B>readdepth</B> <B>-- </B>The degree of complexity of a term. </LI>
+
+<LI><B>maxvars</B> <B>-- </B>The maximum number of variables in a term.
+</LI>
+</MENU>
+
+<P>These parameters affect the maximum number of clauses allowed in a single
+predicate for compiled Prolog. </P>
+
+<MENU>
+<LI><B>maxclauses</B> <B>-- </B>The maximum number of compiled clauses
+that can be loaded as part of one predicate. </LI>
+
+<LI><B>destbuf</B> <B>-- </B>The size of the internal buffer used to hold
+the loaded version of a compiled predicate. </LI>
+
+<LI><B>srcbuf</B> <B>-- </B>The size of the internal buffer used to hold
+the preloaded version of a compiled predicate. </LI>
+</MENU>
+
+<P>Other system paramters. </P>
+
+<MENU>
+<LI><B>maxatoms -- </B>The size of the atom table in 1K (1024 atoms) blocks;
+must be a power of 2 between 1 and 32. </LI>
+
+<LI><B>maxmem</B> <B>-- </B>If non-zero, this sets an upper bound on the
+amount of memory Prolog can allocate in 1K byte multiples. If Prolog tries
+to get more memory, it will garbage collect, hoping to free up some memory
+already allocated, and if it still can't find the memory it needs, it will
+abort. If zero, there is no limit, except available memory. </LI>
+
+<LI><B>thingblksz</B> <B>-- </B>The maximum size (in entries) of a block
+of memory that will be allocated for pointers to strings, floats, database
+objects, etc. Normally, the default should be sufficient, but if you have
+a large number of strings, you may want to increase this value to the maximum
+limit of 16,000 entries. The system will allocate up to 256 such blocks
+of thingblksz entries. </LI>
+
+<LI><B>string_esc -- </B>On or off, depending on whether or not you want
+to enable escape character processing in quoted atoms, character lists
+and strings. </LI>
+
+<LI><B>verbose</B> <B>-- </B>On or off, depending on whether or not you
+want verbose messages about garbage collection. </LI>
+
+<LI><B>logfile</B> <B>-- </B>Specifies the name of a log file and turns
+logging on. This parameter makes it possible to log a program's behavior
+without changing the program. </LI>
+
+<LI><B>lsxload</B> <B>-- </B>If you want to load .LSX files either in the
+IDE or your application, you use this parameter to list the names of the
+files to be loaded. </LI>
+
+<LI><B>apitrace</B> <B>-- </B>On or off, outputs the Logic Server API parameters
+and return values. You must specify a logfile for the trace to be written
+to.. </LI>
+</MENU>
+
+<P>If you specify apitrace in amzi.cfg, then you'll catch errors in the lsInit() 
+  call if there are any. If you specify it in <i>myprog</i>.cfg, where <i>myprog</i> 
+  is the name of your .xpl file, you'll get trace information as long as the initialization 
+  competed OK. </P>
+
+<H3><A NAME="DefaultINIValues"></A><FONT COLOR="#000080">Default .cfg Values</FONT></H3>
+
+<P><!AMZI_INDEX = cfg Files>The system defaults differ for each of the
+runtimes </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD WIDTH=115><B>Parameter</B> </TD>
+
+<TD WIDTH=72><B>Abbrev- iation</B></TD>
+
+<TD WIDTH=96><B>Default Value 32-bit</B></TD>
+
+<TD WIDTH=96><B>Default Value 64-bit</B></TD>
+</TR>
+
+<TR>
+<TD WIDTH=115><B>Stacks</B> </TD>
+
+<TD WIDTH=72></TD>
+
+<TD WIDTH=96></TD>
+
+<TD WIDTH=96></TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>heap =</TD>
+
+<TD WIDTH=72>h</TD>
+
+<TD WIDTH=96>100,000 </TD>
+
+<TD WIDTH=96>100,000</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>control =</TD>
+
+<TD WIDTH=72>c</TD>
+
+<TD WIDTH=96>20,000 </TD>
+
+<TD WIDTH=96>20,000</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>local =</TD>
+
+<TD WIDTH=72>l</TD>
+
+<TD WIDTH=96>20,000 </TD>
+
+<TD WIDTH=96>20,000</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>trail =</TD>
+
+<TD WIDTH=72>t</TD>
+
+<TD WIDTH=96>10,000 </TD>
+
+<TD WIDTH=96>10,000</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>heapbumper =</TD>
+
+<TD WIDTH=72>hb</TD>
+
+<TD WIDTH=96>10</TD>
+
+<TD WIDTH=96>10</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115><B>Term Size</B></TD>
+
+<TD WIDTH=72></TD>
+
+<TD WIDTH=96></TD>
+
+<TD WIDTH=96></TD>
+</TR>
+
+<TR>
+<TD>readbuffer = </TD>
+
+<TD>rb</TD>
+
+<TD>4,096</TD>
+
+<TD>4,096</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>readdepth = </TD>
+
+<TD WIDTH=72>rd</TD>
+
+<TD WIDTH=96>256 </TD>
+
+<TD WIDTH=96>256</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>maxclauses = </TD>
+
+<TD WIDTH=72>mc</TD>
+
+<TD WIDTH=96>500 </TD>
+
+<TD WIDTH=96>500</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>maxvars =</TD>
+
+<TD WIDTH=72>mv</TD>
+
+<TD WIDTH=96>256</TD>
+
+<TD WIDTH=96>256</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115><B>Load Limits</B> </TD>
+
+<TD WIDTH=72></TD>
+
+<TD WIDTH=96></TD>
+
+<TD WIDTH=96></TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>destbuf=</TD>
+
+<TD WIDTH=72>db</TD>
+
+<TD WIDTH=96>60,000 </TD>
+
+<TD WIDTH=96>60,000</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>srcbuf=</TD>
+
+<TD WIDTH=72>sb</TD>
+
+<TD WIDTH=96>30,000 </TD>
+
+<TD WIDTH=96>30,000</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115><B>System Limits</B> </TD>
+
+<TD WIDTH=72></TD>
+
+<TD WIDTH=96></TD>
+
+<TD WIDTH=96></TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>maxatoms = </TD>
+
+<TD WIDTH=72>ma</TD>
+
+<TD WIDTH=96>4</TD>
+
+<TD WIDTH=96>8</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>maxmem =</TD>
+
+<TD WIDTH=72>mm</TD>
+
+<TD WIDTH=96>0</TD>
+
+<TD WIDTH=96>0 </TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>thingblksz = </TD>
+
+<TD WIDTH=72>tb</TD>
+
+<TD WIDTH=96>16,000</TD>
+
+<TD WIDTH=96>16,000</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115><B>Modes</B></TD>
+
+<TD WIDTH=72></TD>
+
+<TD WIDTH=96></TD>
+
+<TD WIDTH=96></TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>string_esc = </TD>
+
+<TD WIDTH=72>se</TD>
+
+<TD WIDTH=96>on</TD>
+
+<TD WIDTH=96>on</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115><B>Miscellaneous</B> </TD>
+
+<TD WIDTH=72></TD>
+
+<TD WIDTH=96></TD>
+
+<TD WIDTH=96></TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>logfile =</TD>
+
+<TD WIDTH=72>lf</TD>
+
+<TD WIDTH=96>null </TD>
+
+<TD WIDTH=96>null</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>apitrace = </TD>
+
+<TD WIDTH=72>at</TD>
+
+<TD WIDTH=96>off </TD>
+
+<TD WIDTH=96>off</TD>
+</TR>
+
+<TR>
+<TD WIDTH=115>lsxload=</TD>
+
+<TD WIDTH=72>ll</TD>
+
+<TD WIDTH=96>null </TD>
+
+<TD WIDTH=96>null</TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="Modes"></A><FONT COLOR="#0000FF">Modes</FONT></H2>
+
+<P><!AMZI_INDEX = Modes; set_mode; get_mode>A <I>mode</I> in Amzi! Prolog
+is a software switch whose setting influences the way a Prolog program
+will respond to conditions which arise during its execution. Modes are
+either <I>on</I> or <I>off</I>. Conditions which are handled include: </P>
+
+<UL>
+<LI>Error handling </LI>
+
+<LI>Garbage collection </LI>
+
+<LI>Lint checking </LI>
+
+<LI>Compiled predicate protection </LI>
+
+<LI>Escape character processing </LI>
+</UL>
+
+<P>Amzi! Prolog supports a number of modes which can be turned on or off.
+The behavior of Prolog is modified according to which modes are on or off.
+To turn a mode on: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">set_mode(Mode, on | off)</FONT></PRE>
+</UL>
+
+<P>To check the status of a mode: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">get_mode(Mode, Var)</FONT></PRE>
+</UL>
+
+<P>The modes supported by Prolog are as follows: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD WIDTH=96><B>Mode</B> </TD>
+
+<TD WIDTH=240><B>Function</B></TD>
+
+<TD WIDTH=67><B>Default </B></TD>
+</TR>
+
+<TR>
+<TD WIDTH=96>fatal_errors </TD>
+
+<TD WIDTH=240>selects reset or abort</TD>
+
+<TD WIDTH=67>off </TD>
+</TR>
+
+<TR>
+<TD WIDTH=96>file_errors </TD>
+
+<TD WIDTH=240>selects fail or error handler</TD>
+
+<TD WIDTH=67>on </TD>
+</TR>
+
+<TR>
+<TD WIDTH=96>protect_db</TD>
+
+<TD WIDTH=240>protects compiled clauses</TD>
+
+<TD WIDTH=67>off</TD>
+</TR>
+
+<TR>
+<TD WIDTH=96>string_esc</TD>
+
+<TD WIDTH=240>escape character processing</TD>
+
+<TD WIDTH=67>on </TD>
+</TR>
+
+<TR>
+<TD WIDTH=96>verbose</TD>
+
+<TD WIDTH=240>monitor garbage collection</TD>
+
+<TD WIDTH=67>off </TD>
+</TR>
+</TABLE>
+
+<H3><A NAME="fatalerrors"></A><FONT COLOR="#000080">fatal_errors</FONT></H3>
+
+<DL>
+<DT><!AMZI_INDEX = fatal_errors>On</DT>
+
+<DD>If a hard error occurs then the Prolog will be exited after a message
+is displayed. </DD>
+
+<DT>Off </DT>
+
+<DD>If a hard error occurs then the error message is displayed and, the
+system waits until you press the [Esc] key, and then a reset takes place.
+</DD>
+</DL>
+
+<H3><A NAME="fileerrors"></A><FONT COLOR="#000080">file_errors</FONT></H3>
+
+<DL>
+<DT><!AMZI_INDEX = file_errors>On </DT>
+
+<DD>An error manipulating a file (<B>fopen</B>, <B>fclose</B> etc.) will
+cause the error to be raised and trapped by the handler. </DD>
+
+<DT>Off </DT>
+
+<DD>An error manipulating a file will simply cause the predicate to fail.
+</DD>
+</DL>
+
+<P>A useful application can be found in the following example (remember
+X -&gt; Y ; Z means if X then Y else Z). </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">file_exists(F) :- 
+  fileerrors(X),              % get old file error mode
+  nofileerrors,               % file errors fail
+  (see(F) -&gt;                  % is it there ? 
+    (seen, fileerrors(X)) ;   % yes succeed   
+    (fileerrors(X), fail)     % no - fail
+  ). 
+% in both cases restore fileerrors to original mode</FONT></PRE>
+</UL>
+
+<P>Note that if file_errors were on when <B>see</B>(F) was invoked then
+absence of file F would cause an error; here it just fails. </P>
+
+<H3><A NAME="protectdb"></A><FONT COLOR="#000080">protect_db</FONT></H3>
+
+<DL>
+<DT><!AMZI_INDEX = protect_db>On </DT>
+
+<DD>If <B>protect_db</B> mode is active when compiled code is loaded then
+all the predicates in the compiled file will be protected. This means that
+they cannot be modified or abolished. Any attempt to modify protected compiled
+clauses will result in an error being raised. </DD>
+
+<DT>Off </DT>
+
+<DD>Compiled clauses are not protected when loaded. </DD>
+</DL>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>All the predicates
+in the standard library are always protected, to prevent you from accidentally
+redefining a standard predicate.</I> </P>
+
+<H3><A NAME="stringesc"></A><FONT COLOR="#000080">string_esc</FONT></H3>
+
+<DL>
+<DT><!AMZI_INDEX = arun; string>On</DT>
+
+<DD>Enables the processing of escape characters (those following a backslash)
+in quoted atoms, character lists and strings. </DD>
+
+<DT>Off</DT>
+
+<DD>Disables escape character processing. </DD>
+</DL>
+
+<H3><A NAME="verbose"></A><FONT COLOR="#000080">verbose</FONT></H3>
+
+<DL>
+<DT><!AMZI_INDEX = Garbage Collection; verbose; arun>On</DT>
+
+<DD>Turns the 25th line of the screen into a transient window which will
+pop up during garbage collection, indicate how much space was collected
+and then vanish. </DD>
+
+<DT>Off</DT>
+
+<DD>Garbage collections occur quietly. </DD>
+</DL>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P><I></I> </P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,301 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Manipulating Terms</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><A NAME="ManipulatingTerms"></A><FONT COLOR="#D2AA00">Manipulating Terms</FONT></h1>
+
+<P><!AMZI_INDEX= Manipulating Terms>This section includes predicates for
+identifying, comparing and manipulating terms. The general categories are:
+</P>
+
+<MENU>
+<LI><A HREF="#Term Classification">Term Classification</A> </LI>
+
+<LI><A HREF="#Comparison of Terms">Comparison of Terms</A> </LI>
+
+<LI><A HREF="#Equality of Terms">Equality of Terms</A> </LI>
+
+<LI><A HREF="#Dissecting Terms">Dissecting Terms</A> </LI>
+</MENU>
+
+<H2><A NAME="Term Classification"></A><FONT COLOR="#0000FF">Term Classification</FONT></H2>
+
+<P><!AMZI_INDEX= Term Classification>The following predicates may be used
+to classify terms in Prolog: </P>
+
+<H3><A NAME="atomX"></A><FONT COLOR="#000080">atom(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Atoms; atom><B>atom</B> succeeds if X is currently
+instantiated to an atom; else it fails. </P>
+
+<H3><A NAME="atomicX"></A><FONT COLOR="#000080">atomic(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Atoms; atomic><B>atomic</B> succeeds if X is currently
+instantiated to an atom or an integer; else it fails. </P>
+
+<H3><A NAME="defined"></A><FONT COLOR="#000080">defined(ExtendedPredicate)</FONT></H3>
+
+<P><!AMZI_INDEX= Extended Predicates; defined; LSXs><B>defined </B>succeeds
+if an extended predicate is defined . This is useful for testing whether
+an LSX, for example, is available for use.</P>
+
+<H3><A NAME="floatX"></A><FONT COLOR="#000080">float(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Numbers; float><B>float</B> succeeds if X is currently
+instantiated to a float. Can also be used in arithmetic expressions to
+convert a value to a float. </P>
+
+<H3><A NAME="integerX"></A><FONT COLOR="#000080">integer(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Numbers; integer><B>integer</B> succeeds if X is
+currently instantiated to an integer. Can also be used in arithmetic expressions
+to convert a value to an integer. </P>
+
+<H3><A NAME="listX"></A><FONT COLOR="#000080">list(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Lists; list><B>list</B> succeeds if X is currently
+instantiated to a list; else it fails. If X is the empty list, [ ], <B>list</B>
+fails. </P>
+
+<H3><A NAME="islistX"></A><FONT COLOR="#000080">islist(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Lists; islist>islist succeeds if X is instantiated
+to a list OR the empty list, [].</P>
+
+<H3><A NAME="longX"></A><FONT COLOR="#000080">long(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Number; long>succeeds if X is a long integer </P>
+
+<H3><A NAME="nonvarX"></A><FONT COLOR="#000080">nonvar(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Variables; nonvar><B>nonvar</B> succeeds if X is
+not an unbound variable; else it fails. </P>
+
+<H3><A NAME="numberX"></A><FONT COLOR="#000080">number(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Numbers; number><B>number</B> succeeds if X is
+currently instantiated to an integer or float. </P>
+
+<H3><A NAME="shortX"></A><FONT COLOR="#000080">short(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Numbers; short>succeeds if X is a short integer
+</P>
+
+<H3><A NAME="stringX"></A><FONT COLOR="#000080">string(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Strings; string><B>string</B> succeeds if X is
+currently instantiated to a string; else it fails. </P>
+
+<H3><A NAME="structureX"></A><FONT COLOR="#000080">structure(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Structures; structure><B>structure</B> succeeds
+if X is currently instantiated to a structure; else it fails. </P>
+
+<H3><A NAME="varX"></A><FONT COLOR="#000080">var(X)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Variables; var><B>var</B> succeeds if X is an unbound
+variable; else it fails. </P>
+
+<H2><A NAME="Comparison of Terms"></A><FONT COLOR="#0000FF">Comparison
+of Terms</FONT></H2>
+
+<P><!AMZI_INDEX= Terms>Two terms may be compared via the standard ordering.
+</P>
+
+<H3><A NAME="XltY"></A><FONT COLOR="#000080">X @&lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Standard Order; Terms; @&lt; >X <B>@&lt;</B> Y succeeds
+if X is less than Y in the standard order </P>
+
+<H3><A NAME="XgtY"></A><FONT COLOR="#000080">X @&gt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Standard Order; Terms; @&gt;>X <B>@&gt;</B> Y succeeds
+if X is greater than Y in the standard order </P>
+
+<H3><A NAME="XlteqY"></A><FONT COLOR="#000080">X @=&lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Standard Order; Terms; @=&lt;>X <B>@=&lt;</B> Y succeeds
+if X is less or equal to Y in the standard order </P>
+
+<H3><A NAME="XgteqY"></A><FONT COLOR="#000080">X @&gt;= Y</FONT></H3>
+
+<P><!AMZI_INDEX= Standard Order; Terms; @&gt;=>X <B>@&gt;=</B> Y succeeds
+if X is greater or equal to Y in the standard order </P>
+
+<H3><A NAME="compareResultTermTerm"></A><FONT COLOR="#000080">compare(Result,
+Term1, Term2)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; compare><B>compare</B> compares terms Term1 and
+Term2 using the standard ordering. Unifies Result with ==, &lt; or &gt;
+depending on whether the terms are equal, or Term1 @&lt; Term2 or Term1
+@&gt; Term2. </P>
+
+<H2><A NAME="Equality of Terms"></A><FONT COLOR="#0000FF">Equality of Terms</FONT></H2>
+
+<P><!AMZI_INDEX= Equality of Terms>Equality is determined with the following
+predicates: </P>
+
+<H3><A NAME="XeqY"></A><FONT COLOR="#000080">X = Y</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Unification; =>X <B>=</B> Y succeeds if X can be
+unified with Y. </P>
+
+<H3><A NAME="XneqY"></A><FONT COLOR="#000080">X \= Y</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Unification; \=>X <B>\=</B> Y succeeds if X cannot
+be unified with Y. </P>
+
+<H3><A NAME="XeqeqY"></A><FONT COLOR="#000080">X == Y</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; ==>X <B>==</B> Y succeeds if X and Y are identical,
+i.e., they unify with <I>no</I> variable bindings occurring. </P>
+
+<H3><A NAME="XneqeqY"></A><FONT COLOR="#000080">X \== Y</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; \==>X <B>\==</B> Y succeeds if X and Y are not
+identical. </P>
+
+<H2><A NAME="Dissecting Terms"></A><FONT COLOR="#0000FF">Dissecting Terms</FONT></H2>
+
+<P><!AMZI_INDEX= Dissecting Terms>These predicates are useful for breaking
+apart and constructing generic terms when you don't know the specifics
+of their structure. A good example of this is a pretty printer. </P>
+
+<H3><A NAME="argNTermArgument"></A><FONT COLOR="#000080">arg(N, Term, Argument)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms;arg; Arguments>N must be instantiated to a positive
+integer less than or equal to the number of arguments in the compound term
+Term. Argument is then instantiated to the Nth argument of Term. If all
+these conditions are not met, the goal fails. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- arg(1, connect(yard, pen), X).
+X = yard</FONT></PRE>
+</UL>
+
+<H3><A NAME="functorTermFunctorN"></A><FONT COLOR="#000080">functor(Term,
+Functor, N)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; functor; Functor; Arity>There are two cases to
+consider: </P>
+
+<UL>
+<LI>Term is bound to a structure or an atom. In this case Functor must
+unify with the principal functor (name) of the structure and N with its
+arity (or 0, if Term is an atom). </LI>
+
+<LI>Term is an unbound variable. In this case Functor must be bound to
+an atom and N to a non-negative integer. Term is then unified with the
+most general term whose principal functor is Functor and whose arity is
+N (if N is greater than 0). </LI>
+</UL>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- functor(T, connect, 2), arg(1, T, yard), arg(2, T, pen).
+T = connect(yard, pen)
+?- functor(connect(yard, pen), F, A).
+F = connect
+A = 2</FONT></PRE>
+</UL>
+
+<H3><A NAME="gensymRootSym"></A><FONT COLOR="#000080">gensym(Root, Sym)</FONT></H3>
+
+<P><!AMZI_INDEX= Atoms; gensym><B>gensym/2</B> is used to create atom names
+on the fly. The names are formed by adding successive integers to the root.
+<B>gensym</B> is designed to create new symbols each time it is called;
+it fails on backtracking. For example </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- gensym(foo, X).
+X = foo1
+?- gensym(foo, X).
+X = foo2 
+?- gensym(foo, X).
+X = foo3</FONT></PRE>
+</UL>
+
+<H3><A NAME="numbervarsTermStartEnd"></A><FONT COLOR="#000080">numbervars(Term,
+Start, End)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Variables; numbervars>numbervars converts the non-anonymous
+variables into numbered atoms. Start must be instantiated to a non-negative
+integer. Any non-anonymous variables (i.e. those appearing only once) occurring
+in Term are bound to an atom of the form _I. End is instantiated to Start
+plus the number of distinct variables in Term. </P>
+
+<P>I is determined by Start and the index of the variable. </P>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- numbervars(b(X, Y), 0, E).
+X = _0
+Y = _1
+E = 2 </FONT></PRE>
+</UL>
+
+<H3><A NAME="TermListBunivB"></A><FONT COLOR="#000080">Term =.. List <B>(univ)</B></FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Lists; Structures; =..; univ>The operator &quot;=..&quot;
+is called &quot;univ.&quot; &quot;Term<B> =.. </B>List&quot; converts between
+compound terms Term and the list List. If Term is instantiated to a compound
+term, then List is unified with the <I>list</I> whose first element is
+the principal functor of Term, and whose successive elements are the arguments
+of Term. An atom is treated as a compound term of arity 0. </P>
+
+<P>If Term is a variable, List must be instantiated to a list of definite
+length whose first element is an atom. Then Term is unified with the structure
+whose principal functor is the head of List and whose arguments are the
+elements in the tail of List. </P>
+
+<P><B>univ</B> fails if the arguments do not make legal structures. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- T =.. [as_easy_as, 1, 2, 3].
+T = as_easy_as(1,2,3) 
+?- as_easy_as(1,2,3) =.. L.
+L = [as_easy_as,1,2,3]  </FONT></PRE>
+</UL>
+
+<H3><A NAME="varlistList"></A><FONT COLOR="#000080">varlist(List)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Variables; varlist><B>varlist/1</B> returns a list
+of the variable names passed to the current term. Each entry in the list
+is a list itself. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- foo(Var1, Var2) :- varlist(X), write(X).
+Term asserted
+?- foo(A, BB).
+[[65], [66, 66]]
+A = H30
+BB = H31</FONT></PRE>
+</UL>
+
+<H3><A NAME="varsofTermList"></A><FONT COLOR="#000080">varsof(Term, List)</FONT></H3>
+
+<P><!AMZI_INDEX= Terms; Variables; varsof><B>varsof/2</B> succeeds if List
+can be unified with a list of all uninstantiated (and non-anonymous) variables
+in Term. Each variable occurs only once in List even though it may have
+more than one occurrence in Term. </P>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- varsof( a(X, Y, X), L).
+X = H0
+Y = H1
+L = [H0, H1] </FONT></PRE>
+</UL>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P><I></I> </P>
+
+</BODY>
+</HTML>

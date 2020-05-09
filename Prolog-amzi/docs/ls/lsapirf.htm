@@ -1,0 +1,2874 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>LSAPI</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><a name="FunctionalList"></a><FONT COLOR="#D2AA00">Functional List of LSAPI 
+  Functions</FONT><!AMZI_INDEX= API Functions> </h1>
+<H3><A NAME="MainentrypointstosetupPrologen"></A><FONT COLOR="#000080">Main
+entry points to set up Prolog environment </FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX=Logic Server Set-Up>lsInit </LI>
+
+<LI>lsInit2</LI>
+
+<LI>lsInitLSX </LI>
+
+<LI>lsAddLSX </LI>
+
+<LI>lsAddPred </LI>
+
+<LI>lsInitPreds </LI>
+
+<LI>lsLoad </LI>
+
+<LI>lsMain </LI>
+
+<LI>lsReset </LI>
+
+<LI>lsClose </LI>
+</MENU>
+
+<H3><A NAME="Parametermanipulatingfunctions"></A><FONT COLOR="#000080">Parameter
+manipulating functions for building extended predicates </FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX=  Extended Predicates>lsGetParm </LI>
+
+<LI>lsGetParmType </LI>
+
+<LI>lsStrParmLen </LI>
+
+<LI>lsUnifyParm </LI>
+</MENU>
+
+<H3><A NAME="CallingPrologfromthehostlangua"></A><FONT COLOR="#000080">Calling
+Prolog from the host language</FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX= Calling Prolog>lsExec </LI>
+
+<LI>lsExecStr </LI>
+
+<LI>lsCall </LI>
+
+<LI>lsCallStr </LI>
+
+<LI>lsRedo </LI>
+
+<LI>lsClearCall </LI>
+</MENU>
+
+<H3><A NAME="Dynamicdatabaseassertingandret"></A><FONT COLOR="#000080">Dynamic
+database asserting and retracting</FONT><!AMZI_INDEX=  Dynamic Database></H3>
+
+<MENU>
+<LI>lsAsserta </LI>
+
+<LI>lsAssertaStr </LI>
+
+<LI>lsAssertz </LI>
+
+<LI>lsAssertzStr </LI>
+
+<LI>lsRetract </LI>
+
+<LI>lsRetractStr </LI>
+</MENU>
+
+<H3><A NAME="StringTermconversionfunctions"></A><FONT COLOR="#000080">String/Term
+conversion functions</FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX= Srings;Terms; Converting>lsTermToStr </LI>
+
+<LI>lsTermToStrQ </LI>
+
+<LI>lsStrToTerm </LI>
+</MENU>
+
+<H3><A NAME="MakingPrologtypes"></A><FONT COLOR="#000080">Making Prolog
+types</FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX= Prolog Types; Types>lsMakeAddr </LI>
+
+<LI>lsMakeAtom </LI>
+
+<LI>lsMakeFloat </LI>
+
+<LI>lsMakeInt </LI>
+
+<LI>lsMakeStr </LI>
+</MENU>
+
+<H3><A NAME="GettingCvaluesfromPrologterms"></A><FONT COLOR="#000080">Getting
+C values from Prolog terms</FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX= Types; Prolog Types; Terms; Variables>lsGetTerm </LI>
+
+<LI>lsGetTermType </LI>
+
+<LI>lsStrTermLen</LI>
+</MENU>
+
+<H3><A NAME="Structurehackingfunctions"></A><FONT COLOR="#000080">Structure
+manipulation functions</FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX=Structures>lsGetFA </LI>
+
+<LI>lsMakeFA </LI>
+
+<LI>lsUnifyArg </LI>
+
+<LI>lsGetArg </LI>
+
+<LI>lsGetArgType </LI>
+
+<LI>lsStrArgLen </LI>
+
+<LI>lsUnify </LI>
+</MENU>
+
+<H3><A NAME="Listhackingfunctions"></A><FONT COLOR="#000080">List manipulation
+functions</FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX=  Lists>lsMakeList </LI>
+
+<LI>lsPopList </LI>
+
+<LI>lsPushList </LI>
+
+<LI>lsGetHead</LI>
+
+<LI>lsGetTail</LI>
+</MENU>
+
+<H3><A NAME="StreamIOfunctions"></A><FONT COLOR="#000080">Stream I/O functions</FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX=  Stream I/O>lsSetInput </LI>
+
+<LI>lsSetOutput </LI>
+
+<LI>lsSetIOArg</LI>
+
+<LI>lsSetStream </LI>
+
+<LI>lsGetStream </LI>
+</MENU>
+
+<H3><A NAME="Miscellaneousfunctions"></A><FONT COLOR="#000080">Miscellaneous
+functions</FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX= Miscellaneous Functions>lsGetVersion </LI>
+
+<LI>lsSetCommandArgs </LI>
+</MENU>
+
+<H3><A NAME="Errorhandling"></A><FONT COLOR="#000080">Error handling</FONT></H3>
+
+<MENU>
+<LI><!AMZI_INDEX= Error Handling>lsErrRaise </LI>
+
+<LI>lsGetExceptType</LI>
+
+<LI>lsGetExceptRC</LI>
+
+<LI>lsGetExceptMsg</LI>
+
+<LI>lsGetExceptCallStack</LI>
+
+<LI>lsGetExceptReadBuffer</LI>
+
+<LI>lsGetExceptReadFileName</LI>
+
+<LI>lsGetExceptReadLineno</LI>
+</MENU>
+
+<H1><A NAME="DataTypes"></A><FONT COLOR="#D2AA00">LSAPI&nbsp;Data Types</FONT></H1>
+
+<P><!AMZI_INDEX= LSAPI Data Types>API functions that initiate Prolog execution
+or unification return TF, a Prolog true/false. Most other functions return
+RC, an error checkable function return. </P>
+
+<DL>
+<DL>
+<DT>TF </DT>
+
+<DD>can be TRUE (1), FALSE (0) or some other number which indicates a Prolog
+error. </DD>
+
+<DT>RC </DT>
+
+<DD>can be OK (0), or some other number which indicates a Prolog error.
+</DD>
+</DL>
+</DL>
+
+<P>Many API functions require you to specify the type of the Prolog term,
+pTYPE. pTYPE is an enumerated constant with these values. </P>
+
+<DL>
+<DL>
+<DT>pATOM </DT>
+
+<DD>an atom </DD>
+
+<DT>pINT </DT>
+
+<DD>an integer </DD>
+
+<DT>pSTR </DT>
+
+<DD>a string (delimited by $'s) </DD>
+
+<DT>pFLOAT </DT>
+
+<DD>a double precision floating point number </DD>
+
+<DT>pSTRUCT </DT>
+
+<DD>a structure </DD>
+
+<DT>pLIST </DT>
+
+<DD>a list </DD>
+
+<DT>pTERM </DT>
+
+<DD>a term </DD>
+
+<DT>pADDR </DT>
+
+<DD>the address of a Prolog value </DD>
+
+<DT>pVAR </DT>
+
+<DD>a Prolog variable </DD>
+
+<DT>pWSTR </DT>
+
+<DD>a Unicode string</DD>
+
+<DT>pWATOM </DT>
+
+<DD>a Unicode atom</DD>
+</DL>
+</DL>
+
+<P>Other API functions require you to specify the type of the host language
+variable, cTYPE. cTYPE is an enumerated constant with these values. </P>
+
+<DL>
+<DL>
+<DT>cAATOM </DT>
+
+<DD>an atom (used to indicate a host string will become an atom) (see cATOM
+below)</DD>
+
+<DT>cASTR </DT>
+
+<DD>an ANSI character string (see cSTR below)</DD>
+
+<DT>cINT </DT>
+
+<DD>an integer </DD>
+
+<DT>cLONG </DT>
+
+<DD>a long </DD>
+
+<DT>cSHORT </DT>
+
+<DD>a short </DD>
+
+<DT>cFLOAT </DT>
+
+<DD>a single precision floating point number </DD>
+
+<DT>cDOUBLE </DT>
+
+<DD>a double precision floating point number </DD>
+
+<DT>cADDR </DT>
+
+<DD>the address of a value </DD>
+
+<DT>cTERM </DT>
+
+<DD>a term </DD>
+
+<DT>cWSTR </DT>
+
+<DD>a Unicode string</DD>
+
+<DT>cWATOM </DT>
+
+<DD>a Unicode atom</DD>
+
+<DT>cSTR </DT>
+
+<DD>a cover type mapped to cASTR or cWSTR depending
+on whether _UNICODE is specified or not</DD>
+
+<DT>cATOM </DT>
+
+<DD>a cover type mapped to cAATOM or cWATOM depending
+on whether _UNICODE is specified or not</DD>
+
+
+</DL>
+</DL>
+
+<P>Other defined types are </P>
+
+<DL>
+<DL>
+<DT>STRptr </DT>
+
+<DD>a pointer to a string, Unicode or ASCII&nbsp;depending upon the interface</DD>
+
+<DT>VOIDptr </DT>
+
+<DD>a pointer to anything </DD>
+
+<DT>intC </DT>
+
+<DD>an integer the size of a Prolog cell (usually 32 bits) </DD>
+
+<DT>uintC </DT>
+
+<DD>an unsigned intC </DD>
+
+<DT>intCH </DT>
+
+<DD>an integer half the size of a Prolog cell (usually 16 bits) </DD>
+
+<DT>uintCH </DT>
+
+<DD>an unsigned intCH </DD>
+
+<DT>CELL </DT>
+
+<DD>a Prolog cell </DD>
+
+<DT>TERM </DT>
+
+<DD>a Prolog term (a pointer to a CELL) </DD>
+
+<DT>PATOM </DT>
+
+<DD>a Prolog atom (same as intCH) </DD>
+
+<DT>PATOMptr </DT>
+
+<DD>a pointer to PATOM </DD>
+
+<DT>ARITY </DT>
+
+<DD>a Prolog arity (uintCH) </DD>
+
+<DT>ENGid </DT>
+
+<DD>ID value for a Logic Server engine </DD>
+
+<DT>ExtPred </DT>
+
+<DD>a function pointer for an extended predicate </DD>
+</DL>
+</DL>
+
+<P>A few API functions manipulate Prolog I/O streams. They use the enumerated
+constant STREAM to identify the streams. Values of STREAM are </P>
+
+<DL>
+<DL>
+<DT>CUR_IN </DT>
+
+<DT>CUR_OUT </DT>
+
+<DT>CUR_ERR </DT>
+
+<DT>USER_IN </DT>
+
+<DT>USER_OUT </DT>
+
+<DT>USER_ERR </DT>
+</DL>
+</DL>
+
+<P>The exectipn types, ExType, are:</P>
+
+<UL>
+<DT>BADENG</DT>
+
+<DT>ABORT</DT>
+
+<DT>INTERNAL</DT>
+
+<DT>FATAL</DT>
+
+<DT>INIT</DT>
+
+<DT>API</DT>
+
+<DT>LOAD</DT>
+
+<DT>EXEC</DT>
+
+<DT>READ</DT>
+
+<DT>UNKNOWN</DT>
+</UL>
+
+<P>See amzi.h for the exact implementations of all data types. </P>
+
+<H1><A NAME="LSAPIFunctionDescriptions"></A><FONT COLOR="#D2AA00">LSAPI
+Function Descriptions</FONT><!AMZI_INDEX= API Functions; LSAPI Function Descriptions></H1>
+
+<H2><A NAME="lsAddLSX"></A><FONT COLOR="#0000FF">lsAddLSX</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsAddLSX; LSXs><B>Description:</B> </P>
+
+<DL>
+<P>void AddLSX(STRptr lsxname, VOIDptr vp);<BR>
+RC lsAddLSX(ENGid cureng, STRptr lsxname, VOIDptr vp);</P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>lsxname </DT>
+
+<DD>Name of the LSX file to load </DD>
+
+<DT>vp </DT>
+
+<DD>Pointer, can be used to identify calling application. </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Causes the Logic Server to load the specified LSX file. Like other API
+functions that initialize extended predicates, lsAddLSX() must come after
+a call to lsInit() and before a call to lsLoad(). </P>
+
+<P>See <A HREF="lsprguid.htm#ExtendedPredicateLibraries">Extended Predicate
+Libraries (LSXs)</A> and <A HREF="lsprguid.htm#WritingExtendedPredicates">Writing
+Extended Predicates</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if everything worked </P>
+
+<P><B>Example:</B></P>
+
+<UL>
+<PRE><FONT COLOR="#000080">try
+{
+   Init(&quot;dbgene&quot;);
+   AddLSX(&quot;ls4odbc&quot;, NULL);  // Load the LSX file
+   Load(&quot;dbgene&quot;);
+}
+catch(CLSException &amp;E) { PrologError(E); }</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsAddPred"></A><FONT COLOR="#0000FF">lsAddPred</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsAddPred; Extended Predicates><B>Description:</B>
+</P>
+
+<DL>
+<P>void AddPred(STRptr functor, ARITY arity, ExtPred fp, VOIDptr vp);<BR>
+RC lsAddPred(ENGid cureng, STRptr functor, ARITY arity, ExtPred fp, VOIDptr
+vp) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>functor </DT>
+
+<DD>Functor of the extended predicate </DD>
+
+<DT>arity </DT>
+
+<DD>Arity of the extended predicate </DD>
+
+<DT>fp </DT>
+
+<DD>Function pointer to host language implementation </DD>
+
+<DT>vp</DT>
+
+<DD>Pointer to anything to be passed to the extended predicate</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Adds the predicate functor/arity to the extended predicate table, mapping
+it to the function pointed to by fp. Like lsInitPreds(), lsAddPred() must
+be called between the calls to lsInit() and lsLoad(). </P>
+
+<P>The fourth argument is used in the callback. This argument is passed
+as the first argument to the extended predicate. This feature allows you
+to implement call backs to member functions of class. The extended predicate
+becomes a dispatch function, that uses the argument as a pointer to an
+object that is used to implement the extended predicate. See the C++ PetsCB
+and Rubik's cube samples for an example of this technique.</P>
+
+<P>NOTE that when lsInitPreds is called, this fourth argument is automatically
+generated to be the engine ID, so call back functions get the engine ID
+passed as a parameter.</P>
+
+<P>See <A HREF="lsprguid.htm#ExtendedPredicateLibraries">Extended Predicate
+Libraries (LSXs)</A> and <A HREF="lsprguid.htm#WritingExtendedPredicates">Writing
+Extended Predicates</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns OK if it worked. </P>
+
+<P><B>Example:</B> </P>
+
+<P>This code adds an extended predicate called msgbox that takes one argument.
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">TF p_msgbox(){...}
+...
+rc = lsInit...
+rc = lsAddPred(eid, &quot;msgbox&quot;, 1, p_msgbox);
+rc = lsLoad...</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsAsserta"></A><FONT COLOR="#0000FF">lsAsserta</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsAsserta><B>Description:</B> </P>
+
+<DL>
+<P>void Asserta(TERM term);<BR>
+RC lsAsserta(ENGid cureng, TERM term); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term to be asserted </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Asserts the term to the dynamic database as the first clause under the
+key which is the term's functor. Same as Prolog asserta/1 and assert/1.
+</P>
+
+<P>See <A HREF="lsprguid.htm#AssertingAndRetracting">Asserting and Retracting
+to and from the Prolog Database</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns OK if it worked, NOTOK if some indeterminate error happened,
+and an atom (small positive integer) if the term redefined a protected
+predicate. </P>
+
+<H2><A NAME="lsAssertaStr"></A><FONT COLOR="#0000FF">lsAssertaStr</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsAssertaStr><B>Description:</B> </P>
+
+<DL>
+<P>void AssertaStr(STRptr str);<BR>
+RC lsAssertaStr(ENGid cureng, STRptr str); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>str </DT>
+
+<DD>String representation of term to be asserted </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>A convenient form of lsAsserta() that uses a string instead of a term.
+Asserts the term to the dynamic database as the first clause under the
+key which is the term's functor. Same as Prolog asserta/1 and assert/1.
+</P>
+
+<P>See <A HREF="lsprguid.htm#AssertingAndRetracting">Asserting and Retracting
+to and from the Prolog Database</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns OK if it worked, NOTOK if some indeterminate error happened,
+and an atom (small positive integer) if the term redefined a protected
+predicate. </P>
+
+<P><B>Example:</B></P>
+
+<UL>
+<PRE><FONT COLOR="#000080">/* Assert the name of the .xpl file (used to load the logic-base) */
+strcpy(strbuf, &quot;system('XPL File', '&quot;);
+strcat(strbuf, xplname);
+strcat(strbuf, &quot;')&quot;);
+
+rc = lsAssertaStr(CurEng, strbuf);</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsAssertz"></A><FONT COLOR="#0000FF">lsAssertz</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsAssertz><B>Description:</B> </P>
+
+<DL>
+<P>void Assertz(TERM&nbsp;term);<BR>
+RC lsAssertz(ENGid cureng, TERM term); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term to be asserted </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Asserts the term to the dynamic database as the last clause under the
+key which is the term's functor. Same as Prolog assertz/1. </P>
+
+<P>See <A HREF="lsprguid.htm#AssertingAndRetracting">Asserting and Retracting
+to and from the Prolog Database</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns OK if it worked, NOTOK if some indeterminate error happened,
+and an atom (small positive integer) if the term redefined a protected
+predicate. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">/* Assert facts to the Prolog dynamic database */
+/* Read them from the test file for now */
+   fp = fopen(sTestFile, &quot;r&quot;);
+   for (i=0; i&lt;16; i++)
+   {
+      fgets(buf, 80, fp);
+      lsStrToTerm(CurEng, &amp;t, buf);
+      lsAssertz(CurEng, t);
+   }</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsAssertzStr"></A><FONT COLOR="#0000FF">lsAssertzStr</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsAssertzStr><B>Description:</B> </P>
+
+<DL>
+<P>void AssertzStr(STRptr str);<BR>
+RC lsAssertzStr(ENGid cureng, STRptr str); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>str </DT>
+
+<DD>String representation of term to be asserted </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>A convenient form of lsAssertz() that uses a string instead of a term.
+Asserts the term to the dynamic database as the last clause under the key
+which is the term's functor. Same as Prolog assertz/1. </P>
+
+<P>See <A HREF="lsprguid.htm#AssertingAndRetracting">Asserting and Retracting
+to and from the Prolog Database</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns OK if it worked, NOTOK if some indeterminate error happened,
+and an atom (small positive integer) if the term redefined a protected
+predicate. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">/* Assert facts to the Prolog dynamic database */
+/* Read them from the test file for now */
+   fp = fopen(sTestFile, &quot;r&quot;);
+   for (i=0; i&lt;16; i++)
+   {
+      fgets(buf, 80, fp);
+      lsAssertzStr(CurEng, buf);
+   }</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsCall"></A><FONT COLOR="#0000FF">lsCall</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsCall><B>Description:</B> </P>
+
+<DL>
+<P>TF&nbsp;Call(TERMptr termp);<BR>
+TF lsCall(ENGid cureng, TERMptr termp); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to term to be called </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Once a term has been created it can be passed to the Amzi! interpreter
+with lsCall(). This is equivalent to the Prolog statement call(X) where
+X is a Prolog term. </P>
+
+<P>See <A HREF="lsprguid.htm#CallingTerms">Calling Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns TRUE/FALSE </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">ENGid cureng;
+TERM t;
+TF tf;
+
+lsStrToTerm(cureng, &amp;t, &quot;parent(elaine,mary)&quot;);
+tf = lsCall(cureng, &amp;t);
+if (tf) printf(&quot;Elaine is Mary's parent&quot;);
+else printf(&quot;Elaine is not Mary's parent&quot;);</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsCallStr"></A><FONT COLOR="#0000FF">lsCallStr</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsCallStr><B>Description:</B> </P>
+
+<DL>
+<P>TF&nbsp;CallStr(TERMptr termp, STRptr str);<BR>
+TF lsCallStr(ENGid cureng, TERMptr termp, STRptr str); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Returns the term corresponding to string </DD>
+
+<DT>str </DT>
+
+<DD>The string representation of a term to call </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>lsCallStr() is a more convenient form of lsCall() that lets you use
+the string representation of a Prolog term or query. </P>
+
+<P>See <A HREF="lsprguid.htm#StringPassingInterface">String Passing Interface</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns TRUE/FALSE </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">ENGid cureng;
+TERM t;
+TF tf;
+tf = lsCallStr(cureng, &amp;t, &quot;parent(elaine,mary)&quot;);
+if (tf) printf(&quot;Elaine is Mary's parent&quot;);
+else printf(&quot;Elaine is not Mary's parent&quot;);</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsClearCall"></A><FONT COLOR="#0000FF">lsClearCall</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsClearCall><B>Description:</B> </P>
+
+<DL>
+<P>RC ClearCall();<BR>
+RC lsClearCall(ENGid cureng) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine indentifier </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>A call to lsCall() or lsCallStr() causes the Prolog engine to build
+a backtracking choice point on the Prolog control stack. Successive calls
+to lsRedo() will cause the choice point to be removed when there are no
+more choices. </P>
+
+<P>If you do not exhaust all the choices with lsRedo() calls, then a call
+to lsClearCall() can be made to remove the choice point from the stack.
+It is not in general necessary, but is good form and might be required
+if the lsCall() is in a tight loop, thus using up the control stack. </P>
+
+<P>lsCall() and lsCallStr() should not be used when the call is intended
+to be executed only once. For those situations lsExec() and lsExecStr()
+should be used, which do not add a choice point to the Prolog control stack.
+</P>
+
+<P>See <A HREF="lsprguid.htm#ScopeOfLogicServerTerms">Scope of Logic Server
+Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK </P>
+
+<H2><A NAME="lsClose"></A><FONT COLOR="#0000FF">lsClose</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsClose><B>Description:</B> </P>
+
+<DL>
+<P>void Close();<BR>
+RC lsClose(ENGid cureng); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Closes down the Prolog environment, closing Prolog streams and freeing
+all memory allocated by Prolog. </P>
+
+<P>See <A HREF="lsprguid.htm#MainEntryPoints">Main Entry Points</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsClose(cureng);</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsErrRaise"></A><FONT COLOR="#0000FF">lsErrRaise</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsErrRaise><B>Description:</B> </P>
+
+<DL>
+<P>void ErrRaise(STRptr msg);<BR>
+RC lsErrRaise(ENGid cureng, STRptr msg) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>msg </DT>
+
+<DD>The string to use in the error message </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Causes an Exec type Prolog error to be raised with the specified error
+message. </P>
+
+<P>See <A HREF="lsprguid.htm#ErrorHandling">Error Handling</A></P>
+
+<H2><A NAME="lsExec"></A><FONT COLOR="#0000FF">lsExec</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsExec><B>Description:</B> </P>
+
+<DL>
+<P>TF&nbsp;Exec(TERMptr termp);<BR>
+TF lsExec(ENGid cureng, TERMptr termp); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Term to execute </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>lsExec() and lsExecStr() are similar to lsCall() and lsCallStr(). The
+only difference is the Exec functions are intended to be called only once
+and not backtracked into. That is, you cannot call lsRedo() after lsExec(),
+but you can after lsCall(). </P>
+
+<P>The advantage of lsExec() calls over lsCall() calls is they do not add
+anything to the Prolog execution stack, so they can be called with no overhead.
+The disadvantage, of course, is you can't backtrack through them. </P>
+
+<P>See <A HREF="lsprguid.htm#CallingTerms">Calling Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns TRUE/FALSE </P>
+
+<H2><A NAME="lsExecStr"></A><FONT COLOR="#0000FF">lsExecStr</FONT></H2>
+
+<P><!AMZI_INDEX=LSAPI; lsExecStr><B>Description:</B> </P>
+
+<DL>
+<P>TF&nbsp;ExecStr(TERMptr termp, STRptr str);<BR>
+TF lsExecStr(ENGid cureng, TERMptr termp, STRptr str); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Returns the term corresponding to string </DD>
+
+<DT>str </DT>
+
+<DD>The string representation of a term to call </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>lsExecStr() is a more convenient form of lsExec() that lets you use
+the string representation of a Prolog term or query. </P>
+
+<P>See <A HREF="lsprguid.htm#StringPassingInterface">String Passing Interface</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns TRUE/FALSE </P>
+
+<P><B>Example:</B></P>
+
+<UL>
+<PRE><FONT COLOR="#000080">if ( TRUE == (tf = lsExecStr(e2, &amp;t, &quot;pet(X)&quot;)) )
+{
+   lsGetArg(e2, t, 1, cSTR, buf);
+   printf(&quot;Engine two's pet is a %s\n&quot;, buf);
+}</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsGetArg"></A><FONT COLOR="#0000FF">lsGetArg</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetArg><B>Description:</B> </P>
+
+<DL>
+<P>void GetArg(TERM term, int iarg, cTYPE ctype, VOIDptr valp);<BR>
+RC lsGetArg(ENGid cureng, TERM term, int iarg, cTYPE ctype, VOIDptr valp);
+</P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>The term whose argument is being retrieved </DD>
+
+<DT>iarg </DT>
+
+<DD>The argument number, starting at 1 </DD>
+
+<DT>ctype </DT>
+
+<DD>The type of variable being set </DD>
+
+<DT>valp </DT>
+
+<DD>Pointer to where to put the value </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Used to extract arguments from complex structures. </P>
+
+<P>Visual Basic Note: When retrieving strings from VB, you must specify
+'ByVal' for the VOIDptr val argument. </P>
+
+<P>See <A HREF="lsprguid.htm#MappingPrologArgumentsToHostVariables">Mapping
+Prolog Arguments to Host Variables</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked, NOTOK if it didn't. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">tf = lsCall(CurEng, &amp;t);
+while(tf)
+{
+   lsGetFA(CurEng, t, sRelation, &amp;arity);
+   lsGetArg(CurEng, t, 1, cSTR, sSib1);
+   lsGetArg(CurEng, t, 2, cSTR, sSib2);
+   printf(&quot;%s is %s of %s\n&quot;, sSib1, sRelation, sSib2);
+   tf = lsRedo(CurEng);
+}</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsGetArgType"></A><FONT COLOR="#0000FF">lsGetArgType</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetArgType><B>Description:</B> </P>
+
+<DL>
+<P>pTYPE GetArgType(TERM term, int iarg);<BR>
+pTYPE lsGetArgType(ENGid cureng, TERM term, int iarg); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term to examine </DD>
+
+<DT>iarg </DT>
+
+<DD>Which argument of the term to test </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Gets the type of the iargth argument of term, assuming term is a structure.
+</P>
+
+<P>See <A HREF="lsprguid.htm#MappingPrologArgumentsToHostVariables">Mapping
+Prolog Arguments to Host Variables</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>pTYPE, see the Data Types section for possible values. </P>
+
+<H2><A NAME="lsGetExceptCallStack"></A><FONT COLOR="#0000FF">lsGetExceptCallStack</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetExceptCallStack><B>Description:</B> </P>
+
+<DL>
+<P>void CLSException::GetCallStack(STRptr str, int len);<BR>
+RC lsGetExceptCallStack(ENGid cureng, STRptr str, int len) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>str </DT>
+
+<DD>String buffer big enough to hold the call stack</DD>
+
+<DT>len</DT>
+
+<DD>Length of str</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Gets the call stack when the current exception occurred.</P>
+
+<P>See <A HREF="lsprguid.htm#ErrorHandling">Error Handling</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK </P>
+
+<H2><A NAME="lsGetExceptMsg"></A><FONT COLOR="#0000FF">lsGetExceptMsg</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetExceptMsg><B>Description:</B> </P>
+
+<DL>
+<P>void CLSException::GetMsg(STRptr str, int len);<BR>
+RC lsGetExceptMsg(ENGid cureng, STRptr str, int len);</P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>str </DT>
+
+<DD>String buffer to hold error message </DD>
+
+<DT>len</DT>
+
+<DD>Length of str</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Gets the message for the current error. </P>
+
+<P>See <A HREF="lsprguid.htm#ErrorHandling">Error Handling</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK </P>
+
+<P><B>Example:</B></P>
+
+<PRE><FONT COLOR="#000080">rc = lsLoad(CurEng, xplname);
+if (rc != 0)
+{
+   lsGetExceptMsg(CurEng, errmsg, 1024);
+   printf(&quot;Fatal Error #%d loading Amzi! Logic Server .xpl file:\n%s&quot;, rc, errmsg);
+}</FONT>
+</PRE>
+
+<H2><A NAME="lsGetExceptReadBuffer"></A><FONT COLOR="#0000FF">lsGetExceptReadBuffer</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetExceptReadBuffer><B>Description:</B> </P>
+
+<DL>
+<P>void CLSException::GetReadBuffer(STRptr str, int len);<BR>
+RC lsGetExceptReadBuffer(ENGid cureng, STRptr str, int len) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>str </DT>
+
+<DD>String buffer big enough to hold the current read buffer </DD>
+
+<DT>len</DT>
+
+<DD>Length of str</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Gets the current read buffer which includes the words &quot;&lt;-Near
+Here-&gt;&quot; to indicate the location of the read error, or at least
+where the Prolog reader realized it was in trouble. </P>
+
+<P>See <A HREF="lsprguid.htm#ErrorHandling">Error Handling</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK </P>
+
+<H2><A NAME="lsGetExceptReadFileName"></A><FONT COLOR="#0000FF">lsGetExceptReadFileName</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetExceptReadFileName><B>Description:</B> </P>
+
+<DL>
+<P>void CLSException::GetReadFileName(STRptr str, int len);<BR>
+RC lsGetExceptReadBuffer(ENGid cureng, STRptr str, int len) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>str </DT>
+
+<DD>String buffer big enough to hold a file name and path </DD>
+
+<DT>len</DT>
+
+<DD>Length of str</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Gets the name of the file, if any, that was open when a read error occurred.
+The name is an empty string if the read error occurred during string I/O
+or console I/O.</P>
+
+<P>See <A HREF="lsprguid.htm#ErrorHandling">Error Handling</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK </P>
+
+<H2><A NAME="lsGetExceptReadLineno"></A><FONT COLOR="#0000FF">lsGetExceptReadLineno</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetExceptReadLineno><B>Description:</B> </P>
+
+<DL>
+<P>int CLSException::GetReadLineno();<BR>
+int lsGetExceptReadLineno(ENGid cureng) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>If the read error occurred during file I/O, this function returns a
+line number in the file close to where the error occurred.</P>
+
+<P>See <A HREF="lsprguid.htm#ErrorHandling">Error Handling</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK </P>
+
+<H2><A NAME="lsGetExceptType"></A><FONT COLOR="#0000FF">lsGetExceptType</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetExceptType><B>Description:</B> </P>
+
+<DL>
+<P>ExType CLSException::GetType();<BR>
+ExType lsGetExceptType(ENGid cureng) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Returns the type of the current exception. See the section on Data Types
+for the values of ExType. </P>
+
+<P>See <A HREF="lsprguid.htm#ErrorHandling">Error Handling</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>The exception type.</P>
+
+<H2><A NAME="lsGetExceptRC"></A><FONT COLOR="#0000FF">lsGetExceptRC</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetExceptRC><B>Description:</B> </P>
+
+<DL>
+<P>RC CLSException::GetRC();<BR>
+RC lsGetExceptRC(ENGid cureng) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Returns the return code of the current exception. </P>
+
+<P>See <A HREF="lsprguid.htm#ErrorHandling">Error Handling</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>The return code</P>
+
+<H2><A NAME="lsGetFA"></A><FONT COLOR="#0000FF">lsGetFA</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetFA><B>Description:</B> </P>
+
+<DL>
+<P>void GetFA(TERM term, STRptr functor, ARITYptr, arityp);<BR>
+RC lsGetFA(ENGid cureng, TERM term, STRptr functor, ARITYptr arityp); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term to be dissected </DD>
+
+<DT>functor</DT>
+
+<DD>String which will contain the functor </DD>
+
+<DT>arityp </DT>
+
+<DD>Pointer to an integer of type ARITY that will have the arity </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>This function lets you determine the functor and arity of a term. If
+the term is an atom, then the arity will be 0. If the term is a list then
+the functor will be &quot;.&quot; and the arity 2. </P>
+
+<P>See <A HREF="lsprguid.htm#ManipulatingStructures">Manipulating Structures</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns OK for the three types of terms described above, returns NOTOK
+if the term is not a legal atom, structure or list. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">ENGid cureng;
+TERM  t;
+char  sBuf[80];
+ARITY ar;
+...
+lsMakeTerm(cureng, &amp;t, &quot;parent(elaine,mary)&quot;);
+...
+lsGetFA(cureng, t, sBuf, ar);
+printf(&quot;Term was %s/%i&quot;, sBuf, ar);
+...
+/* code fragment prints:  Term was parent/2 */</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsGetHead"></A><FONT COLOR="#0000FF">lsGetHead</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetHead><B>Description:</B> </P>
+
+<DL>
+<P>void GetHead(TERM term, cTYPE ctype, VOIDptr valp);<BR>
+RC lsGetHead(ENGid cureng, TERM term, cTYPE ctype, VOIDptr valp) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term</DT>
+
+<DD>Term representing a list </DD>
+
+<DT>ctype </DT>
+
+<DD>Type of variable to be filled </DD>
+
+<DT>valp</DT>
+
+<DD>Address of the variable </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>The term representing the head of the list is stored in valp. See the
+Data Types section for legal values of cTYPE. </P>
+
+<P>See <A HREF="lsprguid.htm#ManipulatingLists">Manipulating Lists</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if everything worked, NOTOK if it failed. Note that it will fail
+if term does not represent a list or if term represents the empty list.
+</P>
+
+<H2><A NAME="lsGetParm"></A><FONT COLOR="#0000FF">lsGetParm</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetParm><B>Description:</B> </P>
+
+<DL>
+<P>void GetParm(int iparm, cTYPE ctype, VOIDptr valp);<BR>
+RC lsGetParm(ENGid cureng, int iparm, cTYPE ctype, VOIDptr valp); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>iparm </DT>
+
+<DD>Number of the parameter to get </DD>
+
+<DT>ctype </DT>
+
+<DD>C/C++ type to retrieve a value into </DD>
+
+<DT>valp </DT>
+
+<DD>Pointer to the C/C++ variable to hold the value </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>When implementing extended predicates, lsGetParm() gets the C/C++ value
+of the iparmth parameter, where 1 is the first parameter. See the Data
+Types section for legal values of cTYPE. </P>
+
+<P>See <A HREF="lsprguid.htm#WritingExtendedPredicates">Writing Extended
+Predicates</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if successful. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">/* get address of array */
+lsGetParm(CurEng, 1, cADDR, &amp;iArray);
+/* get index of element */
+lsGetParm(CurEng, 2, cINT, &amp;I);</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsGetParmType"></A><FONT COLOR="#0000FF">lsGetParmType</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetParmType><B>Description:</B> </P>
+
+<DL>
+<P>pTYPE&nbsp;GetParmType(int iparm);<BR>
+pTYPE lsGetParmType(ENGid cureng, int iparm); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>iparm </DT>
+
+<DD>Number of the parameter whose type is returned </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>When implementing extended predicates lsGetParmType() gets the parameter
+type of the iparmth parameter. </P>
+
+<P>See <A HREF="lsprguid.htm#WritingExtendedPredicates">Writing Extended
+Predicates</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>pTYPE, see the Data Types section for legal values of pTYPE. </P>
+
+<P><B>Examples:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">pt = lsGetParmType(eid, 3);      /* figure out type of third parameter */
+
+if (pt == pINT)                    /* third parameter was instantiated */
+{
+   lsGetParm(eid, 3, cINT, &amp;iElem);                   /* get its value */
+   iArray[i] = iElem;                           /* put it in the array */
+}
+else if (pt == pVAR)                 /* third parameter was a variable */
+{
+   lsMakeInt(eid, &amp;t, iArray[i]);     /* fill its value from the array */
+   lsUnifyParm(eid, 3, cTERM, &amp;t);
+}
+else
+   return FALSE;                       /* third parameter wasn't right */</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsGetStream"></A><FONT COLOR="#0000FF">lsGetStream</FONT></H2>
+
+<P><!AMZI_INDEX=LSAPI; lsGetStream><B>Description:</B> </P>
+
+<DL>
+<P>int GetStream(STREAM&nbsp;stream);<BR>
+int lsGetStream(ENGid cureng, STREAM stream); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>stream </DT>
+
+<DD>Stream identifier </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Gets the current integer handle of the stream specified by stream. See
+the section on Data Types for the legal values of STREAM. </P>
+
+<P>See <A HREF="lsprguid.htm#CapturingPrologI/O">Capturing Prolog I/O</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>The integer handle of the stream. </P>
+
+<H2><A NAME="lsGetTail"></A><FONT COLOR="#0000FF">lsGetTail</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetTail><B>Description:</B> </P>
+
+<DL>
+<P>TERM GetTail(TERM term);<BR>
+TERM lsGetTail(ENGid cureng, TERM term) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term</DT>
+
+<DD>Term representing a list </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>The term representing the tail of the list is returned. </P>
+
+<P><B>Return Value:</B> </P>
+
+<P>The term representing the tail. Returns 0 if term does not represent
+a list or if term represents the empty list. </P>
+
+<P>See <A HREF="lsprguid.htm#ManipulatingLists">Manipulating Lists</A></P>
+
+<H2><A NAME="lsGetTerm"></A><FONT COLOR="#0000FF">lsGetTerm</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetTerm><B>Description:</B> </P>
+
+<DL>
+<DT>void GetTerm(TERM term, cTYPE ctype, VOIDptr valp);<BR>
+RC lsGetTerm(ENGid cureng, TERM term, cTYPE ctype, VOIDptr valp); </DT>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term from which value is to be taken </DD>
+
+<DT>ctype </DT>
+
+<DD>C type to receive the value </DD>
+
+<DT>valp </DT>
+
+<DD>Pointer to the C/C++ variable </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Copies the value of the term into the variable of type ctype pointed
+to by valp. See the Data Types section for legal values of cTYPE. </P>
+
+<P>See <A HREF="lsprguid.htm#HandlingVaryingPrologTypes">Handling Varying
+Prolog Types</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsGetTermType"></A><FONT COLOR="#0000FF">lsGetTermType</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetTermType><B>Description:</B> </P>
+
+<DL>
+<P>pTYPE&nbsp;GetTermType(TERM term);<BR>
+pTYPE lsGetTermType(ENGid cureng, TERM term); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Get the type of the term. </P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Returns the Prolog type of the term. See the Data Types section for
+legal values of pTYPE. </P>
+
+<P>See <A HREF="lsprguid.htm#HandlingVaryingPrologTypes">Handling Varying
+Prolog Types</A></P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsGetParm(CurEng, 1, cTERM, &amp;t);
+ptype = lsGetTermType(CurEng, t);
+if (ptype == pLIST)
+...</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsGetVersion"></A><FONT COLOR="#0000FF">lsGetVersion</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsGetVersion><B>Description:</B> </P>
+
+<DL>
+<P>void GetVersion(STRptr str);<BR>
+RC lsGetVersion(ENGid cureng, STRptr str); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>str </DT>
+
+<DD>String to hold version </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Copies the current version information into the string s. </P>
+
+<P>See <A HREF="lsprguid.htm#MiscellaneousAPIFunctions">Miscellaneous API
+Functions</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK </P>
+
+<H2><A NAME="lsInit"></A><FONT COLOR="#0000FF">lsInit</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsInit><B>Description:</B> </P>
+
+<DL>
+<P>void Init(STRptr ininame);<BR>
+RC lsInit(ENGid *cureng, STRptr ininame); </P>
+
+<DT>cureng </DT>
+
+<DD>Pointer to the new engine identifier </DD>
+
+<DT>ininame </DT>
+
+<DD>Name of .cfg file used for stacks etc. </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Initializes the Prolog environment, using &lt;filename&gt;.cfg if present. 
+  If it's not present, then it uses amzi.cfg and system defaults. It can be called 
+  with an empty string, &quot;&quot;, if you don't care to look for an application 
+  specific .cfg file. Must be called once, and before lsLoad() is called.</P>
+
+<P>See <A HREF="lsprguid.htm#MainEntryPoints">Main Entry Points</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if everything worked. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">rc = lsInit(cureng, &quot;ducks&quot;);
+if (rc != OK) ...
+rc = lsLoad(cureng, &quot;ducks.xpl&quot;);
+if (rc != OK) ...</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsInit2"></A><FONT COLOR="#0000FF">lsInit2</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsInit2><B>Description:</B> </P>
+
+<DL>
+<P>void Init2(STRptr iniparams);<BR>
+RC lsInit2(ENGid *cureng, STRptr iniparams); </P>
+
+<DT>cureng </DT>
+
+<DD>Pointer to the new engine identifier </DD>
+
+<DT>iniparams </DT>
+
+<DD>INI parameters used for stacks etc. </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Initializes the Prolog environment, using the .cfg parameters specified
+in the iniparams string. The string is of the format &quot;parm1=val1,
+parm2=val2..&quot;. The .cfg parameters can be specified using their full
+name or with their abbreviation. See the section on <A HREF="../pro/prruntim.htm">INI
+parameters</A> for a list.</P>
+
+<P>Either lsInit() or lsInit2 must be called once, and before lsLoad()
+is called.</P>
+
+<P>See <A HREF="lsprguid.htm#MainEntryPoints">Main Entry Points</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if everything worked. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">// This try/catch is designed to catch Logic Server exceptions
+// and deal with them in the member function error.  Note it
+// catches a reference to the exception object that is thrown
+// by the Logic Server.
+try
+{
+    // Use Init2 rather than Init in order to set the
+    // .cfg parameters from an argument instead of a
+    // .cfg file.  In this case, the heap, local, control
+    // and trail are set to small numbers because we have
+    // a small program.
+    Init2(&quot;h=100, l=100, c=100, t=100&quot;);
+    // Tell the engine prompt/2 is implemented by
+    // calling the global dispatch function, p_prompt,
+    // with the argument 'this', used to get control
+    // back in this instance of petID.
+    AddPred(&quot;prompt&quot;, 2, &amp;::p_prompt, this);
+    Load(&quot;pets&quot;);
+}
+catch(CLSException &amp;e)
+{
+    error(e);
+}</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsInitLSX"></A><FONT COLOR="#0000FF">lsInitLSX</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsInitLSX>Description </P>
+
+<DL>
+<P>void InitLSX(VOIDptr p);<BR>
+RC lsInitLSX(ENGid cureng, VOIDptr p); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>p </DT>
+
+<DD>Pointer, can be used to identify calling application. </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Causes the Logic Server to look for the 'loadlsx' .cfg file parameter, and 
+  load any .lsx files listed there. </P>
+
+<P>See <A HREF="lsprguid.htm#ExtendedPredicateLibraries">Extended Predicate
+Libraries (LSXs)</A> and <A HREF="lsprguid.htm#WritingExtendedPredicates">Writing
+Extended Predicates</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if everything worked </P>
+
+<H2><A NAME="lsInitPreds"></A><FONT COLOR="#0000FF">lsInitPreds</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsInitPreds><B>Description:</B> </P>
+
+<DL>
+<DT>void InitPreds(PRED_INITptr predtabp);<BR>
+RC lsInitPreds(ENGid cureng, PRED_INITptr predtabp); </DT>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>predtabp</DT>
+
+<DD>Predicate table pointer </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Initializes the predicate table pointed to by predtabp. An application
+can initialize any number of predicate tables. This should be called after
+the call to lsInit() and before calling any Prolog functions. </P>
+
+<P>See <A HREF="lsprguid.htm#ExtendedPredicateLibraries">Extended Predicate
+Libraries (LSXs)</A> and <A HREF="lsprguid.htm#WritingExtendedPredicates">Writing
+Extended Predicates</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if everything worked. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">...
+/* function prototypes */
+TF pMakeArray(ENGid);
+TF pArrayElem(ENGid);
+/* extended predicate table definitions */
+PRED_INIT arrayPreds[] = 
+{
+{&quot;make_array&quot;, 2, pMakeArray},
+{&quot;array_elem&quot;, 3, pArrayElem},
+{NULL, 0, NULL}
+};
+/* extended predicates definitions */
+...
+void main()
+{
+ENGid cureng;
+lsInit(&amp;cureng, &quot;xarray&quot;);
+lsInitPreds(cureng, arrayPreds);
+lsLoad(cureng, &quot;xarray&quot;);
+lsMain(cureng);
+lsClose(cureng);
+}</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsLoad"></A><FONT COLOR="#0000FF">lsLoad</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsLoad><B>Description:</B> </P>
+
+<DL>
+<P>void Load(STRptr xplname);<BR>
+RC lsLoad(ENGid cureng, STRptr xplname); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>xplname </DT>
+
+<DD>Name of the .xpl file </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Loads the compiled and linked Prolog program, xplname. You must call
+lsLoad() at least once after calling lsInit(). If you want to load multiple
+compiled Prolog files, the rest need to be loaded as .plm files using lsExecStr()
+to call the load predicate with the name of the .plm file to load.</P>
+
+<P>See <A HREF="lsprguid.htm#MainEntryPoints">Main Entry Points</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">try
+{
+   // Initialize the Logic Server engine
+   Init(&quot;&quot;);
+
+   // Load the compiled Prolog program, hello.xpl
+   Load(&quot;hello&quot;);
+   return TRUE;
+}
+   catch(CLSException &amp;E)
+{
+   error(E);
+   return FALSE;
+}</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsMain"></A><FONT COLOR="#0000FF">lsMain</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsMain><B>Description:</B> </P>
+
+<DL>
+<P>TF&nbsp;Main();<BR>
+TF lsMain(ENGid cureng); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Calls main/0 of the loaded Prolog .xpl file. </P>
+
+<P>See <A HREF="lsprguid.htm#MainEntryPoints">Main Entry Points</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>Prolog TRUE/FALSE depending on success or failure. </P>
+
+<P><B>Example:</B></P>
+
+<UL>
+<PRE><FONT COLOR="#000080">tf = lsMain(CurEng);
+if (tf == FALSE) ...</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsMakeAddr"></A><FONT COLOR="#0000FF">lsMakeAddr</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsMakeAddr><B>Description:</B> </P>
+
+<DL>
+<P>void MakeAddr(TERMptr termp, VOIDptr valp);<BR>
+RC lsMakeAddr(ENGid cureng, TERMptr termp, VOIDptr valp); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to a term </DD>
+
+<DT>valp </DT>
+
+<DD>An address </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Creates a term of type pADDR from the pointer valp. </P>
+
+<P>See <A HREF="lsprguid.htm#MakingSimpleTerms">Making Simple Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsMakeAtom"></A><FONT COLOR="#0000FF">lsMakeAtom</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsMaAkeAtom><B>Description:</B> </P>
+
+<DL>
+<P>void MakeAtom(TERMptr termp, STRptr str);<BR>
+RC lsMakeAtom(ENGid cureng, TERMptr termp, STRptr str); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to a term </DD>
+
+<DT>str </DT>
+
+<DD>String representing a Prolog atom</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Creates a term of type pATOM from the string str. </P>
+
+<P>See <A HREF="lsprguid.htm#MakingSimpleTerms">Making Simple Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsMakeFA"></A><FONT COLOR="#0000FF">lsMakeFA</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsMakeFA><B>Description:</B> </P>
+
+<DL>
+<P>void MakeFA(TERMptr termp, STRptr functor, ARITY&nbsp;arity);<BR>
+RC lsMakeFA(ENGid cureng, TERMptr termp, STRptr functor, ARITY arity);
+</P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to a term </DD>
+
+<DT>functor</DT>
+
+<DD>String representing the functor </DD>
+
+<DT>arity </DT>
+
+<DD>Arity of the term </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Creates a term with the specified functor and arity. The arguments are
+all unbound variables which may be left as is or set to specific values
+using lsUnifyArg(). </P>
+
+<P>See <A HREF="lsprguid.htm#ManipulatingStructures">Manipulating Structures</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">/* create structure bar(one,two) */
+lsMakeFA(CurEng, &amp;tInner, &quot;bar&quot;, 2);
+lsUnifyArg(CurEng, &amp;tInner, 1, cATOM, &quot;one&quot;);
+lsMakeAtom(CurEng, &amp;tArg, &quot;two&quot;);  /* another way */
+lsUnifyArg(CurEng, &amp;tInner, 2, cTERM, &amp;tArg);</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsMakeFloat"></A><FONT COLOR="#0000FF">lsMakeFloat</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsMakeFloat><B>Description:</B> </P>
+
+<DL>
+<P>void MakeFloat(TERMptr termp, double f);<BR>
+RC lsMakeFloat(ENGid cureng, TERMptr termp, double f); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to a term </DD>
+
+<DT>f </DT>
+
+<DD>Double precision floating point number </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Creates a term of type pFLOAT from the double float f. </P>
+
+<P>See <A HREF="lsprguid.htm#MakingSimpleTerms">Making Simple Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsMakeInt"></A><FONT COLOR="#0000FF">lsMakeInt</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsMakeInt><B>Description:</B> </P>
+
+<DL>
+<P>void MakeInt(TERMptr termp, intC i);<BR>
+RC lsMakeInt(ENGid cureng, TERMptr termp, intC i); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to a term </DD>
+
+<DT>i </DT>
+
+<DD>Integer </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Creates a term of type pINT from the integer i. </P>
+
+<P>See <A HREF="lsprguid.htm#MakingSimpleTerms">Making Simple Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsMakeList"></A><FONT COLOR="#0000FF">lsMakeList</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsMakeList><B>Description:</B> </P>
+
+<DL>
+<P>void MakeList(TERMptr termp);<BR>
+RC lsMakeList(ENGid cureng, TERMptr termp); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to term that will point to new list </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Creates an empty list pointed to by tp. </P>
+
+<P>See <A HREF="lsprguid.htm#MakingSimpleTerms">Making Simple Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsMakeStr"></A><FONT COLOR="#0000FF">lsMakeStr</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsMakeStr><B>Description:</B> </P>
+
+<DL>
+<P>void MakeStr(TERMptr termp, STRptr str);<BR>
+RC lsMakeStr(ENGid cureng, TERMptr termp, STRptr str); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to a term </DD>
+
+<DT>str </DT>
+
+<DD>String </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Creates a term of type pSTR from the string str. </P>
+
+<P>See <A HREF="lsprguid.htm#MakingSimpleTerms">Making Simple Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsPopList"></A><FONT COLOR="#0000FF">lsPopList</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsPopList><B>Description:</B> </P>
+
+<DL>
+<P>void PopList(TERMptr listp, cTYPE ctype, VOIDptr valp);<BR>
+RC lsPopList(ENGid cureng, TERMptr listp, cTYPE&nbsp;ctype, VOIDptr valp);</P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>listp</DT>
+
+<DD>Term pointing to a list or empty list </DD>
+
+<DT>ctype</DT>
+
+<DD>Type of the term to be popped</DD>
+
+<DT>valp</DT>
+
+<DD>The location to store the popped term</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Pops the term of type ctype from the head of the list and save it in
+valp. See the Data Types section for possible values of cTYPE. </P>
+
+<P>See <A HREF="lsprguid.htm#ManipulatingLists">Manipulating Lists</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if everything worked, NOTOK if it failed. Failure will occur if tp
+does not point to a list. </P>
+
+<H2><A NAME="lsPushList"></A><FONT COLOR="#0000FF">lsPushList</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsPushList><B>Description:</B> </P>
+
+<DL>
+<P>void PushList(TERMptr listp, TERM term);<BR>
+RC lsPushList(ENGid cureng, TERMptr listp, TERM term) </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>listp</DT>
+
+<DD>Term pointing to a list or empty list </DD>
+
+<DT>term </DT>
+
+<DD>Term to be pushed on the list </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>The term is pushed on the head of the list and listp points to this
+new head of list. </P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if everything worked, NOTOK if it failed. Failure will occur if tp
+does not point to a list. </P>
+
+<P>See <A HREF="lsprguid.htm#ManipulatingLists">Manipulating Lists</A></P>
+
+<H2><A NAME="lsRedo"></A><FONT COLOR="#0000FF">lsRedo</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsRedo><B>Description:</B> </P>
+
+<DL>
+<P>TF&nbsp;Redo();<BR>
+TF lsRedo(ENGid cureng); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Causes Prolog to backtrack and retry the last lsCall(), lsvCallStr(),
+or lsRedo(). The term used in the initiating lsCall() or lsvCallStr() is
+unified with a new value if the redo is successful. lsRedo can be used
+in a while loop to get all the solutions to a Prolog query. </P>
+
+<P><B>Return Value:</B> </P>
+
+<P>TRUE/FALSE. A loop that has the TF return code as its condition will
+loop until there are no more solutions. </P>
+
+<P>See <A HREF="lsprguid.htm#StringPassingInterface">String Passing Interface</A>
+and <A HREF="lsprguid.htm#ScopeOfLogicServerTerms">Scope of Logic Server
+Terms</A></P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">printf(&quot;Elaine's children:\n&quot;);
+tf = lsCallStr(cureng, &amp;t,&quot;parent(elaine,X)&quot;);
+while (tf)
+{
+ lsvScanTerm(cureng, t,&quot;parent(elaine,%s)&quot;,buffer);
+ printf(&quot;  %s\n&quot;, buffer);
+ lsRedo(cureng);
+}</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsReset"></A><FONT COLOR="#0000FF">lsReset</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsReset><B>Description:</B> </P>
+
+<DL>
+<P>void Reset();<BR>
+RC lsReset(ENGid cureng); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Resets the Prolog stacks and runtime environment. Leaves the dynamic
+database unchanged, so all load programs and assert terms are still present.
+</P>
+
+<P>See <A HREF="lsprguid.htm#ErrorHandling">Error Handling</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if successful. </P>
+
+<H2><A NAME="lsRetract"></A><FONT COLOR="#0000FF">lsRetract</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsRetract><B>Description:</B> </P>
+
+<DL>
+<P>TF Retract(TERM term);<BR>
+TF lsRetract(ENGid cureng, TERM term); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term to retract</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Retracts the first term in the database that unifies with the specified
+term; term has the unified value, so lsRetract() can be used to retrieve
+and process terms as they're being retracted. </P>
+
+<P>See <A HREF="lsprguid.htm#AssertingAndRetracting">Asserting and Retracting
+to and from the Prolog Database</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>TRUE/FALSE </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">...
+TERM t;
+lsvMakeTerm(cureng, &amp;t, &quot;foo(one)&quot;);
+lsAsserta(cureng, t);
+lsvMakeTerm(cureng, &amp;t, &quot;foo(X)&quot;);
+lsRetract(cureng, t);
+lsTermToStr(cureng, &amp;t, buf, 40);
+printf(&quot;Removed %s&quot;, buf);
+...
+/* This fragment prints:  Removed foo(one) */</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsRetractStr"></A><FONT COLOR="#0000FF">lsRetractStr</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsRetractStr><B>Description:</B> </P>
+
+<DL>
+<P>TF RetractStr(STRptr str);<BR>
+TF lsRetractStr(ENGid cureng, STRptr str); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>str </DT>
+
+<DD>String representation of term </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Retracts the first term in the database that unifies with the term represented
+by the string str.</P>
+
+<P>See <A HREF="lsprguid.htm#AssertingAndRetracting">Asserting and Retracting
+to and from the Prolog Database</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>TRUE/FALSE </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsAssertaStr(cureng, &quot;foo(one)&quot;);
+lsRetractStr(cureng, &quot;foo(X)&quot;);</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsSetCommandArgs"></A><FONT COLOR="#0000FF">lsSetCommandArgs</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsSetCommandArgs><B>Description:</B> </P>
+
+<DL>
+<P>void SetCommandArgs(int argc, char** argv);<BR>
+RC lsSetCommandArgs(ENGid cureng, int argc, char** argv); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>argc </DT>
+
+<DD>Count of arguments </DD>
+
+<DT>argv </DT>
+
+<DD>Array of arguments </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Passes the values of argc and argv to the Prolog engine so it can process
+command line arguments if desired. It is necessary to do this if the Prolog
+code uses the predicate 'command_line/1'.</P>
+
+<P>See <A HREF="lsprguid.htm#MiscellaneousAPIFunctions">Miscellaneous API
+Functions</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">void main(int argc, char** argv)
+{
+ ...
+ lsSetCommandArgs(cureng, argc, argv),
+ ...
+}</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsSetInput"></A><FONT COLOR="#0000FF">lsSetInput</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsSetInput><B>Description:</B> </P>
+
+<DL>
+<P>void SetInput(int (* mygetc)(VOIDptr vp), void(*myungetc)(VOIDptr vp,
+int c));<BR>
+RC lsSetInput(ENGid cureng, int (* mygetc)(VOIDptr vp), void(*myungetc)(VOIDptr
+vp, int c)); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>mygetc </DT>
+
+<DD>A function that gets a character </DD>
+
+<DT>myungetc </DT>
+
+<DD>A function that ungets the last character </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>When any input stream is set to 3, Amzi! Prolog uses these functions
+for reading user input from that stream. </P>
+
+<P>See <A HREF="lsprguid.htm#CapturingPrologI/O">Capturing Prolog I/O</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsSetIOArg"></A><FONT COLOR="#0000FF">lsSetIOArg</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsSetIOArg><B>Description:</B> </P>
+
+<DL>
+<P>void SetIOArg(VOIDptr vp);<BR>
+RC lsSetIOArg(ENGid cureng, VOIDptr vp); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>vp</DT>
+
+<DD>The argument to include in I/O&nbsp;calls</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>When any input stream is set to 3, the vp argument is included in the
+calls to the getc, ungetc, putc and puts functions defined by lsSetInput()
+and lsSetOutput().</P>
+
+<P>See <A HREF="lsprguid.htm#CapturingPrologI/O">Capturing Prolog I/O</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsSetOutput"></A><FONT COLOR="#0000FF">lsSetOutput</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI;; lsSetOutput><B>Description:</B> </P>
+
+<DL>
+<P>void SetOutput(void (*myputc)(VOIDptr vp, int c), void (*myputs)(VOIDptr
+vp, STRptr s)); <BR>
+RC lsSetOutput(ENGid cureng, void (*myputc)(VOIDptr vp, int c), void (*myputs)(VOIDptr
+vp, STRptr s)); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>myputc </DT>
+
+<DD>A function that puts a character </DD>
+
+<DT>myputs </DT>
+
+<DD>A function that puts a string </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>When any output stream is set to 3, Amzi! Prolog uses these functions
+for writing to the stream. </P>
+
+<P>See <A HREF="lsprguid.htm#CapturingPrologI/O">Capturing Prolog I/O</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsSetStream"></A><FONT COLOR="#0000FF">lsSetStream</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsSetStream><B>Description:</B> </P>
+
+<DL>
+<P>SetStream(STREAM stream, int handle);<BR>
+RC lsSetStream(ENGid cureng, STREAM stream, int handle); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>stream </DT>
+
+<DD>The stream to set </DD>
+
+<DT>handle</DT>
+
+<DD>The handle to set it to </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Sets the stream to the integer handle. Typically this will be used to
+set the stream to 3, reserved for user-defined function I/O. It might also
+be used to reset the stream to its old value, obtained from a prior call
+to lsGetStream(). See the section on Data Types for the legal values of
+STREAM. </P>
+
+<P>See <A HREF="lsprguid.htm#CapturingPrologI/O">Capturing Prolog I/O</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsStrArgLen"></A><FONT COLOR="#0000FF">lsStrArgLen</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsStrArgLen><B>Description:</B> </P>
+
+<DL>
+<P>int StrArgLen(TERM term, int iarg);<BR>
+int lsStrArgLen(ENGid cureng, TERM term, int iarg); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term defining a structure </DD>
+
+<DT>iarg </DT>
+
+<DD>Number of the structure argument </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Used to determine the length of string to be returned from a lsGetArg()
+where the argument is either a string or an atom. </P>
+
+<P>See <A HREF="lsprguid.htm#MappingPrologArgumentsToHostVariables">Mapping
+Prolog Arguments to Host Variables</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>The length of the string/atom at the iargth parameter, or NOTOK (-1)
+if term is not a string. </P>
+
+<H2><A NAME="lsStrParmLen"></A><FONT COLOR="#0000FF">lsStrParmLen</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsStrParmLen><B>Description:</B> </P>
+
+<DL>
+<P>int StrParmLen(int iparm);<BR>
+int lsStrParmLen(ENGid cureng, int iparm); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>iparm </DT>
+
+<DD>Number of the parameter </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Used to determine the length of string to be returned from a lsGetParm()
+where the parameter is either a string or an atom. </P>
+
+<P>See <A HREF="lsprguid.htm#WritingExtendedPredicates">Writing Extended
+Predicates</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>The length of the string/atom at the iparmth parameter, or NOTOK (-1)
+if term is not a string. </P>
+
+<H2><A NAME="lsStrTermLen"></A><FONT COLOR="#0000FF">lsStrTermLen</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsStrTermLen><B>Description:</B> </P>
+
+<DL>
+<P>int StrTermLen(TERM&nbsp;term);<BR>
+int lsStrTermLen(ENGid cureng, TERM term); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term</DT>
+
+<DD>Term representing a string</DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Used to determine the length of string to be returned from a lsGetTerm()
+or lsGetHead() where the parameter is either a string or an atom. </P>
+
+<P>See <A HREF="lsprguid.htm#StringPassingInterface">String Passing Interface</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>The length of the string/atom at the iparmth parameter, or NOTOK (-1)
+if term is not a string. </P>
+
+<H2><A NAME="lsStrToTerm"></A><FONT COLOR="#0000FF">lsStrToTerm</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsStrToTerm><B>Description:</B> </P>
+
+<DL>
+<P>void StrToTerm(TERMptr termp, STRptr str);<BR>
+RC lsStrToTerm(ENGid cureng, TERMptr termp, STRptr str); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to term created from string </DD>
+
+<DT>str </DT>
+
+<DD>String to be used to generate a term </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Reads the string and creates a term from it. </P>
+
+<P>See <A HREF="lsprguid.htm#CallingTerms">Calling Terms</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">sprintf(buf, &quot;%s(%s, Y)&quot;, sRelation, sIndividual);
+lsStrToTerm(CurEng, &amp;t, buf);
+tf = lsCall(CurEng, &amp;t);</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsTermToStr"></A><FONT COLOR="#0000FF">lsTermToStr</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsTermToStr><B>Description:</B> </P>
+
+<DL>
+<P>void TermToStr(TERM term, STRptr str, int len);<BR>
+RC lsTermToStr(ENGid cureng, TERM term, STRptr str, int len); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term to translate to a string </DD>
+
+<DT>str </DT>
+
+<DD>Pointer to string buffer to hold value </DD>
+
+<DT>len </DT>
+
+<DD>Length of string buffer, used to prevent overflows </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Writes the term to the string which is len bytes long. </P>
+
+<P>See <A HREF="lsprguid.htm#StringPassingInterface">String Passing Interface</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsGetParm(CurEng, 1, cTERM, &amp;t);
+ptype = lsGetTermType(CurEng, t);
+if (ptype == pLIST)
+{
+   while (OK == lsPopList(CurEng, &amp;t, cTERM, &amp;tm))
+   {
+      lsTermToStr(CurEng, tm, buf, 80);
+      printf(&quot;%s&quot;, buf);
+   }
+}
+else
+{
+   lsTermToStr(CurEng, t, buf, 80);
+   printf(&quot;%s&quot;, buf);
+}</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsTermToStrQ"></A><FONT COLOR="#0000FF">lsTermToStrQ</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsTermToStrQ><B>Description:</B> </P>
+
+<DL>
+<P>void TermToStrQ(TERM&nbsp;term, STRptr, str, int len);<BR>
+RC lsTermToStrQ(ENGid cureng, TERM term, STRptr str, int len); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term </DT>
+
+<DD>Term to translate to a string </DD>
+
+<DT>str </DT>
+
+<DD>Pointer to string buffer to hold value </DD>
+
+<DT>len </DT>
+
+<DD>Length of string buffer, used to prevent overflows </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>This function is the same as lsTermToStr(), except the string is created
+with quoted atoms where necessary. This makes it possible to feed the same
+string back to Prolog. </P>
+
+<P>See <A HREF="lsprguid.htm#StringPassingInterface">String Passing Interface</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>OK if it worked. </P>
+
+<H2><A NAME="lsUnify"></A><FONT COLOR="#0000FF">lsUnify</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsUnify><B>Description:</B> </P>
+
+<DL>
+<P>TF&nbsp;Unify(TERM&nbsp;term1, TERM term2);<BR>
+TF lsUnify(ENGid cureng, TERM term1, TERM term2); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>term1 </DT>
+
+<DD>Term to unify </DD>
+
+<DT>term2 </DT>
+
+<DD>Term to unify </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Unifies the two terms. lsUnify() does a full Prolog unification between
+the two terms. Unlike other functions which return TF, lsUnify() does not
+set and reset Prolog break and error handling. </P>
+
+<P>See <A HREF="lsprguid.htm#ManipulatingStructures">Manipulating Structures</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>TRUE/FALSE depending on whether the unification succeeded or failed.
+</P>
+
+<H2><A NAME="lsUnifyArg"></A><FONT COLOR="#0000FF">lsUnifyArg</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsUnifyArg><B>Description:</B> </P>
+
+<DL>
+<P>TF UnifyArg(TERMptr termp, int iarg, cTYPE ctype, VOIDptr valp);<BR>
+TF lsUnifyArg(ENGid cureng, TERMptr termp, int iarg, cTYPE ctype, VOIDptr
+valp); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>termp </DT>
+
+<DD>Pointer to the structure term whose argument is to be set </DD>
+
+<DT>iarg </DT>
+
+<DD>The number of the argument, starting at 1 </DD>
+
+<DT>ctype </DT>
+
+<DD>The type of the variable </DD>
+
+<DT>valp </DT>
+
+<DD>Pointer to the variable </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Used to build complex terms, lsUnifyArg() lets you individually set
+the arguments of term. Used in conjunction with lsMakeFA(), as well as
+Prolog terms picked up from calls to Prolog. </P>
+
+<P>See <A HREF="lsprguid.htm#ManipulatingStructures">Manipulating Structures</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>TRUE/FALSE depending on whether the unification succeeded or failed.
+</P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">/* create structure bar(one,two) */
+lsMakeFA(CurEng, &amp;tInner, &quot;bar&quot;, 2);
+lsUnifyArg(CurEng, &amp;tInner, 1, cATOM, &quot;one&quot;);
+lsMakeAtom(CurEng, &amp;tArg, &quot;two&quot;); /* another way */
+lsUnifyArg(CurEng, &amp;tInner, 2, cTERM, &amp;tArg);</FONT></PRE>
+</UL>
+
+<H2><A NAME="lsUnifyParm"></A><FONT COLOR="#0000FF">lsUnifyParm</FONT></H2>
+
+<P><!AMZI_INDEX= LSAPI; lsUnifyParm><B>Description:</B> </P>
+
+<DL>
+<P>TF&nbsp;UnifyPartm(int iparm, cTYPE ctype, VOIDptr valp);<BR>
+TF lsUnifyParm(ENGid cureng, int iparm, cTYPE ctype, VOIDptr valp); </P>
+
+<DT>cureng </DT>
+
+<DD>Current engine identifier </DD>
+
+<DT>iparm </DT>
+
+<DD>The number of the parameter to set, starting at 1 </DD>
+
+<DT>ctype </DT>
+
+<DD>The type of the variable </DD>
+
+<DT>valp </DT>
+
+<DD>A pointer to the variable </DD>
+</DL>
+
+<P><B>Remarks:</B> </P>
+
+<P>Unify the iparmth parameter of an extended predicate with the 'variable.
+Note that there are two types for representing strings, cATOM and cSTR.
+While they are both strings, they unify as either a Prolog atom or a Prolog
+string depending on which is used. </P>
+
+<P>See <A HREF="lsprguid.htm#WritingExtendedPredicates">Writing Extended
+Predicates</A></P>
+
+<P><B>Return Value:</B> </P>
+
+<P>TRUE/FALSE depending on whether the unification succeeded or failed.
+</P>
+
+<P><B>Example:</B> </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">int i;
+
+lsUnifyParm(cureng, 1, cATOM, &quot;atomparam&quot;);
+lsUnifyParm(cureng, 2, cINT, &amp;i);</FONT></PRE>
+</UL>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P><I></I> </P>
+
+</BODY>
+</HTML>

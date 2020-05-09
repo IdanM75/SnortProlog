@@ -1,0 +1,2122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Programmer's Guide</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="LogicServerProgrammersGuide"></A><FONT COLOR="#D2AA00">Programmer's 
+  Guide</FONT> </h1>
+<P>This section describes the main functions of the Logic Server. The examples
+use pseudo-code API functions that correspond to the native C functions
+of the API. The ideas hold for all environments, but each environment has
+slightly different syntax and might provide additional services. See the
+environment-specific reference sections for details on exact syntax. </P>
+
+<MENU>
+<LI><A HREF="#MainEntryPoints">Main Entry Points</A> </LI>
+
+<LI><A HREF="#LogicServerReturnCodes">Logic Server Return Codes</A> </LI>
+
+<LI><A HREF="#PrologTerms">Prolog Terms</A> </LI>
+
+<LI><A HREF="#StringPassingInterface">String Passing Interface</A> </LI>
+
+<LI><A HREF="#ScopeOfLogicServerTerms">Scope of Logic Server Terms</A>
+</LI>
+
+<LI><A HREF="#ImplementingASimplePrologListener">Implementing a Simple
+Prolog Listener</A> </LI>
+
+<LI><A HREF="#CallingTerms">Calling Terms</A> </LI>
+
+<LI><A HREF="#MappingPrologArgumentsToHostVariables">Mapping Prolog Arguments
+to Host Variables</A> </LI>
+
+<LI><A HREF="#MakingSimpleTerms">Making Simple Terms</A> </LI>
+
+<LI><A HREF="#HandlingVaryingPrologTypes">Handling Varying Prolog Types</A>
+</LI>
+
+<LI><A HREF="#ManipulatingStructures">Manipulating Structures</A> </LI>
+
+<LI><A HREF="#ManipulatingLists">Manipulating Lists</A> </LI>
+
+<LI><A HREF="#AssertingAndRetracting">Asserting and Retracting to and from
+the Prolog Database</A> </LI>
+
+<LI><A HREF="#ConsultingPrologSource">Consulting Prolog Source</A> </LI>
+
+<LI><A HREF="#MultipleEngines">Running Multiple Engines</A></LI>
+
+<LI><A HREF="#WritingExtendedPredicates">Writing Extended Predicates</A>
+</LI>
+
+<LI><A HREF="#ExtendedPredicateLibraries">Extended Predicate Libraries
+(LSXs)</A> </LI>
+
+<LI><A HREF="#CapturingPrologI/O">Capturing Prolog I/O</A> </LI>
+
+<LI><A HREF="#ErrorHandling">Error Handling</A> </LI>
+
+<LI><A HREF="#MiscellaneousAPIFunctions">Miscellaneous API Functions</A>
+</LI>
+</MENU>
+
+<H2><A NAME="MainEntryPoints"></A><FONT COLOR="#0000FF">Main Entry Points</FONT></H2>
+
+<P><!AMZI_INDEX=main/0; LSAPI; lsInit; lsLoad; lsMain; lsClose>The simplest
+host program to Prolog interface is one that initializes the Prolog engine,
+loads a Prolog logic-base, calls its main/0 predicate and then closes the
+Prolog engine. To do this requires the following four functions. </P>
+
+<DL>
+<DL>
+<DT><B>lsInit</B>(logic_base_name) returns RC </DT>
+
+<DD>Initializes the Logic Server engine, allocating resources as needed.
+If logic_base_name is specified, it is used to open a .cfg file of the same
+name for custom setting of various runtime parameters. </DD>
+
+<DT><B>lsInit2</B>(.cfg_parameters) returns RC</DT>
+
+<DD>Initializes the Logic Server engine like lsInit(), but takes a string
+containing .cfg parameters instead.</DD>
+
+<DT><B>lsLoad</B>(logic_base_name) returns RC </DT>
+
+<DD>Loads the compiled Prolog .xpl file for logic_base_name. A .xpl file
+must always be loaded before executing any Prolog code. This is because
+a .xpl file includes a copy of AMZILIB.PLM which implements a portion of
+the Prolog system software. </DD>
+
+<DT><B>lsMain</B>() returns TF </DT>
+
+<DD>Calls the main/0 predicate of the loaded program. </DD>
+
+<DT><B>lsClose</B>() returns RC </DT>
+
+<DD>Releases the memory and files used by the Logic Server engine. </DD>
+</DL>
+</DL>
+
+<P>For example, you can write a simple host language shell that runs the tutorial 
+  Prolog program, ducks.xpl. (This example assumes you are in a command-line environment 
+  in which the Prolog reads and writes used in ducks work in a reasonable way.) 
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">lsInit();
+lsLoad(&quot;ducks&quot;);
+lsMain();
+lsClose();</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H3><A NAME="EngineIDParameter"></A><FONT COLOR="#000080">Engine ID Parameter</FONT></H3>
+
+<P><!AMZI_INDEX=  Engine ID; LSAPI>All of the base Logic Server API functions 
+  take as their first argument a Logic Server Engine ID. You can run multiple 
+  engines simultaneously, each in their own memory space. Many of the environments 
+  shield the Engine ID parameter in the LSAPI. For example, the object-oriented 
+  lsapis of C++ and Delphi both encapsulate this parameter within the class definition. 
+</P>
+
+<P>The Engine ID parameter is not shown for most of the pseudo code examples
+of this section. </P>
+
+<H2><A NAME="LogicServerReturnCodes"></A><FONT COLOR="#0000FF">Logic Server
+Return Codes</FONT></H2>
+
+<P><!AMZI_INDEX=  Return Codes; RC; TF>While some of the API functions
+return strings, integers, and other data types, the majority return one
+of two types defined in the API. These are RC, which is used for error
+checking, and TF, which is a Prolog TRUE/FALSE return code. </P>
+
+<H3><A NAME="RCErrorCheckingReturnCodes"></A><FONT COLOR="#000080">RC-Error
+Checking Return Codes</FONT></H3>
+
+<P><!AMZI_INDEX= RC; Return Codes>The RC return code is a normal function
+return code, with OK (zero) being a normal termination and other values
+representing various error conditions. Check the reference for each function
+to see if there are error conditions you should be checking for. Many simply
+return OK all of the time. </P>
+
+<P>It is always a good idea to check the return codes, because it is often
+the case that successive calls to the Prolog API depend on the success
+of previous ones. For example, if the program load failed, then it doesn't
+make sense to start it running. </P>
+
+<P>If you continue after an API error, at best your program won't behave
+as expected, and at worst you might cause it to crash (although we try
+to guard against this). </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> Some environment-specific
+shells have a layer that provides error checking. Check the reference for
+the environment.</I> </P>
+
+<H3><A NAME="TFSuccessFailureReturnCodes"></A><FONT COLOR="#000080">TF
+- Success/Failure Return Codes</FONT></H3>
+
+<P><!AMZI_INDEX= TF; True; False; Success; Failure>The TF return code corresponds
+to Prolog success or failure. It can have the value TRUE (one), FALSE (zero),
+or it can return an error code. A TF is returned from those functions that:
+</P>
+
+<UL>
+<LI>Start the Prolog inference engine, or </LI>
+
+<LI>Use the Prolog unification algorithm. </LI>
+</UL>
+
+<P>For example, the function lsCall(), which calls a Prolog predicate,
+starts the Prolog engine and returns either TRUE or FALSE. A TF return
+code also implies that these functions activate the Prolog error handler,
+as described in the section on error handling. </P>
+
+<P>The functions that perform unification, indicated by the word 'Unify'
+in their names, also return a TRUE or FALSE, but do not start the inference
+engine or the error handler. The unify functions are most often used in
+writing extended predicates that might succeed or fail based on a unification.
+</P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> Because the
+return code can be TRUE, FALSE or an error, functions that test the return
+code should explicitly test for TRUE, as in 'if (TRUE == lsCall(...'</I>
+</P>
+
+<H2><A NAME="PrologTerms"></A><FONT COLOR="#0000FF">Prolog Terms</FONT></H2>
+
+<P><!AMZI_INDEX= Terms>To do any more than simply call the main/0 predicate,
+it is necessary to pass information back and forth between the host language
+and Prolog. This is done using Prolog terms. </P>
+
+<P>All data types in Prolog are represented by a single entity, called
+a 'term.' For example, each of the following is a Prolog term: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">X
+foo(a,b)
+hello
+$this is a string$
+'a long atom name'
+[a,list,of,stuff,34,$foo$,foo(a,b),Z,Y]
+42
+3.7
+13 + 8.9 / 16
+even_rules(X) :- are(Y,Z), terms</FONT></PRE>
+</UL>
+
+<P>Terms are represented internally in Prolog by a pointer to the Prolog
+heap, on which the terms are constructed. These pointers are heavily used
+in the API in order to transfer information between the host language and
+Prolog. </P>
+
+<P>Each of the environments has a data type defined for terms, and most
+of the API calls have one or more arguments that are either terms or pointers
+to terms. Check the environment specific reference for details. </P>
+
+<H3><A NAME="TheInternalsofComplexTerms"></A><FONT COLOR="#000080">Internals
+of Complex Terms</FONT></H3>
+
+<P><!AMZI_INDEX=Terms; Complex Terms; Cells; Heap>Terms are, in general,
+built on the Prolog heap, which is an array of 'cells.' Simple terms, such
+as integers and atoms take up a single cell, whereas complex structures
+and lists take up multiple cells. Complex terms are made up of simpler
+terms. To accommodate this, and Prolog unification, cells can contain terms.
+</P>
+
+<P>For example, a structure with three arguments will have three cells
+allocated for those arguments, but each of the arguments might be a term
+which points to other cells which represent other structures, lists, or
+any other Prolog data. </P>
+
+<P>When you use a term in your program, you're really using a cell pointer.
+The cell might be the entire term or be the start of a chain of cells making
+up a complex term. You don't need to know this when programming in Prolog
+or when using the Logic Server's string-passing interface to/ from Prolog,
+but you do if you're going to construct and dissect complex Prolog terms.
+</P>
+
+<P>The Logic Server API provides tools for building terms, calling terms,
+translating strings to and from terms, decomposing terms, getting host
+language values from terms, and passing terms to and from Prolog. </P>
+
+<H2><A NAME="StringPassingInterface"></A><FONT COLOR="#0000FF">String Passing
+Interface</FONT></H2>
+
+<H3><A NAME="CallingPrologwithaStringQuery"></A><FONT COLOR="#000080">Calling
+Prolog with a String Query</FONT></H3>
+
+<P><!AMZI_INDEX= Calling Prolog; Strings; Queries; lsCallStr; lsExecStr>Once
+you have loaded a logic-base (Prolog .xpl file) you can issue Prolog queries
+and backtrack through all solutions. The API functions designed for string-passing
+are the simplest to use. The primary functions issue a Prolog query based
+on an input string. One is for queries that have multiple answers, and
+one is for queries that will be executed only once. </P>
+
+<DL>
+<DL>
+<DT><B>lsCallStr</B>(term_ptr, query_string) returns TF </DT>
+
+<DD>Convert query_string into a Prolog term pointed to by term_ptr, and
+call that Prolog term. The term is unified with the results of the query,
+so all variables which could be unified are unified. If the query succeeds
+it returns true, and if it fails it returns false. </DD>
+
+<DT><B>lsExecStr</B>(term_ptr, query_string) returns TF </DT>
+
+<DD>Exactly like lsCallStr, except it is optimized for queries that will
+not be backtracked through. </DD>
+</DL>
+</DL>
+
+<P>For example, using a classic family tree Prolog application, you might
+want to issue the query 'sister(mary, X)' to find the sisters of mary.
+If you entered this query at a Prolog listener </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- sister(mary,X).</FONT></PRE>
+</UL>
+
+<P>Prolog would first convert that input to a term, and call it. This is
+exactly what lsCallStr() does. </P>
+
+<P>Normal Prolog execution will cause the term to be unified with clauses
+in the logic-base, in the process unifying the variable X if there is a
+match, or failing if there is no match. </P>
+
+<P>This, too, is what happens with lsCallStr(). If there is a clause which
+matches, then the term argument is unified with the result and lsCallStr()
+returns true. If there is no clause which matches, then lsCallStr() returns
+false. </P>
+
+<H3><A NAME="ConvertingTermstoStrings"></A><FONT COLOR="#000080">Converting
+Terms to Strings</FONT></H3>
+
+<P><!AMZI_INDEX= Converting; Strings; Terms; lsTermToStr; lsTermToStrQ>The
+Prolog listener automatically displays the bindings of variables for you.
+The API cannot do this directly, but it does provide you with the tools
+for manipulating terms. The easiest simply convert the term back into a
+string. </P>
+
+<DL>
+<DL>
+<DT><B>lsTermToStr</B>(term, string, maxlength) returns RC </DT>
+
+<DD>Convert the term to a string no longer than maxlength characters. </DD>
+
+<DT><B>lsTermToStrQ</B>(term, string, maxlength) returns RC </DT>
+
+<DD>Convert the term to a string, using quotes for atoms and strings as
+necessary, so they can be used as input to Prolog again, if necessary.</DD>
+
+<DT><B>lsStrTermLen</B>(term) returns length</DT>
+
+<DD>Returns the size of the string needed to hold the string representation
+of the term.</DD>
+</DL>
+</DL>
+
+<P>Continuing the example above, after the 'sister(mary, X)' query was
+given, you could convert the query term to a string, which might be 'sister(mary,
+kathy)'. You could then display that string, or parse it using the string
+manipulation features of the host language. </P>
+
+<H3><A NAME="BacktrackingthroughMultipleAns"></A><FONT COLOR="#000080">Backtracking
+through Multiple Answers</FONT></H3>
+
+<P><!AMZI_INDEX= Backtracking Search; Queries; lsRedo>Once you have retrieved
+one answer from a query, you can induce Prolog backtracking and get the
+next answer. You can do this until there are no more answers using lsRedo().
+</P>
+
+<DL>
+<DL>
+<DT><B>lsRedo</B>() returns TF </DT>
+
+<DD>Using the term pointed to by the previous lsCallStr, backtrack and
+redo the query. If the query succeeds, the term is now unified based on
+this success and lsRedo() returns true, otherwise it returns false. </DD>
+</DL>
+</DL>
+
+<P>lsRedo is equivalent to using the semicolon (;) at the Prolog listener
+to get more answers, or using the 'fail' predicate in a Prolog rule. It
+returns true or false, depending on whether there was another clause which
+could be unified with the original query term. </P>
+
+<H3><A NAME="Puttingitalltogther"></A><FONT COLOR="#000080">Putting it
+All Togther</FONT></H3>
+
+<P>The following examples make use of this Prolog program. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">% XGENE.PRO
+
+mother(elaine,mary).
+mother(elaine,kathy).
+mother(elaine,ricky).
+mother(elaine,jenny).
+
+sibling(X,Y) :- mother(P,X), mother(P,Y).</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>This pseudo code finds all of the sisters of mary and prints the full
+terms for each successful answer. (The &amp; symbol indicates an address.
+It is not necessary to use address operators in all programming environments.)
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">declare TERM t
+declare STRING s of length 80
+
+lsInit()
+lsLoad(&quot;xgene&quot;)
+
+tf = lsCallStr(&amp;t, &quot;sibling(mary, X)&quot;)
+while (tf == true)
+        lsTermToStr(t, s, 80)
+        print(s)
+        tf = lsRedo()
+        end while
+
+lsClose()</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The program will display this output: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">sibling(mary, mary)
+sibling(mary, kathy)
+sibling(mary, ricky)
+sibling(mary, jenny)</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H3><A NAME="Examples"></A><FONT COLOR="#000080">Examples</FONT></H3>
+
+<P>C </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">TERM t;
+TF tf;
+char s[80];
+...
+lsInit();
+lsLoad(&quot;xgene&quot;);
+
+tf = lsCallStr(&amp;t, &quot;sibling(mary, X)&quot;);
+while (tf == TRUE) {
+        lsTermToStr(t, s, 80);
+        printf(&quot;%s\n&quot;, s);
+        tf = lsRedo();
+        }
+
+lsClose();
+...</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="ScopeOfLogicServerTerms"></A><FONT COLOR="#0000FF">Scope of
+Logic Server Terms</FONT></H2>
+
+<P><!AMZI_INDEX=Scope; Queries; Terms;  lsCall; lsExec; lsRedo; lsCallStr; lsExecStr>When
+dealing with lsCall()s there is some question as to the scope of the terms.
+There are two answers to this question, one safe and one for those wishing
+to nest lsCall()s. </P>
+
+<P>(All references to lsCall() and lsExec() in this article also apply
+to lsCallStr() and lsExecStr()). </P>
+
+<P>Common to both is the distinction between lsCall() and lsExec(). lsCall()
+builds what is called a choice point on the Prolog control stack. It is
+this choice point that allows the call to be backtracked into by lsRedo().
+The term built by lsCall() is reused by lsRedo(), as can be seen in the
+documentation for lsRedo(). </P>
+
+<P>lsExec(), on the other hand, does not build a choice point on the control
+stack, and cannot be backtracked into. It gets one term as an answer. </P>
+
+<P>So, you should used lsExec() if you only require one answer, and lsCall()
+if you intend to backtrack through multiple answers. </P>
+
+<H3><A NAME="TheSafeScopingAnswer"></A><FONT COLOR="#000080">Safe Scoping
+Answer </FONT></H3>
+
+<P><!AMZI_INDEX= Scope; Queries; Variables; Terms; lsCall; lsRedo>You should
+consider that the API is interfaced to Prolog the same way a Prolog listener
+is, and that when you do an lsCall() it is the same as issuing a query
+at the listener's ?- prompt. </P>
+
+<P>In the listener, the user can use the ';' key to cause the listener
+to backtrack and generate more solutions to the query. In the API this
+same effect is generated by calls to lsRedo(). </P>
+
+<P>As with the listener, none of the variables or terms from one query
+presented at a ?- prompt are valid when the next query is posed at a ?-
+prompt. </P>
+
+<P>So, when you issue the next lsCall(), then all of the terms from the
+previous lsCall() are no longer in scope. If you try to reference them,
+you might find them still valid, but this is not guaranteed, and you might
+also be inviting a GPF. </P>
+
+<H3><A NAME="TheNestedScopingAnswer"></A><FONT COLOR="#000080">Nested Scoping
+Answer </FONT></H3>
+
+<P><!AMZI_INDEX= Choice Points; Control; Queries; Scope; Terms; lsCall; lsRedo; lsClearCall>lsCall()
+builds a choice point on the control stack. That choice point remains there
+until there are no choices left. That occurs when lsRedo() is called and
+fails. So, to clear the choice point from the control stack, you need to
+execute lsRedo()s until it returns FALSE. </P>
+
+<P>If an lsCall() choice point is still active, you can issue a nested
+lsCall(). It is in scope until it finally fails, in which case the lsRedo()
+loop for the first lsCall() can continue. </P>
+
+<P>This approach requires some care, because, unlike when Prolog is executing
+its own backtracking search, the programmer must know which query is active
+when issuing an lsRedo(). The redo only sends the backtracking message
+to the most recent active query. </P>
+
+<P>In addition to calling lsRedo() until it fails, you can also clear a
+choice point by calling lsClearCall(). Again care must be taken. This will
+clear the most recent active choice point, so it should only be called
+when the last lsRedo() or lsCall() returned a TRUE and you want to end
+that choice point. </P>
+
+<P>The use of lsClearCall() can reduce the amount of control stack used
+by an application that uses lsCall()s without exhausting all possible answers
+before going on to the next lsCall(). </P>
+
+<H2><A NAME="ImplementingASimplePrologListener"></A><FONT COLOR="#0000FF">Implementing
+a Simple Prolog Listener</FONT></H2>
+
+<P><!AMZI_INDEX= Listener>Using the tools learned so far, you can implement
+a simple Prolog listener that prompts the user for the name of a logic-base,
+loads it and then reads queries from the user, displaying all answers.
+It will accept almost any query that can be entered at the ?- prompt of
+the actual Prolog listener, including consults, asserts, retracts and other
+predicates that manipulate the dynamic database. </P>
+
+<P>The pseudo code follows. (The &amp; symbol indicates an address. It
+is not necessary to use address operators in all programming environments.)
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">declare TERM t_query
+declare TF tf
+declare STRING s_input
+declare STRING s_output length 80
+declare STRING s_logic_base
+
+prompt_user(&quot;What logic-base to load?&quot;)
+s_logic_base = read_user_string()
+lsInit(s_logic_base)
+lsLoad(s_logic_base)
+
+prompt_user(&quot;Enter Prolog query: &quot;)
+s_input = read_user_string()
+while (s_input \= &quot;quit&quot;)
+        tf = lsCallStr(&amp;t, s_input)
+        while (tf == true)
+                lsTermToStr(t, s_output, 80)
+                display(s_output)
+                tf = lsRedo()
+                end_while
+        prompt_user(&quot;Enter Prolog query: &quot;)
+        s_input = read_user_string()
+        end_while
+
+lsClose()</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="CallingTerms"></A><FONT COLOR="#0000FF">Calling Terms</FONT></H2>
+
+<P><!AMZI_INDEX= Terms; lsCallStr; lsExecStr; lsCall; lsStrToTerm; lsExec>The
+two functions, lsCallStr() and lsExecStr() both have counterparts that
+issue Prolog queries with just terms as input. </P>
+
+<DL>
+<DL>
+<DT><B>lsCall</B>(term_ptr) returns TF </DT>
+
+<DD>This calls the term unifying it with clauses in the Prolog logic-base.
+</DD>
+
+<DT><B>lsExec</B>(term_ptr) returns TF </DT>
+
+<DD>This calls the term once and returns the result (cannot be followed
+by lsRedo()). </DD>
+</DL>
+</DL>
+
+<P>To use either of these, you must have first built a term that represents
+a Prolog query. The easiest way to do this is with the function that converts
+a string into a term. </P>
+
+<DL>
+<DL>
+<DT><B>lsStrToTerm</B>(term_ptr, string) returns RC </DT>
+
+<DD>Convert the string to the term referenced by term_ptr. </DD>
+</DL>
+</DL>
+
+<P>If you wanted, you could replace a call to lsCallStr() with calls to
+lsStrToTerm() and lsCall(). This obviously doesn't make too much sense
+for now, but it does illustrate the ability to separate the string to term
+conversion from the calling of the term. </P>
+
+<H2><A NAME="MappingPrologArgumentsToHostVariables"></A><FONT COLOR="#0000FF">Mapping
+Prolog Arguments to Host Variables</FONT></H2>
+
+<P><!AMZI_INDEX=  Variables; Terms; Structures; Arguments; lsGetArg; lsStrArgLen; lsGetArgType>One
+way to map Prolog arguments to host language variables is to convert the
+resultant term into a string, and parse the string. The Logic Server also
+provides functions that allow for a more direct mapping of Prolog arguments
+to variables. </P>
+
+<P>Remember that a Prolog query term is usually a structure, with a functor
+and a number of arguments. For example, the query 'sibling(mary, X)' is
+a Prolog term/structure with the functor 'sibling' and two arguments. </P>
+
+<P>Given this, a function that can retrieve a specific argument from a
+term/structure and map it into a variable is a very useful one. </P>
+
+<DL>
+<DL>
+<DT><B>lsGetArg</B>(term, i_arg, v_type, var) returns RC </DT>
+
+<DD>Gets the ith argument of term t and converts it to host language type
+v_type and puts the result in variable var. </DD>
+</DL>
+</DL>
+
+<P>This is exactly what lsGetArg() does. The first two arguments specify
+the term and the argument. The third argument is an environment-specific
+constant that indicates a host language variable type, such as integer
+or string. The fourth argument provides the location of the host language
+variable. </P>
+
+<P>Another useful function returns the type of the argument and is useful
+when different types of values are returned by the same predicate.</P>
+
+<UL>
+<DT><B>lsGetArgType</B>(term, i_arg) returns pTYPE</DT>
+
+<DD>Gets the type of the ith argument of term t. </DD>
+</UL>
+
+<P>lsGetArg() can be used to implement a better version of the program
+that finds mary's sisters. (The &amp; symbol indicates an address. It is
+not necessary to use address operators in all programming environments.)
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">declare TERM t
+declare STRING s of length 80
+declare STRING s_sib
+
+lsInit(&quot;&quot;)
+lsLoad(&quot;xgene&quot;)
+
+tf = lsCallStr(&amp;t, &quot;sibling(mary, X)&quot;)
+print(&quot;Mary's siblings are: &quot;)
+while (tf == true)
+        lsGetArg(t, 2, type_string, s_sib)
+        print(s_sib)
+        tf = lsRedo()
+        end while
+
+lsClose()</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>This program will display this output: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">Mary's siblings are:
+mary
+kathy
+ricky
+jenny</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Notice in this example that lsGetArg() has taken the second argument
+and mapped it into a host language string type variable, but that the Prolog
+argument was a Prolog atom, not a Prolog string. lsGetArg() and other similar
+functions will map either Prolog atoms or strings into host language string
+functions. </P>
+
+<P>Notice also that lsGetArg() does not provide length checking if the
+argument is a string. If you are not sure a Prolog string will fit in the
+buffer provided for it, you can first test the length of the string. </P>
+
+<DL>
+<DL>
+<DT><B>lsStrArgLen</B>(term, i_arg) returns integer </DT>
+
+<DD>This function assumes the ith argument is a string or atom, and returns
+its length. </DD>
+</DL>
+</DL>
+
+<H3><A NAME="Example"></A><FONT COLOR="#000080">Example</FONT></H3>
+
+<P>C </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">#include &lt;stdio.h&gt;
+#include &quot;amzi.h&quot;
+
+void main()
+{
+        ENGid   cureng;
+        char    strbuf[80];
+        TERM    term;
+        int             rc;
+        TF              tf;
+
+        rc = lsInit(&amp;cureng, &quot;&quot;);
+        rc = lsLoad(cureng, &quot;xgene&quot;);
+
+        tf = lsCallStr(cureng, &amp;t, &quot;sibling(mary, X)&quot;);
+        printf(&quot;The siblings of Mary are: &quot;);
+        while (tf == TRUE)
+                {
+                rc = lsGetArg(cureng, term, 2, cSTR, strbuf);
+                printf(&quot;%s &quot;, strbuf);
+                tf = lsRedo(cureng);
+                }
+        printf(&quot;\n&quot;);
+        
+        lsClose();
+}</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The output of this programs is: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">The siblings of Mary are: mary kathy ricky jenny</FONT></PRE>
+</UL>
+
+<P>Note that, just like in pure Prolog, the variables in the query term
+are bound (unified) when called, and unbound and rebound by the call to
+lsRedo(). </P>
+
+<H2><A NAME="MakingSimpleTerms"></A><FONT COLOR="#0000FF">Making Simple
+Terms</FONT></H2>
+
+<P><!AMZI_INDEX= Terms; lsMakeAtom; lsMakeStr; lsMakeInt; lsMakeFloat; lsMakeAddr>In
+addition to the string-based functions, the API provides specific functions
+to make simple terms. These are: </P>
+
+<DL>
+<DL>
+<DT><B>lsMakeAtom</B>(term_ptr, string) returns RC </DT>
+
+<DD>Make a term pointing to a Prolog atom created from the host language
+string. </DD>
+
+<DT><B>lsMakeStr</B>(term_ptr, string) returns RC </DT>
+
+<DD>Make a term pointing to a Prolog string created from the host language
+string. </DD>
+
+<DT><B>lsMakeInt</B>(term_ptr, int) returns RC </DT>
+
+<DD>Make a term pointing to a Prolog integer created from the host language
+integer. </DD>
+
+<DT><B>lsMakeFloat</B>(term_ptr, float) returns RC </DT>
+
+<DD>Make a term pointing to a Prolog double precision float created from
+the host language double precision float. </DD>
+
+<DT><B>lsMakeAddr</B>(term_ptr, address) returns RC </DT>
+
+<DD>Make a term pointing to a Prolog address from a host language pointer.
+The Prolog address is not a common Prolog term but is useful for passing
+addresses to Prolog that will at sometime be passed back. For example,
+a window handle could be passed to Prolog and then passed back by a Prolog
+predicate that needs to refer to that window. </DD>
+</DL>
+</DL>
+
+<P>Examples: </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">declare TERM t
+declare POINTER p
+...
+lsMakeAtom(&amp;t, &quot;hello&quot;)
+lsMakeStr(&amp;t, &quot;hello&quot;)
+lsMakeInt(&amp;t, 47)
+lsMakeFloat(&amp;t, 4.7)
+lsMakeAddr(&amp;t, p)
+...</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="HandlingVaryingPrologTypes"></A><FONT COLOR="#0000FF">Handling
+Varying Prolog Types</FONT></H2>
+
+<P><!AMZI_INDEX= Variables; Types; Terms; lsGetTerm; lsGetTermType>Because
+Prolog isn't typed, you sometimes need to determine the type of term returned
+to your host language program. lsGetTermType() performs that function.
+</P>
+
+<DL>
+<DL>
+<DT><B>lsGetTermType</B>(term) returns prolog_type </DT>
+
+<DD>The prolog_type is represented by constants which are defined for each
+particular environment. The prolog_type indicates whether the term is an
+atom, integer, string, float, structure, list, address or variable. </DD>
+</DL>
+</DL>
+
+<P>If the Prolog term is any thing except a structure, list or variable,
+you can get the value of the term using lsGetTerm(). (Structures and lists
+require more processing, and variables have no value.) </P>
+
+<DL>
+<DL>
+<DT><B>lsGetTerm</B>(term, host_type, address) returns RC </DT>
+
+<DD>The Prolog terms is mapped to the host_type of variable pointed to
+by the address. This is a generic function that can be used for a variety
+of data types. The host_type is represented by constants defined for each
+particular environment. This is a generic function that can be used for
+a variety of data types. The host language type can be an atom, string,
+integer, long, short, float, double, address, or term. </DD>
+</DL>
+</DL>
+
+<P>Some of these host language types are self-explanatory, such as string,
+integer. Both double and float refer to double precision floating point
+numbers (two terms for historical reasons). Some types represent specific
+Prolog types of information. These are: </P>
+
+<DL>
+<DL>
+<DT><B>term</B></DT>
+
+<DD>The Prolog term, which is just a pointer, is brought into the host
+language as is, usually for further processing. </DD>
+
+<DT><B>atom</B></DT>
+
+<DD>The Prolog term is an atom, which is brought in as its atomic number
+rather than as the string which it represents. </DD>
+
+<DT><B>address</B></DT>
+
+<DD>The Prolog term represents a host language address, which is brought
+directly in. </DD>
+</DL>
+</DL>
+
+<P>Only certain Prolog terms mix with host language types. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD><B>Prolog type</B></TD>
+
+<TD><B>Host language type</B></TD>
+</TR>
+
+<TR>
+<TD>atom</TD>
+
+<TD>string</TD>
+</TR>
+
+<TR>
+<TD></TD>
+
+<TD>atom</TD>
+</TR>
+
+<TR>
+<TD>string</TD>
+
+<TD>string</TD>
+</TR>
+
+<TR>
+<TD>integer</TD>
+
+<TD>integer</TD>
+</TR>
+
+<TR>
+<TD></TD>
+
+<TD>short</TD>
+</TR>
+
+<TR>
+<TD></TD>
+
+<TD>float</TD>
+</TR>
+
+<TR>
+<TD>address</TD>
+
+<TD>address</TD>
+</TR>
+
+<TR>
+<TD>variable</TD>
+
+<TD>term</TD>
+</TR>
+
+<TR>
+<TD>structure</TD>
+
+<TD>term</TD>
+</TR>
+
+<TR>
+<TD>list</TD>
+
+<TD>term</TD>
+</TR>
+</TABLE>
+
+<P>The following code can be used to indirectly print first &quot;hello&quot;
+and then the number 49; and directly indicate how term building and retrieval
+work. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">declare TERM t
+declare INTEGER I
+declare STRING s
+
+lsMakeAtom(&amp;t, &quot;hello&quot;)
+lsGetTerm(t, cSTR, s)
+print(s)
+
+lsMakeInt(&amp;t, 47)
+lsGetTerm(t, cINT, &amp;i)
+print(i)</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="ManipulatingStructures"></A><FONT COLOR="#0000FF">Manipulating
+Structures</FONT></H2>
+
+<P><!AMZI_INDEX= Structures; lsMakeFA; lsUnifyArg; lsGetFA; lsUnify; lsStrToTerm>A
+Prolog structure is composed of a functor and n arguments, where n is the
+arity of the structure. The following functions allow you to build and
+decompose Prolog structures. </P>
+
+<DL>
+<DL>
+<DT><B>lsMakeFA</B>(term_ptr, string, int) returns RC </DT>
+
+<DD>Creates a Prolog term representing a structure of arity int whose functor
+is created from the string. The arguments of the structure are all unbound
+variables. </DD>
+
+<DT><B>lsUnifyArg</B>(term_ptr, i_arg, host_type, host_var_addr) returns
+TF </DT>
+
+<DD>Unifies (or sets) the ith argument of a structure represented by term_ptr,
+which might have been retrieved from Prolog or might have been constructed
+using lsMakeFA(). The argument is unified with the host language variable
+pointed to by host_var_addr of type host_type. Because the host_type can
+itself be a term, this function can be used to build complex structures
+that have structures as arguments. </DD>
+</DL>
+</DL>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> lsUnifyArg
+returns a TF because it might fail when the host language value cannot
+be unified with the existing Prolog value of the argument, which might
+be the case if the term being worked on was obtained from Prolog rather
+than constructed using lsMakeFA().</I> </P>
+
+<DL>
+<DL>
+<DT><B>lsGetFA</B>(term, string, int_addr) returns RC </DT>
+
+<DD>Retrieves the functor and arity of a term pointing to a structure.
+The functor is mapped into a host language string and the arity into an
+integer. </DD>
+
+<DT><B>lsUnify</B>(term1, term2) returns TF </DT>
+
+<DD>Unifies the two terms, succeeding or failing as the unification succeeds
+or fails. </DD>
+</DL>
+</DL>
+
+<P>These functions can be used in conjunction with the string-based functions.
+For example, these two function calls are equivalent: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsMakeFA(&amp;term, &quot;sister&quot;, 2)
+lsStrToTerm(&amp;term, &quot;sister(X,Y)&quot;)</FONT></PRE>
+</UL>
+
+<P>The following example constructs the complex structure foo(bar(one,two),X,Y)
+using various techniques, and then deconstructs it. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">declare TERM tInner
+declare TERM tStruc
+declare TERM tArg
+declare STRING buf length 80
+declare INTEGER arity
+
+lsMakeFA(&amp;tInner, &quot;bar&quot;, 2)
+lsUnifyArg(&amp;tInner, 1, cATOM, &quot;one&quot;)
+lsMakeAtom(&amp;tArg, &quot;two&quot;)
+lsUnifyArg(&amp;tInner, 2, cTERM, &amp;tArg)
+
+lsMakeFA(&amp;tStruc, &quot;foo&quot;, 3)
+lsUnifyArg(&amp;tStruc, 1, cTERM, &amp;tInner)
+
+lsTermToStr(tStruc, buf, 80)
+print(&quot;Created structure:&quot;)
+print(buf)
+
+lsGetFA(tStruc, buf, &amp;arity)
+print(&quot;Got back &quot;)
+print(buf), print(&quot;/&quot;), print(arity)
+
+lsGetArg(tStruc, 1, cTERM, &amp;tArg)
+lsTermToStr(tArg, buf, 80)
+print(&quot;arg1 = &quot;), print(buf)</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Running this program produces these results, where H10 and H11 represent
+the variable arguments. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">Created structure: foo(bar(one,two),H10,H11)
+Got back foo/3
+arg1 = bar(one,two)</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="ManipulatingLists"></A><FONT COLOR="#0000FF">Manipulating
+Lists</FONT></H2>
+
+<P><!AMZI_INDEX= Lists; lsMakeList; lsPushList; lsPopList>Lists are also
+pointed to by Prolog terms. The term provides access to the head of the
+list and the tail, usually another list. Lists are manipulated from the
+host language just as they are from Prolog, by working from the head of
+the list. </P>
+
+<P>Being a term, a list can be built and included in a structure, and,
+conversely a list can include structures. </P>
+
+<P>The functions for manipulating lists are </P>
+
+<DL>
+<DL>
+<DT><B>lsMakeList</B>(list_term_ptr) returns RC </DT>
+
+<DD>Creates an empty list pointed to by list_term_ptr. </DD>
+
+<DT><B>lsGetHead</B>(list_term, prolog_type, value_ptr) returns RC</DT>
+
+<DD>Returns the term of type prolog_type which is the head of the list
+pointed to by list_term. The head of the list remains unchanged.</DD>
+
+<DT><B>lsGetTail</B>(list_term) returns term</DT>
+
+<DD>Returns the term representing the tail of the list pointed to by list_term.</DD>
+
+<DT><B>lsPushList</B>(list_term_ptr, term) returns RC </DT>
+
+<DD>Push the term as the head of the list pointed to by list_term_ptr.
+The current value of list_term_ptr becomes the tail of the new list, and
+list_term_ptr is updated to point to the new head of the list. </DD>
+
+<DT><B>lsPopList</B>(list_term_ptr, host_type, value_ptr) returns RC </DT>
+
+<DD>Pop the head of the list into the host variable pointed to by value_ptr
+of type host_type. Update list_term_ptr to point to the tail of the list.
+lsPopList returns OK (0) as long as there are more elements to be popped
+from the list. </DD>
+</DL>
+</DL>
+
+<P>Note that both lsPushList() and lsPopList() update the term pointed
+to by list_term_ptr. This allows host language loops to work through lists,
+either building them or taking them apart. If you want to preserve the
+head of a list, use lsGetHead() or make a copy of the term at list_term_ptr.
+</P>
+
+<P>The following example shows how to build a Prolog list from a host language,
+and then take the list apart. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">declare TERM tList, tHead;
+declare STRING buf length 80
+declare ARRAY[3] of STRING lines = (&quot;first&quot;, &quot;second&quot;, &quot;third&quot;)
+declare INTEGER i
+
+lsMakeList(&amp;tList)
+
+for (i=0; i&lt;3; i=i+1)
+        lsMakeAtom(&amp;tHead, lines[i]);
+        lsPushList(&amp;tList, tHead);
+        end_for_loop
+
+lsTermToStr(tList, buf, 80)
+write(&quot;Made list &quot;), write(buf)
+
+while ( OK==lsPopList(&amp;tList, TYPE_STRING, buf))
+        write(&quot;Popped &quot;), write(buf)
+        end_while_loop
+
+lsClose(cureng)</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>Running this program produces the results </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">Made list [third,second,first]
+Popped third
+Popped second
+Popped first</FONT></PRE>
+</UL>
+
+<H2><A NAME="AssertingAndRetracting"></A><FONT COLOR="#0000FF">Asserting
+and Retracting to and from the Prolog Database</FONT></H2>
+
+<P><!AMZI_INDEX=Asserting; Retracting; Dynamic Database; Terms; lsAsserta; lsAssertz; lsAssertaStr; lsAssertzStr; lsRetract; lsRetractStr>The
+Prolog dynamic database keeps track of Prolog terms that have been either
+consulted or dynamically asserted. A host language program can assert and
+retract terms to and from the dynamic database for later use by either
+Prolog or the host language. </P>
+
+<DL>
+<DL>
+<DT><B>lsAsserta</B>(term) returns RC </DT>
+
+<DT><B>lsAssertz</B>(term) returns RC </DT>
+
+<DD>Asserts term as either the first (lsAsserta) or last (lsAssertz) term
+recorded under its functor. </DD>
+
+<DT><B>lsAssertaStr</B>(string) returns RC </DT>
+
+<DT><B>lsAssertzStr</B>(string) returns RC </DT>
+
+<DD>Asserts string as either the first (lsAssertaStr) or last (lsAssertzStr)
+term recorded under its functor. </DD>
+
+<DT><B>lsRetract</B>(term) returns TF </DT>
+
+<DD>Retracts term from the dynamic database. </DD>
+
+<DT><B>lsRetractStr</B>(string) returns TF </DT>
+
+<DD>Retracts term represented by string s from the dynamic database. </DD>
+</DL>
+</DL>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> Remember,
+for your Prolog code you must declare anything asserted to be external
+if you are using Prolog modules. Otherwise, the compiler will not correctly
+compile references to the dynamic predicates and an error will occur when
+attempting to load the program.</I> </P>
+
+<H2><A NAME="ConsultingPrologSource"></A><FONT COLOR="#0000FF">Consulting
+Prolog Source Code</FONT></H2>
+
+<P><!AMZI_INDEX=Consulting; Source Files; pro Files>You can also consult
+or reconsult source files of Prolog code. There is no special function
+for this, but it can be done by simply issuing a Prolog goal to consult
+or reconsult a file, just as you would from Prolog. You can also load separate
+modules of compiled Prolog code if desired. </P>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsExecStr(term, &quot;consult(ducks)&quot;)
+lsExecStr(term, &quot;reconsult(ducks)&quot;)
+lsExecStr(term &quot;load(ducks)&quot;)</FONT></PRE>
+</UL>
+
+<P>If you wish to use these functions, you must have first loaded any XPL
+file. This is because .xpl Files are linked with AMZILIB.PLM, which contains
+some of Amzi! Prolog's built-in predicates, such as consult, reconsult
+and load. </P>
+
+<P>In some cases you might be consulting additional files as part of your
+application, but in other cases you might wish to consult your main application
+files rather than compiling them, during development for example. In this
+case you can use the essentially blank .xpl file, AMZI.xpl as the first
+file to load. This loads the amzilib predicates for you and lets you use
+consult for your application files. </P>
+
+<P>Example </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsInit(&quot;&quot;)
+lsLoad(&quot;amzi&quot;)
+lsExecStr(term, &quot;consult(ducks)&quot;)</FONT></PRE>
+</UL>
+
+<H2><A NAME="MultipleEngines"></A><FONT COLOR="#0000FF">Multiple Engines</FONT>
+</H2>
+
+<P>You can have multiple, independent Prolog engines running at the same
+time. This feature enables the following types of applications.</P>
+
+<UL>
+<LI>You can have different Prolog modules active at the same time in an
+event-driven program. </LI>
+
+<LI>You can implement server applications that service multiple clients,
+where each client has its own copy of a Prolog logic base. </LI>
+
+<LI>You can implement agent architectures, with multiple intelligent agents
+that either communicate with each other or communicate via a central agent
+dispatcher. </LI>
+</UL>
+
+<P><B>LSAPI</B> - From the LSAPI, you simply call lsInit() once for each
+engine. lsInit() returns the engine ID, which is then used as a parameter
+in subsequent LSAPI calls. Each engine must be closed individually as well.
+See the C sample, Pets, for an example.</P>
+
+<P><B>C++</B> - Using the new Logic Server class, CLogicServer, you simply
+create new instances for each engine. The engine ID is managed within the
+class for you. See the C++ sample, Pets, for an example. </P>
+
+<P><B>Multiple Threads</B> - You can run multiple engines simultaneously
+by starting them in separate threads. See the C++ sample, RubikMT, for
+an example. </P>
+
+<P><B>Delphi</B> - Simply create multiple instances of the Logic Server
+component. The class maintains the engine ID. </P>
+
+<P><B>Java</B> - Simply create multiple instances of the Logic Server class.
+The class maintains the engine ID. </P>
+
+<P><B>Visual Basic</B> - The Visual Basic wrapper keeps the current engine
+ID in a global variable. After initializing an engine, you can retrieve
+and save its engine ID with GetCurrentEngineLS(). You can then use the
+engine IDs from different engines to set the current engine using SetCurrentEngineLS().</P>
+
+<H2><A NAME="WritingExtendedPredicates"></A><FONT COLOR="#0000FF">Writing
+Extended Predicates</FONT></H2>
+
+<P><!AMZI_INDEX= Extended Predicates; C; C++; Delphi; Java>To call a host
+language from Prolog, you must create extended predicates. These behave
+just like any other built-in Prolog predicates, except you have written
+them. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> Only host
+languages that support pointers or virtual machine extensions, such as
+C/C++, Delphi or Java, can be used for implementing extended predicates.</I>
+</P>
+
+<P>To add an extended predicate you must: </P>
+
+<OL>
+<LI>Define a host language function that will implement the predicate.
+</LI>
+
+<LI>Inform the Logic Server during initialization of the name and arity
+of the Prolog predicate and the address of the host language function that
+implements it. </LI>
+</OL>
+
+<H3><A NAME="DefiningExtendedPredicates"></A><FONT COLOR="#000080">Defining
+Extended Predicates</FONT></H3>
+
+<P><!AMZI_INDEX=  Extended Predicates; Engine ID; lsGetParm; lsGetParmType; lsStrParmLen; lsUnifyParm>A
+function that implements an extended predicate takes only one argument,
+and that is the engine ID of the engine that called the predicate. It can
+then use that argument when calling other Logic Server functions. (The
+Logic Server interface for some host language implementations hides the
+engine ID parameter.) </P>
+
+<P>To manipulate the parameters of the extended predicate, the function
+uses a number of Logic Server functions that provide access to the Prolog
+parameters. These let the function </P>
+
+<UL>
+<LI>Test the Prolog type of a parameter, including whether it is bound
+or a variable, </LI>
+
+<LI>Map Prolog parameters into host language variables, and </LI>
+
+<LI>Unify host language variables with Prolog parameters. </LI>
+</UL>
+
+<P>These functions provide the flexibility for the extended predicate to
+behave like a Prolog predicate, that is, it can respond to different types
+of arguments and behave differently depending on which parameters are bound
+and which ones are not. </P>
+
+<P>The function must return a true or false, just as built-in predicates
+do. </P>
+
+<P>Like most built-in predicates, extended predicates simply fail on backtracking.
+</P>
+
+<P>The following functions are intended for use within extended predicates.
+</P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> Notice that
+they include the word 'Parm' in their names, indicating that they are working
+with the Prolog parameters list. They are similar to, but not to be confused
+with, arguments with the word 'Arg' in them, which are used for extracting
+arguments from Prolog structures.</I> </P>
+
+<DL>
+<DL>
+<DT><B>lsGetParm</B>(i_parm, host_type, var_addr) returns RC </DT>
+
+<DD>Gets the ith parameter and puts it in the host variable at var_addr
+of type host_type. </DD>
+
+<DT><B>lsGetParmType</B>(i_parm) returns prolog_type </DT>
+
+<DD>Returns the Prolog type of the ith parameter. </DD>
+
+<DT><B>lsStrParmLen</B>(i_parm) returns int </DT>
+
+<DD>Returns the length of the string/atom at the ith parameter, so you
+can decide how to deal with it. </DD>
+
+<DT><B>lsUnifyParm</B>(i_parm, host_type, var_addr) returns TF </DT>
+
+<DD>Unifies the ith parameter with the host variable at var_addr of type
+host_type. Because lsUnifyParm is often used to set a parameter, you should
+make sure you correctly specify whether you want to use the host type for
+strings or atoms. Each is represented in the host language as a string,
+but the Prolog result can be either a Prolog atom or a Prolog string depending
+on the host type used. </DD>
+</DL>
+</DL>
+
+<H3><A NAME="InitializingtheExtendedPredica"></A><FONT COLOR="#000080">Initializing
+the Extended Predicates</FONT></H3>
+
+<P><!AMZI_INDEX=  Extended Predicates; lsAddPred; lsInitPreds; lsInitLSX>Once
+you have defined a number of functions, you need to let the Logic Server
+know about them. This is done after the call to lsInit in one of three
+different ways. </P>
+
+<DL>
+<DL>
+<DT><B>lsAddPred</B>(functor, arity, function_ptr) returns RC </DT>
+
+<DD>Maps the Prolog predicate of functor/arity to the host language function.
+Must be called once for each extended predicate. </DD>
+
+<DT><B>lsInitPreds</B>(pred_table_ptr) returns RC </DT>
+
+<DD>Uses a host language table that maps Prolog predicates to functions.
+Called once to initialize all of the predicates in the table. </DD>
+
+<DT><B>lsInitLSX</B>(ptr) returns RC </DT>
+
+<DD>Causes the Logic Server to check the .cfg file for a lsxload parameter.
+It then automatically loads any .LSXs (DLLs containing extended predicates)
+listed in the .cfg file. </DD>
+</DL>
+</DL>
+
+<P>You can use multiple sources of extended predicates, as long as they
+are all initialized before a .xpl file is loaded. That is, predicate initialization
+must occur between the call to lsInit and the call to lsLoad. </P>
+
+<H3><A NAME="ExtendedPredicateExample"></A><FONT COLOR="#000080">Example</FONT></H3>
+
+<P><!AMZI_INDEX=  Extended Predicates; make_array; array_elem; delete_array>The
+following pseudo-code defines three extended predicates that implement
+simple array-processing in Prolog. (Conventional array processing is not
+a standard feature in Prolog.). For simplicity, the arrays are one-dimensional
+and only contain integers. Further there is only simple error checking
+and the result of an error is simply a return of false. (See the section
+on error handling for more complex error recovery in extended predicates.)
+</P>
+
+<P>The three predicates are </P>
+
+<DL>
+<DL>
+<DT><B>make_array(ID, Size)</B> </DT>
+
+<DD>Initialize a new array of size Size, and returns its ID for use in
+other calls. Size must be bound to and integer, and ID and unbound variable.
+</DD>
+
+<DT><B>array_elem(ID, Index, Value)</B> </DT>
+
+<DD>Depending on whether Value is an unbound variable or an integer, this
+predicate will retrieve the Index value of the array or set the value.
+ID must be bound to a valid array ID, and Index to an integer within the
+bounds of the array. </DD>
+
+<DT><B>delete_array(ID)</B> </DT>
+
+<DD>Free the memory used to allocate the specified array. </DD>
+</DL>
+</DL>
+
+<P>This example illustrates the use of host language addresses as Prolog
+terms, and the implementation of extended predicates that vary their behavior
+based on the input arguments. </P>
+
+<P>make_array is implemented by pMakeArray, array_elem is implemented by
+pArrayElem, and delete_array is implemented by pDeleteArray. (&amp; indicates
+an address, which is not needed in all environments.) </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">function pMakeArray(eid) returns TF
+        declare POINTER to INTEGER iArray
+        declare INTEGER iSize
+        declare TERM t
+
+        lsGetParm(eid, 2, HOST_INT, &amp;iSize)
+        iArray = allocate_memory(iSize * sizeof(INTEGER))
+        lsMakeAddr(eid, &amp;t, iArray)
+        lsUnifyParm(eid, 1, HOST_TERM, &amp;t)
+
+        return TRUE
+
+function pArrayElem(eid) returns TF
+        declare POINTER to INTEGER iArray
+        declare INTEGER ith
+        declare INTEGER iElem
+        declare TERM t
+        declare PROLOG TYPE pt
+
+        lsGetParm(eid, 1, HOST_ADDR, &amp;iArray)
+        lsGetParm(eid, 2, HOST_INT, &amp;ith)
+        pt = lsGetParmType(eid, 3)
+        if (pt == PROLOG_INT)
+                lsGetParm(eid, 3, HOST_INT, &amp;iElem)
+                iArray[ith] = iElem
+        else if (pt == PROLOG_VAR)
+                lsMakeInt(eid, &amp;t, iArray[ith])
+                lsUnifyParm(eid, 3, HOST_TERM, &amp;t)
+        else
+                return FALSE
+
+        return TRUE
+
+function pDeleteArray(eid) returns TF
+        declare POINTER to INTEGER iArray
+
+        lsGetParm(eid, 1, HOST_ADDR, &amp;iArray)
+        free_memory(iArray)
+
+        return TRUE</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>If these functions were part of a host language/Prolog application,
+they could be initialized like this </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">lsAddPred(&quot;make_array&quot;, 2, pMakeArray)
+lsAddPred(&quot;array_elem&quot;, 3, pArrayElem)
+lsAddPred(&quot;delete_array&quot;, 1, pDeleteArray)</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>or like this using a table </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">declare function pMakeArray(ENGid) returns TF
+declare function pArrayElem(ENGid) returns TF
+declare function pDeleteArray(ENGid) returns TF
+
+declare PRED_INIT table arrayPreds =
+        (&quot;make_array&quot;, 2, pMakeArray)
+        (&quot;array_elem&quot;, 3, pArrayElem)
+        (&quot;delete_array&quot;, 1, pDeleteArray)
+        (null, 0, null)
+...
+lsInitPreds(arrayPreds)</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>They could also be included in a .LSX file (see next section), and if
+they were loaded for use by the Prolog listener, the following Prolog program
+</P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">main :-
+        make_array(A, 5),
+        array_elem(A, 3, 9),
+        array_elem(A, 4, 16),
+        array_elem(A, 3, X),
+        array_elem(A, 4, Y),
+        write($element 3 is $), write(X), nl,
+        write($element 4 is $), write(Y), nl.</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>would produce this output </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">element 3 is 9
+element 4 is 16</FONT></PRE>
+</UL>
+
+<H2><A NAME="ExtendedPredicateLibraries"></A><FONT COLOR="#0000FF">Extended
+Predicate Libraries (LSXs)</FONT></H2>
+
+<P><!AMZI_INDEX= Extended Predicate Libraries; LSXs; Extended Predicates; LSX Files; InitPreds; lsAddPred; lsInitPreds>Extended
+predicates can be included as part of a particular application, or they
+can be implemented in special DLLs called .LSXs (Logic Server Extensions).
+LSXs can be made available to any application, including the IDE. This
+means you can use your extended predicates directly from the Amzi! IDE.
+</P>
+
+<P>An LSX is implemented using the host language tools for generating a
+DLL. It contains extended predicate definitions as explained in the previous
+section. </P>
+
+<P>It contains one additional entry point, which is called by the Logic
+Server to initialize its predicates. This entry point must be exported
+by the LSX DLL. </P>
+
+<DL>
+<DL>
+<DT><B>lsInitPreds</B>(pointer) returns RC </DT>
+
+<DD>A user written function, called by the Logic Server, that initializes
+the functions defined in the .LSX. The pointer argument is not used by
+the Logic Server, but can be used by the application to pass additional
+information to the LSX. </DD>
+</DL>
+</DL>
+
+<P>The user implementation of InitPreds() will call either lsAddPred or
+lsInitPreds to initialize the extended predicates. </P>
+
+<H3><A NAME="UsingLSXs"></A><FONT COLOR="#000080">Using LSXs</FONT></H3>
+
+<P><!AMZI_INDEX= LSXs; AMZI5.INI; A5IDL.INI>A host language application
+that intends to use an LSX file needs to do two things. </P>
+
+<UL>
+<LI>Tell the Logic Server to initialize LSX files </LI>
+
+<LI>Include the desired LSX file in the .cfg file </LI>
+</UL>
+
+<P>The function call lsInitLSX(), described in the previous section, tells
+the Logic Server to look at the .cfg file parameter, LSXLOAD, and load
+the LSX files listed in it. (If there are none, then nothing happens.)
+</P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> The Amzi! IDE, which 
+  is a host language application that calls the Logic Server, has a call to lsInitLSX() 
+  in it, so you can gain access to LSXs from the IDE by simply listing them in 
+  the amzi.cfg.</I> </P>
+
+<H3><A NAME="LSXExample"></A><FONT COLOR="#000080">Example</FONT></H3>
+
+<P><!AMZI_INDEX= Extended Predicates; LSXs; AMZI5.INI>The following code
+can be added to the program implementing array handling predicates, assuming
+a table defining the predicates. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">function InitPreds(EngID, pointer) returns RC
+        lsInitPreds(EngID, arrayPreds)
+        return 0</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>The program can then be compiled, using the environment-specific tools for 
+  creating a dynamic/shared libary (.dll or .so). The library should be renamed 
+  to use a .LSX extension. </P>
+
+<P>Code for the xarray sample is included in the samples/lsx directory with a 
+  makefile. The completed LSXs for both are pre-installed in the /amzi/bin directory 
+  so they can be used from the IDE by simply turning them on in amzi.cfg. </P>
+
+<P>To load the xarray.lsx, add this line to amzi.cfg. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsxload = xarray</FONT></PRE>
+</UL>
+
+<P>Other applications can either load LSX files from the .cfg file or explicitly
+load the desired files. To load from the .cfg file, use </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsInitLSX()</FONT></PRE>
+</UL>
+
+<P>To load explicitly, use </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsAddLSX(&quot;xarray&quot;)</FONT></PRE>
+</UL>
+
+<H2><A NAME="CapturingPrologI/O"></A><FONT COLOR="#0000FF">Capturing Prolog
+I/O</FONT></H2>
+
+<P><!AMZI_INDEX= Prolog I/O; I/O Streams>In some cases you will want to
+write a host language shell around Prolog code that captures the normal
+Prolog I/O streams. (Actually we needed this feature to implement the Windows
+IDE, but maybe it's of use to you as well.) </P>
+
+<P>To do this you must </P>
+
+<UL>
+<LI>Create functions that perform basic I/O services, </LI>
+
+<LI>Map those functions to Prolog's I/O for the special stream ID, 3, and
+</LI>
+
+<LI>Set stream 3 to be the stream used for standard input and output. </LI>
+</UL>
+
+<H3><A NAME="TheIOFunctions"></A><FONT COLOR="#000080">I/O Functions</FONT></H3>
+
+<P><!AMZI_INDEX= I/O Functions; I/O Streams>There are two input and two
+output functions. The output functions correspond to the C functions putc()
+and puts(). The input functions correspond to the C functions of getc and
+ungetc. </P>
+
+<P>The prototypes for your functions should follow this pattern: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">int my_getc(FILE*);
+int my_ungetc(int, FILE*);
+int my_puts(char*);
+int my_putc(int);</FONT></PRE>
+</UL>
+
+<P>There are some anomalies that you need to be aware of if you intend
+to mimic the behavior of a Prolog listener. </P>
+
+<UL>
+<LI>The FILE* argument on the two 'get' functions is for internal compatibility
+and is not used. </LI>
+
+<LI>The first argument to unget is not always provided, it is better if
+your functions remember the last character read. </LI>
+
+<LI>The puts function should NOT automatically provide a new line character.
+</LI>
+</UL>
+
+<P>You also need to define an extended predicate, <b>keyb/1</b>, that returns 
+  keystrokes if you want your Prolog code to use the predicates get0_noecho and 
+  respkey. (See example.) </P>
+
+<H3><A NAME="ConnectingYourFunctions"></A><FONT COLOR="#000080">Connecting
+Your Functions</FONT></H3>
+
+<P><!AMZI_INDEX= Stream 3; I/O Streams; lsSetInput; lsSetOutput>These API
+functions let you inform the Logic Server of the functions to use for stream
+3 I/O. </P>
+
+<DL>
+<DL>
+<DT><B>lsSetInput</B>(my_getc, my_ungetc) returns RC </DT>
+
+<DD>Passes the function pointers for your getc and ungetc routines to the
+Logic Server. </DD>
+
+<DT><B>lsSetOutput</B>(my_putc, my_puts) returns RC </DT>
+
+<DD>Passes the function pointers for your putc and puts routines to the
+Logic Server. </DD>
+</DL>
+</DL>
+
+<H3><A NAME="MakingStreamtheDefault"></A><FONT COLOR="#000080">Making Stream
+3 the Default</FONT></H3>
+
+<P><!AMZI_INDEX= Stream 3; I/O Streams; lsSetStream>To let Prolog know
+the I/O is channeled to your functions, you must also set the current stream
+to the reserved stream, 3, indicating function I/O. This is done using
+</P>
+
+<DL>
+<DL>
+<DT><B>lsSetStream</B>(Stream, ID) returns RC </DT>
+
+<DD>Sets the Stream, specified by a defined constant, to the ID specified.
+The ID is a normal stream ID, that is a small integer. See the defined
+constants for your environment for the stream specifiers. </DD>
+</DL>
+</DL>
+
+<P>The following statements set all of the I/O streams to use the functions
+defined for stream 3. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">lsSetStream(CUR_OUT, 3)
+lsSetStream(CUR_IN, 3)
+lsSetStream(CUR_ERR, 3)
+lsSetStream(USER_OUT, 3)
+lsSetStream(USER_IN, 3)
+lsSetStream(USER_ERR, 3)</FONT></PRE>
+</UL>
+
+<P>Once this is done, normal Prolog reads and writes will go through the
+I/O functions specified in the lsSetInput and lsSetOutput functions. (See
+the Prolog reference for a discussion of Prolog streams.) </P>
+
+<H3><A NAME="RedirectingIOStreamsExample"></A><FONT COLOR="#000080">Redirecting
+I/O Streams Example</FONT></H3>
+
+<P><!AMZI_INDEX=Redirecting I/O Streams; I/O Streams>The following example
+shows how to redirect the I/O streams to run DOS Prolog programs from a
+Borland EasyWin application. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">#include &lt;stdio.h&gt;
+/* Borland library for getch() */
+#include &lt;conio.h&gt;
+
+/* Define my_getc, my_ungetc, my_putc, my_puts in terms of 
+   getchar and putchar. Define predicate keyb/1 using getch().
+*/
+
+char unget_buf[128];
+int num_buffered = 0;
+int last_read = 0;
+
+int my_getc()
+{
+        if (num_buffered  0) {
+                return (last_read = 
+                        unget_buf[num_buffered--]);
+}
+        else return (last_read = getchar());
+}
+
+void my_ungetc()
+{
+        unget_buf[++num_buffered] = last_read;
+}
+
+void my_puts(const char *s)
+{
+        for (int i=0; s[i]; i++) putchar(s[i]);
+}
+
+void my_putc(int c)
+{
+        putchar(c);
+}
+
+// Definition for predicate keyb/1
+
+TF p_keyb(ENGid eid)
+{
+        int a;
+        a = getch();
+        if (! lsUnifyParm(eid, 1, cINT, &amp;a))
+                return FALSE;
+        return TRUE;
+}</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H2><A NAME="ErrorHandling"></A><FONT COLOR="#0000FF">Error Handling</FONT></H2>
+
+<P><!AMZI_INDEX=Error Handling>Inside the Prolog engine, error handling
+is implemented using the C++ catch/throw mechanism, integrated with the
+ISO-standard Prolog catch/throw mechanism. Prolog code can throw errors,
+which, if uncaught by a Prolog catch, will be caught by the engine's error
+handler. Likewise, the Prolog catch can be used to catch system errors
+thrown by the engine.</P>
+
+<P>There are eight types of errors during Prolog execution. </P>
+
+<UL>
+<LI><B>Abort</B> - These shouldn't happen, but when they do they issue
+a message and stop the application. </LI>
+
+<LI><B>API</B> - These are errors that occur in parameter passing and processing
+API&nbsp;calls.. </LI>
+
+<LI><B>Exec</B> - These are problems with a predicate during Prolog execution,
+such as a bad argument to a built-in function.</LI>
+
+<LI><B>Fatal</B> - A critical Prolog resource is exhausted, so Prolog execution
+must be stopped. Nothing else is damaged, however, and Prolog can be reset
+and rerun. </LI>
+
+<LI><B>Internal</B> - These shouldn't happen, but when they do they issue
+a message and stop the application. </LI>
+
+<LI><B>Init </B>- These are problems that occur when initializing the Prolog
+engine, log files and LSXs. </LI>
+
+<LI><B>Load </B>- These are problems that occur when loading an .xpl or
+PLM file. </LI>
+
+<LI><B>Read </B>- These are problems with reading a term from a user, file
+or string. </LI>
+</UL>
+
+<H3><A NAME="PrologErrorHandling"></A><FONT COLOR="#000080">Prolog Error
+Handling</FONT></H3>
+
+<P><!AMZI_INDEX=Error Handling; error/2>'Read' and 'exec' errors are passed
+to the Prolog error handler via a 'throw'. You can handle these errors
+by using <B>catch/3</B>. The term 'thrown' is of the form:</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">error(Error, AttributeList)</FONT></PRE>
+</UL>
+
+<P>Error is either:</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">syntax_error
+system_error</FONT></PRE>
+</UL>
+
+<P>The attribute list contains a list of entries that further describe
+the error. It may contain any of these entries:</P>
+
+<UL>
+<DT><B>type</B></DT>
+
+<DD>Error type is one of abort, api, exec, fatal, internal, init, load
+or read.</DD>
+
+<DT><B>rc</B></DT>
+
+<DD>Error number.</DD>
+
+<DT><B>message</B></DT>
+
+<DD>Error message text.</DD>
+
+<DT><B>predicate</B></DT>
+
+<DD>The name and arity of the predicate that was running when the error
+occurred.</DD>
+
+<DT><B>callstack</B></DT>
+
+<DD>The stack of predicates that were called prior to the current predicate.</DD>
+
+<DT><B>read_buffer</B></DT>
+
+<DD>For read errors, the text in which the read error occurred.</DD>
+
+<DT><B>read_file</B></DT>
+
+<DD>For read errors from a file, the file name the erroneous text was read
+from.</DD>
+
+<DT><B>line_number</B></DT>
+
+<DD>For read errors from a file, the line number in the file where the
+read error occurred.</DD>
+</UL>
+
+<P>For example, a read error might throw the following term:</P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">error(syntax_error,
+[
+type = read,
+rc = 619,
+message = Unexpected operator,
+predicate = read_/2,
+callstack = + fopen/3;- lbLoad/2;- sendInitialForm/0;+ sendInitialForm/0;- once/1;+ cgiMain/0;- once/1;- catch/3;+ catch/3;- main/0;+ main/0;--- top of stack ---,
+read_buffer = if biopsy_performed = $$ no **NEAR HERE** then general = gen_need_biopsy,
+read_file = diagnosis.lb,
+line_number = 145
+])</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<P>You can see how errors are caught by experimenting in the Prolog listener.</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- catch(read(X), E, writeq(E)).   % create a read error
+x badop y.
+error(syntax_error,
+  [type = read,
+   rc = 407,
+   message = $Unexpected operator$,
+   predicate = $read_/2$,
+   callstack = $- catch/3;+ catch/3;--- top of stack ---$,
+   read_buffer = $x badop **NEAR HERE**  y$,
+   read_file = $$,
+   line_number = 0])</FONT>
+</PRE>
+</UL>
+
+<P>The attribute list provides flexibility for future enhancements, and
+can be easily analyzed using a version of the classic member/2 predicate.
+(There is a copy in the list library, LIST.PLM.) For example, here is the
+error handling code used in the console version of the Amzi! listener.
+top$loop is a repeat/fail loop that gets a query in X and calls listen$(X)
+to interpret it. </P>
+
+<TABLE BORDER=1 CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">top$loop(Prompt) :-
+   ...
+   catch(listen$(X), E, except$(E)).
+
+except$(error(Err, Attrs)) :-
+  member(rc=RC, Attrs),
+  member(type=TYPE, Attrs),
+  member(message=MSG, Attrs),
+  write(Err), tab(1), write(RC), nl, write(MSG), nl,
+  member(predicate=PRED, Attrs),
+  write($While executing: $), write(PRED), nl,
+  (TYPE==read -&gt;
+      member(read_buffer=RB, Attrs),
+      write($Read buffer: $), write(RB), nl,
+      member(read_file=RF, Attrs),
+      (RF == $$ -&gt; true;
+        write($File: $), write(RF),
+        member(line_number=LN, Attrs),
+        write($ Line $), write(LN), nl)
+    ; true),
+  !,
+  what$next(TYPE).
+except$(E) :-
+  write($Unexpected Catch: $),
+  writeq(E), nl,
+  fail.   % fail continues the repeat/fail listener loop.
+
+% what$next - disposition after exception, success ends the listener
+%  repeat/fail loop, failure continues it.
+
+what$next(abort) :-
+  !, write($Aborting listener\n$).
+what$next(internal) :-
+  !, write($Internal error, aborting listener, contact Amzi! technical support\n$).
+what$next(fatal) :-
+  !, write($Prolog resource exhausted, stacks and heaps reinitialized.\n$),
+  fail.
+what$next(_) :-
+  fail.</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+
+<H3><A NAME="LSAPIErrorHandling"></A><FONT COLOR="#000080">LSAPI Error
+Handling</FONT> </H3>
+
+<P><!AMZI_INDEX = lsErrRaise; lsGetExceptType; lsGetExceptRC; lsGetExceptMsg; lsGetExceptReadBuffer;
+lsGetExceptCallStack>When
+used from C++ or another object-oriented language, all errors from LSAPI
+functions are thrown using the Logic Server exception class. When used
+from&nbsp;C, Visual Basic or other procedural languages, the LSAPI functions
+return error codes. </P>
+
+<P>You can raise an error (typically from an extended predicate) by using
+lsErrRaise:</P>
+
+<UL>
+<DT><B>lsErrRaise</B>(term)</DT>
+
+<DD>This throws an exception, which will either be caught by Prolog, or
+reflected in the return code passed back to the host language calling program.
+The string is interpreted as a Prolog term. </DD>
+</UL>
+
+<P>When a return code, either RC or TF, indicates an error occurred, there
+are four LSAPI functions that can be used to get additional information
+about the error. </P>
+
+<UL>
+<DT><B>lsGetExceptType</B>() returns ExceptionType</DT>
+
+<DD>Returns the error type. </DD>
+
+<DT><B>lsGetExceptRC</B>() returns RC</DT>
+
+<DD>Returns the error code. </DD>
+
+<DT><B>lsGetExceptMsg</B>(message_buffer, length)</DT>
+
+<DD>Copies the error message to message_buffer which is length bytes long.
+</DD>
+
+<DT><B>lsGetExceptReadBuffer</B>(read_buffer, length)</DT>
+
+<DD>For read errors, copies the read buffer to read_buffer which is length
+bytes long.</DD>
+
+<DT><B>lsGetExceptCallStack</B>(stack_buffer, length)</DT>
+
+<DD>Returns an approximation of the call stack at the time of error. Each
+layer is separated by a semicolon.</DD>
+
+<DT><B>lsGetExceptReadFileName</B>(file_name, length)</DT>
+
+<DD>Returns the name of the file being read for a read error.</DD>
+
+<DT><B>lsGetExceptLineno</B>()</DT>
+
+<DD>Returns the line number near where a read error occurred.</DD>
+</UL>
+
+<P>See the C samples for examples of LSAPI error handling. See amzi.h
+for full details of the functions supported.</P>
+
+<H3><A NAME="CPPErrorHandling"></A><FONT COLOR="#000080">C++ Error Handling</FONT>
+</H3>
+
+<P><!AMZI_INDEX = C++; try; catch>When an exception occurs in the engine,
+and the engine was accessed from the C++ CLogicServer class, then an instance
+of CLSException is thrown.</P>
+
+<P>When catching Logic Server exceptions, it is better to catch a reference
+to the exception object. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">try { // Logic Server stuff }
+catch(CLSException &amp;e) { // recovery stuff }</FONT></PRE>
+</UL>
+
+<P>Class CLSException has a number of member functions that let you get
+details about the exception. See the header file definition of CLSException
+in AMZI.H for exact details of arguments and return values. </P>
+
+<H3><A NAME="HostLanguageErrorHandling"></A><FONT COLOR="#000080">Host
+Language Error Handling</FONT> </H3>
+
+<P>The other host language environments are derived from the LSAPI inteface.
+Their error handling is basically the same, but the functions that get
+information about errors have been replaced with functions that map to
+the LSAPI functions described above. </P>
+
+<H3><A NAME="BreakHandling"></A><FONT COLOR="#000080">Break Handling</FONT></H3>
+
+<P><!AMZI_INDEX= [Ctrl-Break]; Break Handling; C++>A break handler is set
+and unset upon entry to and exit from Prolog. When the user presses [Ctrl-Break]
+the Prolog engine stops at the next good stopping point, which is when
+it's about to call a built-in predicate. The break is treated as an Exec
+error, so the user can decide what to do next. (Not enabled on the Alpha
+AXP, breaks simply exit the program.) </P>
+
+<P>This way, any break handling set up in the C/C++ program is active when
+the C/C++ program is in control, and Prolog break handling is active when
+Prolog is in control. </P>
+
+<H3><A NAME="ReturnCodes"></A><FONT COLOR="#000080">Return Codes</FONT></H3>
+
+<P><!AMZI_INDEX=  Errors; Return Codes; lsUnifyArg; lsCall; lsREdo>Prolog
+error handling is established any time you start the Prolog inference engine.
+The functions which do this are the non-unification functions that return
+a TF. For example, lsCall() and lsRedo() both invoke the inference engine
+and both return TF. lsUnifyArg() also returns a TF, but it only uses the
+unification algorithm, not the full inference engine. </P>
+
+<H2><A NAME="MiscellaneousAPIFunctions"></A><FONT COLOR="#0000FF">Miscellaneous
+Functions</FONT></H2>
+
+<P><!AMZI_INDEX= Miscellaneous Functions; lsGetVersion; lsSetCommandArgs; C++>There
+are a few functions that pass additional information back and forth between
+Prolog and C. These are </P>
+
+<DL>
+<DL>
+<DT><B>lsGetVersion</B>(STRptr s) returns RC </DT>
+
+<DD>Get the current version into the string s. </DD>
+
+<DT><B>lsSetCommandArgs</B>(int argc, char** argv) returns RC </DT>
+
+<DD>Pass the command line arguments to Prolog so they can be processed
+by the command_line/1 Amzi! built-in predicate. </DD>
+</DL>
+</DL>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P>&nbsp;</P>
+
+</BODY>
+</HTML>

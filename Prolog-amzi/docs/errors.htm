@@ -1,0 +1,609 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Error Codes</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<H1><FONT COLOR="#D2AA00">Error Codes</FONT></H1>
+
+<H2>
+<HR WIDTH="100%"></H2>
+
+<H2><FONT COLOR="#0000FF">Initialization Errors</FONT></H2>
+
+<DL> 
+  <DT>100, INIT, Unknown .cfg parameter: %s </DT>
+  <DD>The parameter %s is not a valid Amzi! configuration parameter. It was encountered 
+    in either an Amzi! configuration file (.cfg) or an configurationstring passed 
+    by a host language application during Logic Server initialization. </DD>
+  <DT>101, INIT, Unable to open log file: %s </DT>
+  <DD>An attempt to open the logfile %s failed. </DD>
+  <DT>102 , INIT, Attempt to open log %s before closing log %s </DT>
+  <DD>The application tried to open logfile %s when is was already open. </DD>
+  <DT>103 , INIT, An operating system error, %d, occurred when calling InitPreds() 
+    for LSX %s. </DT>
+  <DD>Once a Logic Server Extension (.lsx) has been loaded by the Logic Server, 
+    the Logic Server looks for and calls the function InitPreds() which should 
+    be defined in the LSX. This error message indicates that the operating system 
+    returned an error code, %d, when attempting to get the address of InitPreds() 
+    in the LSX. This error code indicates there was a problem other than the most 
+    common problem of not being able to find the InitPreds() entry point. </DD>
+  <DT>104, INIT, The initialization procedure InitPreds() was not found for LSX 
+    %s. </DT>
+  <DD>Once a Logic Server Extension (.lsx) has been loaded by the Logic Server, 
+    the Logic Server looks for and calls the function InitPreds() which should 
+    be defined in the LSX. This error message indicates that the LSX was successfully 
+    loaded, but the Logic Server could not find the InitPreds() entry point.<br>
+    <br>
+    The problem could be simply that InitPreds() is not defined in the LSX, or, 
+    if it is defined, that it is not defined correctly. Look at the sample LSXs 
+    for your environment and make sure that InitPreds() in your LSX is defined 
+    the same way. </DD>
+  <DT>105, INIT, An operating system error, %d, occurred when attempting to load 
+    LSX %s. </DT>
+  <DD>There are a few common errors that can occur when the Logic Server attempts 
+    to load a Logic Server Extension (.lsx). This message indicates the operating 
+    system encountered an error, %d, that is not that common. Consult the operating 
+    system documentation to determine the nature of the problem. </DD>
+  <DT>106, INIT, The operating system could not find LSX %s. </DT>
+  <DD>The operating system was unable to find the named Logic Server Extension. 
+    This is probably due to a simple environment patherror, or other such directory 
+    error. </DD>
+  <DT>107, INIT, The operating system could not find one of the dynamic/shared 
+    libraries necessary to load LSX %s. </DT>
+  <DD>The Logic Server Extension DLL (.lsx) %s could not be loaded. Apparently 
+    it requires other dynamic/shared libraries as part of its load, and one of 
+    those libraries could not be loaded. </DD>
+  <DT>108, INIT, The operating system failed to initialize LSX %s. </DT>
+  <DD>The operating system failed to initialize the Logic Server Extension (.lsx) 
+    %s correctly. Make sure main entry points in the LSX are specified correctly. 
+    See the sample LSXs for examples. </DD>
+  <DT>109, ABORT, Runtime trashed, re-install </DT>
+  <DD>The Amzi! engine has been corrupted. Re-install the product. </DD>
+</DL>
+
+<H2><FONT COLOR="#0000FF">API Errors</FONT></H2>
+
+<DL> 
+  <DT>200, API, API function was called before the .xpl file was loaded </DT>
+  <DD>Most Logic Server API (LSAPI) functions require a loaded Prolog load module 
+    (.xpl file) before they can be executed. This is required because part of 
+    the Prolog runtime system is implemented in Prolog, and that Prolog code (alib.plm) 
+    is linked with every .xpl file. The .xpl file can be your full Prolog program, 
+    or just a stub to get the Logic Server started.<br>
+    <br>
+    Check the sequence of LSAPI calls in the host language program to make sure 
+    an lsLoad is called before any LSAPI calls to manipulate the logic base (but 
+    after the Logic Server is initialized). If you just want a stub .xpl file, 
+    you can link just alib.plm into amzi.xpl. </DD>
+  <DT>201, API, Logic Server call to uninitialized engine. </DT>
+  <DD>The first Logic Server API (LSAPI) call must be either lsInit or lsInit2. 
+    Without one of these occurring first, you can't execute any other LSAPI functions. 
+  </DD>
+  <DT>202, API, Can't add extended predicates after a .xpl file is loaded. </DT>
+  <DD>Extended predicates, entered with lsAddPred or lsInitPreds, must be defined 
+    after the Logic Server is initialized and before the .xpl file is loaded. 
+    This is because the .xpl loader uses extended predicate definitions to resolve 
+    references to extended predicates. </DD>
+  <DT>203, API, API function called with invalid index (%d) for structure %s. 
+  </DT>
+  <DD>In a Logic Server API call that takes a structure and argument index, the 
+    index was not valid for the structure. That is, it was either less than 1 
+    or greater than the arity of the structure. </DD>
+  <DT>204, API, API function called with invalid list index (%d). Must be 1 or 
+    2. </DT>
+  <DD>A list can be considered as a structure with two arguments. In this case 
+    the term in the Logic Server API call was a list and it was given an index 
+    that was not either 1, the head, or 2, the tail. </DD>
+  <DT>205, API, API function cannot map Prolog term to a string: %s. </DT>
+  <DD>A Logic Server API call is trying to map the Prolog term '%s' to a string, 
+    but that term is not an atom, character list or string. </DD>
+  <DT>206, API, API function cannot map Prolog term to an integer: %s. </DT>
+  <DD>A Logic Server API call is trying to map the Prolog term '%s' to an integer, 
+    but that term cannot be converted to an integer. </DD>
+  <DT>207, API, API function cannot map Prolog term to a float: %s. </DT>
+  <DD>A Logic Server API call is trying to map the Prolog term '%s' to a float, 
+    but that term cannot be converted to a float. </DD>
+  <DT>208, API, API function cannot map Prolog term to an address: %s. </DT>
+  <DD>A Logic Server API call is trying to map the Prolog term '%s' to an address, 
+    but that term cannot be converted to an address. </DD>
+  <DT>209, API, API function called with bad type code for conversion, %d. </DT>
+  <DD>A Logic Server API call is trying to map a Prolog term to a host language 
+    type, but the type, '%d', is not a valid host language type specification. 
+  </DD>
+  <DT>210, API, API function GetFA called with term that is not an atom, structure 
+    or list: %s. </DT>
+  <DD>The term '%s' was passed to the Logic Server API function GetFA, but the 
+    term is not a structure, atom or list, so it can't be broken up into a functor 
+    and arity. </DD>
+  <DT>211, API, API function List function called with non-list argument. </DT>
+  <DD>A non-list term was passed to a Logic Server API function that requires 
+    a list argument. </DD>
+  <DT>212, API, API function called with a bad stream ID. </DT>
+  <DD>A Logic Server API function that either sets or gets stream information 
+    was passed an invalid stream identifier. </DD>
+  <DT>213, API, API function request length of term that was not an atom or string. 
+  </DT>
+  <DD>A Logic Server API function that attempts to calculate the length of an 
+    atom or string Prolog term was not passed a term that is an atom or string. 
+  </DD>
+  <DT>214, API, API function requested type of invalid Prolog term. </DT>
+  <DD>A Logic Server API function that returns the type of a Prolog term was given 
+    a Prolog term that is not a known type. This error should not happen, so it 
+    is likely that the term pointer has been corrupted. </DD>
+  <DT>215, API, API function called with string too long, or not null-terminated: 
+    %s. </DT>
+  <DD>A Logic Server API function was called with a string argument that is either 
+    longer than allowed or not null-terminated. If you think the string is formatted 
+    correctly, then increase the Amzi! initialization parameter readbuffer. </DD>
+  <DT>216, API, API function called with bad host language type. </DT>
+  <DD> A Logic Server API function that maps Prolog terms to host language variables 
+    was called with a bad type indicator for the host language. </DD>
+  <DT>217, EXEC, Extended predicate error: %s </DT>
+  <DD> An extended predicate has thrown an error with the descriptive string '%s'. 
+  </DD>
+</DL>
+
+<H2><FONT COLOR="#0000FF">Load Errors</FONT></H2>
+
+<DL> 
+  <DT>300, LOAD, %s is not a valid Prolog load file </DT>
+  <DD>'%s has either been corrupted or is not a valid load file for this release. 
+    Rebuild the file. If the problem persists, contact Amzi! technical support. 
+  </DD>
+  <DT>301, LOAD, Maximum atoms in a load file (%d) exceeded, global %d, local 
+    %d </DT>
+  <DD>The load file has exceeded the maximum number of atoms. Increase the Amzi! 
+    configuration parameter 'maxatoms'. </DD>
+  <DT>302, LOAD, Load module compiled with earlier version, recompile </DT>
+  <DD>The load module was not compiled and linked using the current version. Rebuild 
+    the file and try again. </DD>
+  <DT>303, LOAD, Too many clause references (%d), increase MAXCLAUSES </DT>
+  <DD>While loading a load module, one of the predicates was found to have too 
+    many clauses. Either split the predicate into multiple predicates with fewer 
+    clauses, or increase the Amzi! configuration parameter 'maxclauses'. <br>
+    If you decide to split the predicate, the following model can be used. If 
+    the original predicate had clauses such as: </DD>
+  <PRE>      duck(a1).
+      duck(a2).
+      ...
+      duck(b1).
+      duck(b2).
+      ...</PRE>
+  <DT></DT>
+  <DD>You can rewrite the predicate as follows, without changing program behavior.</DD>
+  <PRE>
+      duck(X) :- duck1(X).
+      duck(X) :- duck2(X).
+
+      duck1(a1).
+      duck1(a2).
+      ...
+      duck2(b1).
+      duck2(b2).
+      ...</PRE>
+  <DT>304, LOAD, Too many local atoms, limit %d </DT>
+  <DD>The load module had too many atoms, increase the Amzi! initialization parameter 
+    'maxatoms'. If the problem persists, you might be able to replace some of 
+    the atom definitions in your program with strings. Strings are slower for 
+    pattern matching, but are not limited in space. </DD>
+  <DT>305, FATAL, Load buffer overflow, increase DESTBUF </DT>
+  <DD>An internal buffer has overflowed while loading a program. Increase the 
+    Amzi! initialization parameter 'destbuf'. </DD>
+  <DT>306, LOAD, Missing local predicates:\n%s </DT>
+  <DD>This error only occurs in modules, which are indicated by the presence of 
+    either a :-import or :-export directive at the beginning of the file. In a 
+    module, all predicates that are not declared in import or export directives 
+    are considered 'local' to the module. All goals in clauses in a module refer 
+    to either 'global' predicates (mentioned in export or import directives) or 
+    local predicates in the file. <br>
+    <br>
+    The error can be caused by simply failing to have a local predicate that was 
+    meant to be defined. <br>
+    <br>
+    It can also be caused by goals that refer to clauses that the application 
+    expects will be created dynamically with 'asssert's. In this case it is necessary 
+    to mention the dynamic predicates in either an :-import or :-export statement. 
+    <br>
+    <br>
+    This error can also occur when porting from a different Prolog to Amzi!. If 
+    the other predicate has built-in predicates that are not supported in Amzi!, 
+    then the occurrence of goals calling those predicates will trigger this error 
+    as well. In these cases, the predicate must be simulated, or the code redesigned, 
+    or Amzi! contacted to see if the predicate can be added. </DD>
+  <DT>307, LOAD, Corrupted .xpl file: %s </DT>
+  <DD>The .xpl file '%s' has become corrupted. Recreate the file and try the application 
+    again. If the problem persists, call Amzi! technical support. </DD>
+  <DT>308, LOAD, Maximum load modules exceeded </DT>
+  <DD>You have exceeded the system limit for load modules in a single execution. 
+    Contact Amzi! technical support if your application needs require a larger 
+    number of load modules. </DD>
+  <DT>309, ABORT, Error in load file </DT>
+  <DD>While loading a .PLM or .xpl file, it was discovered that the .PLM or .xpl 
+    file was corrupted. Try rebuilding the offending file. If that doesn't fix 
+    the problem, contact Amzi! technical support. </DD>
+  <DT>310, ABORT, Error loading local atom table </DT>
+  <DD>This is an internal error, indicating a problem during load with the local 
+    atom table of a module. Contact Amzi! technical support. </DD>
+  <DT>311, ABORT, Too long an atom in compiled code </DT>
+  <DD>An atom name was encountered during a load that was longer than the read 
+    buffer. If you have an extremely long atom name, then increase the Amzi! initialization 
+    paratemeter 'readbuffer'. </DD>
+  <DT>312, ABORT, Code too long to load </DT>
+  <DD>The buffer used to hold each compiled predicate during load was not big 
+    enough for one of your predicates. Increase the Amzi! initialization parameter 
+    'srcbuf'. </DD>
+  <DT>313, ABORT, Too many variables in clause </DT>
+  <DD>During loading, one of the clauses was found to have more variables than 
+    the system had space for. Increase the Amzi! initialization paramenter 'maxvars'. 
+  </DD>
+  <DT>314, ABORT, Load file corrupted, aborting. </DT>
+  <DD>This is an internal error caused by a corrupted load file. Rebuild the file, 
+    and if the problem persists contact Amzi! technical support. </DD>
+  <DT>315, LOAD, Predicate too long to load, subdivide it.</DT>
+  <DD>This error is caused by a predicate that is too long for the internal 16-bit 
+    integer jumps. It must be broken up into smaller predicates, that might have 
+    a master predicate that calls each of the smaller chunks in turn. </DD>
+</DL>
+
+<H2><FONT COLOR="#0000FF">I/O Errors</FONT></H2>
+
+<DL>
+<DT>400, READ, String/atom too long </DT>
+
+<DD>A string or atom has exceeded an internal buffer used for manipulating
+strings and atoms. Increase the Amzi! initialization parameter 'readbuffer'.
+</DD>
+
+<DT>401, READ, Bad character %d '%c' </DT>
+
+<DD>The reader encountered a character it could not parse. Fix the source
+code so the bad character is no longer used. </DD>
+
+<DT>402, READ, Bad hex number format, must be 0x... </DT>
+
+<DD>The reader was attempting to read what it thought was a hexadecimal
+number, but the number was not formatted correctly. Check the format, fix
+the program and try again. </DD>
+
+<DT>403, READ, Too many variables </DT>
+
+<DD>The reader encountered a clause with too many variables. Either redesign
+the clause or increase the Amzi! initialization parameter 'maxvars'. </DD>
+
+<DT>404, READ, Term too long to read </DT>
+
+<DD>The reader encountered a term that overflowed the internal read buffer.
+Either break the term up or increase the Amzi! initialization parameter
+'readbuffer'. </DD>
+
+<DT>405, READ, Read stack full </DT>
+
+<DD>The reader encountered a term whos complexity caused an internal overflow.
+Either simplify the term or increase the Amzi! initialization paramteter
+'readdepth'. </DD>
+
+<DT>406, READ, Unexpected delimiter </DT>
+
+<DD>The reader encountered a delimiter character when it did not expect
+one. The term being read is syntactically incorrect. </DD>
+
+<DT>407, READ, Unexpected operator </DT>
+
+<DD>The reader has been confused by the term being read. The term is syntactically
+incorrect, although the problem might be something other than an operator
+definition problem. Fix the problem and try again. </DD>
+
+<DT>408, READ, Read parsing error, parse stack: %d </DT>
+
+<DD>The reader ran into a problem interpreting an operator expression.
+If you don't find an error in your code, contact Amzi! technical support
+with the code that causes the error. </DD>
+
+<DT>409, READ, Atom name too long to read, max size: %ld </DT>
+
+<DD>An atom in the code had a name longer than the read buffer. Increase
+the Amzi! initialization parameter 'readbuffer', or use a shorter name
+for the atom. </DD>
+
+<DT>410, READ, Reader confused, expected an atom </DT>
+
+<DD>The reader encountered an internal error. If the code appears correct
+to you, contact Amzi! technical support with the offending code. </DD>
+
+<DT>411, READ, Bad internal type in read parse </DT>
+
+<DD>An internal reader error occurred. If the problem isn't obvious with
+your code, contact Amzi! technical support with the offending code. </DD>
+
+<DT>412, READ, Unable to read valid term in string </DT>
+
+<DD>While trying to read a term from a string, the reader was unable to
+parse a valid term from that string. </DD>
+
+<DT>413, EXEC, Bad file handle passed in, %d </DT>
+
+<DD>A file I/O predicate was called with the invalid handle '%d'. </DD>
+
+<DT>414, EXEC, Attempt to redirect stream to unopened file/window, %s </DT>
+
+<DD>A file I/O predicate was called with handle that does not correspond
+to an open file. </DD>
+
+<DT>415, EXEC, Buffer has overflowed by %d during a write. </DT>
+
+<DD>Write operations use the same internal buffer as read operations. This
+message indicates that a write operation has exceeded the buffer length.
+Increase the Amzi! initialization parameter 'readbuffer'. </DD>
+
+<DT>416, EXEC, Attempt to set stream to non-open I/O handle, %d </DT>
+
+<DD>When attempting to change the current or user default I/O stream, an
+invalid handle was specified. This problem might occur from use of see
+or tell predicates or Logic Server API calls that set the current streams.
+</DD>
+
+<DT>417, EXEC, Prolog file I/O error </DT>
+
+<DD>An undetermined I/O error occur when writing to a file. </DD>
+
+<DT>418, EXEC, Path length too long </DT>
+
+<DD>A file predicate was called with a file name/path specification that
+is longer than the allowable path name for the platform. </DD>
+
+<DT>419, FATAL, Unexpected end-of-file </DT>
+
+<DD>An unexpected end-of-file error occurred while reading a file. This
+error can occur with an improperly formatted binary file, .PLM or .xpl,
+or with a file of Prolog source in which the end-of-file was encountered
+in the middle of reading a Prolog term. </DD>
+
+<DT>420, EXEC, Can't open file %s </DT>
+
+<DD>An attempt to open the file '%s' failed. </DD>
+
+<DT>421, EXEC, IO error: %s </DT>
+
+<DD>An I/O error occurred. '%s' provides additional information on where
+the error occurred. </DD>
+
+<DT>422, FATAL, Too many files opened </DT>
+
+<DD>There are too many files opened from Prolog. Close some before trying
+to open others. If your application really needs this many files open,
+contact Amzi! technical support. </DD>
+
+<DT>423, EXEC, Oops error (%s), call Amzi! </DT>
+
+<DD>An internal error has occurred during Prolog I/O. If it is not clear
+how your program could have caused such an error, contact Amzi! technical
+support. </DD>
+</DL>
+
+<H2><FONT COLOR="#0000FF">Arithmetic Errors</FONT></H2>
+
+<DL>
+<DT>500, EXEC, Bad arguments for arithmetic operator, %s </DT>
+
+<DD>The arithmetic operator '%s' requires integer arguments, but was given
+non-integer arguments instead. </DD>
+
+<DT>501, EXEC, Bad argument for arithmetic evaluation, %s </DT>
+
+<DD>A term being evaluated arithmetically contained the value '%s' which
+is not valid for arithmetic evaluation. Arithmetic evaluation occurs for
+the arguments of the 'is' operator and arithmetic comparison operators.
+</DD>
+
+<DT>502, EXEC, 0 division </DT>
+
+<DD>An arithmetic expression included a division by zero. </DD>
+</DL>
+
+<H2><FONT COLOR="#0000FF">Execution Errors</FONT></H2>
+
+<DL> 
+  <DT>1000, EXEC, Attempt to assert a previously compiled or protected predicate: 
+    %s. </DT>
+  <DD>The application tried to assert the predicate '%s', which has already been 
+    loaded as a compiled predicate, or is a system predicate.<br>
+    <br>
+    This error often occurs when a program contains discontiguous clauses defining 
+    a predicate that were not declared as either discontiguous or multifile. This 
+    type of program will run interpreted OK, but when compiled, each set of clauses 
+    compiles into a separate block. When the compiled module is loaded this error 
+    will be generated when the loader tries to load the second block of clauses.<br>
+    <br>
+    This error can also result from a simple typing error. If, for example, a 
+    clause ends in a comma, rather than a period, or a clause has a period in 
+    the middle of the goals, rather than a comma, the compiler might think you 
+    are defining the comma operator.<br>
+    <br>
+    Another common typing error is to miss an argument in one clause of a predicate 
+    that has many clauses. This will insert a predicate of the wrong arity in 
+    between the clauses with the correct arity.<br>
+    <br>
+    Look at the compiler output to make sure the clauses that are compiled represent 
+    the predicates you think should be defined in your program. </DD>
+  <DT>1001, ABORT, User exit </DT>
+  <DD>The application program executed the goal abort(1) </DD>
+  <DT>1002, FATAL, User reset </DT>
+  <DD>The application program executed the goal abort(0). </DD>
+  <DT>1003, ABORT, User abort </DT>
+  <DD>The application program executed the goal abort(2). </DD>
+  <DT>1004, ABORT, Bad op code in compiled code </DT>
+  <DD>While executing compiled Prolog code, a bad Prolog op code was encountered. 
+    This should not happen, and indicates that the compiled code was somehow corrupted. 
+    Unless you suspect your host language application is corrupting memory, contact 
+    Amzi! technical support. </DD>
+  <DT>1005, INTERNAL, Bad choice point heap reference </DT>
+  <DD>During heap garbage collection, a bad heap reference was found. This is 
+    an internal error that shouldn't occur. Contact Amzi! technical support. In 
+    the meantime you can work around the problem by increasing the heap size with 
+    an Amzi! initialization parameter or, if the code is running interpreted, 
+    by compiling the code. </DD>
+  <DT>1006, ABORT, Bad data type in load file </DT>
+  <DD>While loading a .PLM or .xpl file a bad tag was found. This is an internal 
+    error, indicating the file being loaded is corrupted. Recreate the file and 
+    if the problem persists contact Amzi! technical support. </DD>
+  <DT>1007, ABORT, Attempt to allocate too big a chunk </DT>
+  <DD>This is an internal error, contact Amzi! technical support. </DD>
+  <DT>1008, ABORT, Bad term on heap during GC </DT>
+  <DD>This is an internal error triggered during heap garbage collection. Contact 
+    Amzi! technical support. In the meantime you can work around the problem by 
+    increasing the heap size with an Amzi! initialization parameter or, if the 
+    code is running interpreted, by compiling the code. </DD>
+  <DT>1009, ABORT, Heap has overflowed before garbage collection </DT>
+  <DD>A percentage of the heap is reserved for overflow. This error indicates 
+    that that percentage was not enough to prevent the heap from overflowing before 
+    garbage collection could take place. Increase the Amzi! initialization parameter 
+    'heapbumper'. </DD>
+  <DT>1010, ABORT, Memory allocation error </DT>
+  <DD>This is an internal error indicating an error in the memory management sub-system. 
+    Contact Amzi! technical support. </DD>
+  <DT>1011, ABORT, String to char list string buffer overflow </DT>
+  <DD>1This is an internal error indicating a string being converted to a list 
+    of codes was longer than its internal buffer. This shouldn't happen. Contact 
+    Amzi! technical support. </DD>
+  <DT>1012, ABORT, No more space for things </DT>
+  <DD>Certain Prolog types are stored in a separate area of memory. These include 
+    long integers, strings and addresses. This message indicates that storage 
+    area is full. You can increase this storage by increasing the Amzi! initialization 
+    parameter 'thingblksz'. Garbage collection should make this message relatively 
+    rare. If you don't think your application should run out of this storage, 
+    contact Amzi! technical support. </DD>
+  <DT>1013, ABORT, Write error parsing term </DT>
+  <DD>This is an internal error indicating the write function was unable to process 
+    a term to be written. Contact Amzi! technical support. </DD>
+  <DT>1014, ABORT, Out of memory allocating: %s </DT>
+  <DD>There is insufficient memory available to continue running the application. 
+    The resource being allocated when memory ran out was '%s'. </DD>
+  <DT>1015, EXEC, Attempt to retract a protected predicate: %s </DT>
+  <DD>The application as attempted to retract the predicate '%s', which is either 
+    a system predicate or a protected predicate. </DD>
+  <DT>1016, FATAL, Heap space full, compile code or increase heap </DT>
+  <DD>The heap became full before the garbage collector could be called. You can 
+    increase the heap with the Amzi! initialization parameter 'heap', or you can 
+    give the garbage collector a better chance by increasing the 'heapbumper' 
+    initialization parameter.<br>
+    <br>
+    If your program is running interpreted, you can greatly reduce the heap usage 
+    by compiling the program. This is because compiled code optimizes both speed 
+    and the use of internal resources, such as the heap. If the problem still 
+    persists, you might have to replace some recursive control structures in your 
+    application with repeat/fail control structures. </DD>
+  <DT>1017, FATAL, Heap fully compacted, no more space, compile code or increase 
+    heap </DT>
+  <DD>The heap is full and can not be further garbage collected. You can increase 
+    the heap with the Amzi! initialization parameter 'heap'.<br>
+    <br>
+    If your program is running interpreted, you can greatly reduce the heap usage 
+    by compiling the program. This is because compiled code optimizes both speed 
+    and the use of internal resources, such as the heap.<br>
+    <br>
+    If the problem still persists, you might have to replace some recursive control 
+    structures in your application with repeat/fail control structures. </DD>
+  <DT>1018, ABORT, Memory not aligned on 4-byte boundary for %s. Contact Amzi! 
+  </DT>
+  <DD>This is an internal error that should not occur. It indicates that the internal 
+    control structure '%s' is not properly aligned. Contact Amzi! technical support. 
+  </DD>
+  <DT>1019, FATAL, Too many references to the same clause </DT>
+  <DD>The dynamic database garbage collection routines keep track of the active 
+    use of each clause. This error means one particular clause is being simultaneously 
+    accessed a great many times. This should not be an ordinary occurence. </DD>
+  <DT>1020, FATAL, Trail space full, %ld of %ld. Compile code or increase trail 
+  </DT>
+  <DD>The trail stack has overflowed. If your program is running interpreted, 
+    you can decrease trail use by compiling the code. You can also increase the 
+    amount of trail space with the Amzi! initialization paramteter 'trail'. </DD>
+  <DT>1021, FATAL, Control stack full. Compile code or increase control </DT>
+  <DD>The Prolog execution control stack is full. Compiling your code will decrease 
+    the impact on the control stack for recursive predicates. You can also increase 
+    the Amzi! initialization parameter 'control' to create a larger control stack. 
+    If the problem persists, you might have to replace some recursive loops in 
+    your program with repeat/fail loops. </DD>
+  <DT>1022, EXEC, Argument instantiation error: %s. </DT>
+  <DD>An argument to a built-in predicate was not correctly instantiated, as indicated 
+    by the additional information '%s' provided in the message. </DD>
+  <DT>1023, EXEC, Argument type error: %s. </DT>
+  <DD>An argument to a built-in predicate was not the correct type, as indicated 
+    by the additional information '%s' provided in the message. </DD>
+  <DT>1024, EXEC, Maximum number of atoms exceeded (%d). Use strings or increase 
+    atomtable </DT>
+  <DD>The atom table is full. You can increase the size of the atom table using 
+    the Amzi! initialization parameter 'maxatoms'.<br>
+    <br>
+    You might also consider using strings instead of atoms for some situations 
+    in your program. Strings are slower to unify, because they compare character 
+    by character, but are not as limited in storage. So if there are places where 
+    you use atoms simply to display information, then those terms are probably 
+    better stored as strings. </DD>
+  <DT>1025, EXEC, Too many variables </DT>
+  <DD>A call to the built-in predicate 'functo'r requested an arity that is greater 
+    than the maximum number of variables allowed. Either correct the call or increase 
+    the Amzi! initialization parameter 'maxvars'. </DD>
+  <DT>1026, EXEC, Op error </DT>
+  <DD>An attempt to create an operator has failed. Check the operator definition 
+    statements for syntactical correctness. </DD>
+  <DT>1027, EXEC, System pred - bad argument </DT>
+  <DD>A built-in predicate had a bad argument. Either it was the wrong type or 
+    it was not correctly instantiated (a variable when it should be bound, or 
+    bound when it should be a variable). </DD>
+  <DT>1028, EXEC, Needed integer argument </DT>
+  <DD>A call to the built-in predicate arg had an argument number that was not 
+    an integer. </DD>
+  <DT>1029, FATAL, Break </DT>
+  <DD>The user hit break during execution of a program, or while reading input. 
+  </DD>
+  <DT>1030, FATAL, Local stack full, compile code or increase local </DT>
+  <DD>The local stack is full. You can minimize impact on the local stack by compiling 
+    your code. You can increase the local stack with the Amzi! initialization 
+    parameter 'local'. </DD>
+  <DT>1031, EXEC, Too many variables in term (copyt) </DT>
+  <DD>A term with too many variables was being added to the dynamic database. 
+    Either simplify the term or increase the Amzi! initialization parameter 'maxvars'. 
+  </DD>
+  <DT>1032, FATAL, Bad op code, %d, at offset %d </DT>
+  <DD>A bad opcode was encountered when loading compiled code. Try rebuilding 
+    the file and if that doesn't correct the problem, contact Amzi! technical 
+    support. </DD>
+  <DT>1033, EXEC, Bad system argument: %s </DT>
+  <DD>A built-in predicate had an invalid argument. The text '%s' provides further 
+    information. </DD>
+  <DT>1034, EXEC, User throw: %s </DT>
+  <DD>A throw or cut_tag predicate was called with a tag for which there was no 
+    catch or tag. The offending tag is '%s'. </DD>
+  <DT>1035, EXEC, Execution error: %s </DT>
+  <DD>An execution error occurred during the call to a built-in predicate in the 
+    Prolog portion of the runtime library. The message '%s' provides more information. 
+  </DD>
+  <DT>1036, FATAL, Unreachable cuttag </DT>
+  <DD>A tag for a catch wound up in a position on the control stack where it could 
+    not be reached. This is an internal error. Contact Amzi! technical support. 
+  </DD>
+  <DT>1037, FATAL, Bad cut </DT>
+  <DD>A cut, probably in a compiled not or if-then-else ( -&gt; ; ), did not cut 
+    correctly. If the problem occurs in a cut in one of the two constructs mentioned 
+    above, recode that section without the embedded cut. </DD>
+  <DT>1038, EXEC, String too long, increase .cfg parameter 'readbuffer' </DT>
+  <DD>A string predicate or operation created a string that is longer than the 
+    internal buffer. Increase the Amzi! initialization parameter 'readbuffer'. 
+  </DD>
+  <DT>1039, ABORT, Unlock software before use. </DT>
+  <DD>The system was still locked when it was used. Unlock the software and then 
+    continue. Contact Amzi! technical support if you have questions. </DD>
+  <DT>1040, INTERNAL, Bad built-in predicate </DT>
+  <DD>An internal error occurred accessing a built-in predicate. Contact Amzi! 
+    technical support. </DD>
+  <DT>1041, INTERNAL, Built-in or extended predicate %s/%d had a bad return code: 
+    %d </DT>
+  <DD>A built-in predicate encountered an internal error. Contact Amzi! technical 
+    support. </DD>
+</DL>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<p>&nbsp;</p>
+</BODY>
+</HTML>

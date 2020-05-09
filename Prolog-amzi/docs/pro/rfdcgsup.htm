@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Definite Clause Grammars (DCGs)</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+
+<h1><A NAME="DefiniteClauseGrammarsDCGs"></A><FONT COLOR="#D2AA00">Definite Clause 
+  Grammars (DCGs)</FONT></h1>
+
+<P><!AMZI_INDEX = DCG; Difference Lists; Natural Language; Terminals; Non-Terminals>Definite
+Clause Grammars (DCGs) are convenient ways to represent grammatical relationships
+for various parsing applications. Typically it is used on either a character
+basis, tokenizing an input stream, or on a word basis, interpreting either
+formal or natural language input. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM><I> For details
+on DCGs, refer to </I>Adventure in Prolog<I> or </I>Programming in Prolog<I>
+by Clocksin &amp; Mellish, as well as the various sample programs that
+use DCG.</I> </P>
+
+<P>Often it takes an input list of characters or words and translates it
+into Prolog structures that are manipulated by the program. It can go the
+other way as well, taking the Prolog structures as input and generating
+lists of characters or words. </P>
+
+<P>So, it can be used to extract the meaning from a list of words, which
+might be a sentence or part of a formal language, or it can be used to
+generate sentences or commands based on Prolog structures. </P>
+
+<P>For example, the following DCG translates lists of words, which might
+be from input commands, into Prolog equivalents that can be executed. It
+takes commands of the form 'open file test for input' where the word 'for'
+is optional. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">trans( fopen(H,X,M) ) --&gt; [open, file, X], mode(M).
+mode( r ) --&gt; [for, input].
+mode( r ) --&gt; [input].
+mode( w ) --&gt; [for, output].
+mode( w ) --&gt; [output].</FONT></PRE>
+</UL>
+
+<P>Mechanically, Prolog DCG is simply a shorthand notation for predicates
+that manipulate difference lists. The DCG translator takes clauses of the
+above form and translates them into normal Prolog clauses, with two additional
+arguments that represent difference lists which are propagated from goal
+to goal. </P>
+
+<P>So, to call a DCG predicate, you put in the difference lists, where
+the second list is the empty list. To test the above DCG from the listener:
+</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- trans(X, [open, file, test, for, output], []).
+X = fopen(H12, test, w)
+yes</FONT></PRE>
+</UL>
+
+<P>Like most Prolog predicates, it can be used to generate commands from
+Prolog as well as parse them: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- trans(fopen(H, text, r), L, []).
+L = [open, file, test, for, input] ;
+L = [open, file, test, input] ;
+no</FONT></PRE>
+</UL>
+
+<P>In the DCG example, both trans and mode are DCG predicates. Sometimes
+you want to include, in the DCG rules, Prolog predicates that do not need
+to be embellished with the difference lists. You specify this by enclosing
+those clauses in curly brackets { }. </P>
+
+<P>Suppose there was a list of files that a user was allowed to open, and
+you wanted the DCG to make sure the file specified by the user was on that
+list. The first DCG rule would then be rewritten as follows: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">trans( fopen(H,X,M) ) --&gt;
+   [open, file, X],
+   {legal_files(LF), member(X, LF)},
+   mode(M).</FONT></PRE>
+</UL>
+
+<P>It is not necessary to enclose the cut (!) primitive in curly brackets.
+</P>
+
+<P>Notice that the DCG has two types of goals. The goals which are represented
+in list notation, with square brackets [ ] are called terminals, meaning
+they call for direct extraction of information from the input list. The
+other goals are non-terminal, meaning they rely on other DCG rules to get
+their results. </P>
+
+<H3><A NAME="expandtermDCGclausePROLOGclaus"></A><FONT COLOR="#000080">expand_term(DCGclause,
+PROLOGclause)</FONT></H3>
+
+<P><!AMZI_INDEX = expand_term>The predicate that translates a DCG statement
+into conventional Prolog is <B>expand_term/2</B>. This predicate can be
+called directly. The first argument is a DCG clause, the second is the
+generated Prolog clause. </P>
+
+<P>While this predicate is compiled into the core Prolog library, alib.plm,
+it is also available in source form in the samples library in the file
+DCGXPAND.PRO. </P>
+
+<P>In normal DCG, the terminal lists are translated into goals that convert
+the single list into a difference list, where the difference is exactly
+the list presented. You can see how this works by calling the DCG translator
+directly. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- expand_term((mode(r) --&gt; [for, input]), X).
+X = mode(r,H114,H116) :-
+   dcg$terminal([for,input],H114,H116) 
+yes</FONT></PRE>
+</UL>
+
+<P>The built-in predicate dcg$terminal creates the difference list. You
+can use it directly as well to see how it works. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- dcg$terminal([for, input], X, Y).
+X = [for,input | H95]
+Y = H95 </FONT></PRE>
+</UL>
+
+<P>Here is the definition of dcg$terminal. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">dcg$terminal([T], S0, S):-
+        ( dcg_terminal([T], S0, S), !;
+          S0 = [T|S] ), !.
+dcg$terminal(Ts, S0, S):-
+        ( dcg_terminal(Ts, S0, S), !;
+          append(Ts, S, S0) ).</FONT></PRE>
+</UL>
+
+<H3><A NAME="dcgterminalLISTDIFFLISTDIFFLIS"></A><FONT COLOR="#000080">dcg_terminal(LIST,
+DIFFLIST1, DIFFLIST2)</FONT></H3>
+
+<P><!AMZI_INDEX = dcg_terminal>Notice that dcg$terminal attempts to call
+dcg_terminal/3. This is an optional user-defined predicate, meaning you
+can define dcg_terminal/3 in your application to provide any type of terminal
+handling you like. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P>&nbsp; </P>
+
+</BODY>
+</HTML>

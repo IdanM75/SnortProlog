@@ -1,0 +1,59 @@
+HERE = $(AMZI_DEV_DIR)\src\lsapis
+
+all: _dirs _java20 _cgi _vb _delphi
+
+_dirs:
+	-md $(AMZI_DEV_DIR)\lsapis
+	-md $(AMZI_DEV_DIR)\lsapis\java20
+	-md $(AMZI_DEV_DIR)\lsapis\cgi
+	-md $(AMZI_DEV_DIR)\lsapis\vb
+	-md $(AMZI_DEV_DIR)\lsapis\delphi
+
+_java20:
+	@echo *** making java20 ***
+	cd java20
+	bmake -f makefile.win
+	cd $(HERE)
+
+_cgi:
+	@echo *** making cgi ***
+	cd cgi
+	bmake -f makefile.win
+	cd $(HERE)
+
+_vb:
+	@echo *** making vb ***
+	cd vb
+	bmake -f makefile.win
+	cd $(HERE)
+	
+_delphi:
+	@echo *** making delphi ***
+	cd delphi
+	bmake -f makefile.win
+	cd $(HERE)
+
+clean:
+	cd java20
+	-bmake -f makefile.win clean
+	cd $(HERE)
+	cd cgi
+	-bmake -f makefile.win clean
+	cd $(HERE)
+	cd vb
+	-bmake -f makefile.win clean
+	cd $(HERE)
+
+remove_cvs:
+	-rmdir /S /Q CVS
+	cd java20
+	-bmake -f makefile.win remove_cvs
+	cd $(HERE)
+	cd cgi
+	-bmake -f makefile.win remove_cvs
+	cd $(HERE)
+	cd vb
+	-bmake -f makefile.win remove_cvs
+	cd $(HERE)
+	
+

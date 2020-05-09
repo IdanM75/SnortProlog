@@ -1,0 +1,291 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; U) [Netscape]">
+   <TITLE>Listener</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>
+<A NAME="Listener"></A><FONT COLOR="#D2AA00">Listener</FONT></H1>
+<!AMZI_INDEX = alis>Alis is the Prolog listener, which contains the classic "?-" 
+Prolog listener used to run interpreted Prolog code, as described in Clocksin 
+&amp; Mellish. Alis is a superset of the classic listener as it can also load 
+and run Prolog object modules (.plm files). This allows you to intermix compiled 
+and interpreted code in the listener, making it easy to work on a piece of an 
+application at a time. 
+<P>The listener is available from both command-line and windowing environments.
+<H2>
+<A NAME="StartingtheListener"></A><FONT COLOR="#0000FF">Running in the
+IDE</FONT></H2>
+<!AMZI_INDEX = alis; IDE>To invoke the Prolog listener from the Windows-IDE,
+press the LIS button or select Listener / Start.
+<H2>
+<A NAME="StartingtheListener"></A><FONT COLOR="#0000FF">Running from the
+Command-Line</FONT></H2>
+<!AMZI_INDEX = alis; Command-Line>To start the listener from the command
+line, type:
+<UL>
+  <PRE><FONT COLOR="#000080">c>&nbsp; alis
+Amzi! Prolog Listener
+Copyright (c) 1987-2000 Amzi! inc. All Rights Reserved.
+Type 'quit.' to exit
+?-</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="ConsultingFilesfromtheCommandL"></A><FONT COLOR="#000080">Consulting
+Files</FONT></H3>
+<!AMZI_INDEX = Consulting; Command-Line; alis; main>You can optionally
+specify a list of files on the operating system command line. These files
+are <A HREF="rfdatabs.htm">consult</A>ed as Prolog loads, then the predicate
+<B>main/0</B> is called, if it exists. If the files do NOT contain a <B>main/0</B>
+predicate, this is equivalent to having consulted the files at the ?- prompt
+(i.e., the code files are loaded, but are not executed).
+
+<P>The files are loaded in the order in which they are listed. The filenames
+(which may be arbitrary pathnames complete with drive and sub-directory
+specifiers) must be separated from each other by at least one space. If
+there is no extension specified for a file, and there is no file with the
+non-extended name, then the extension .pro is assumed.
+
+<P>The files specified can be Prolog source files (.pro), compiled Prolog
+object files (.plm) or a combination thereof.
+<UL>
+<PRE><FONT COLOR="#000080">c>&nbsp; alis duck1 duck2.plm
+c>&nbsp; alis b:\mydir\myapp1.plm</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="ExecutingmainfromtheCommandLin"></A><FONT COLOR="#000080">Executing
+main/0</FONT></H3>
+<!AMZI_INDEX = alis; Command-Line; main>If the files consulted on the
+command line do contain a <B>main/0</B>, then alis simply calls <B>main/0</B>
+and exits if it succeeds. If <B>main/0</B> fails, then the listener is
+started up.
+<H2>
+<A NAME="LoadingPrologCodeFiles"></A><FONT COLOR="#0000FF">Loading Prolog
+Code</FONT></H2>
+<!AMZI_INDEX = Loading; consult; load>Both source and object files can
+be loaded into the listener. In the Windows-IDE, Listener / Consult can
+be used to load source, object and project files.
+
+<P>In alis and the IDE, four built-in predicates provide this service:
+<MENU>
+<LI>
+<A HREF="rfdatabs.htm">consult</A> - assumes the files are source files
+(.pro), but if an object file is specified it will load it correctly as
+well.</LI>
+
+<LI>
+<A HREF="rfdatabs.htm">load</A> - assumes the files are object files (.plm),
+and will fail if a source file is specified instead.</LI>
+
+<LI>
+<A HREF="rfrunenv.htm">consult_project</A> - consults or loads all the
+files in a project (.ppj)</LI>
+
+<LI>
+<A HREF="rfrunenv.htm">reconsult_project</A> - reconsults or loads all
+the files in a project (.ppj)</LI>
+</MENU>
+Examples:
+<UL>
+<PRE><FONT COLOR="#000080">?- consult([duck1, duck2]).&nbsp;&nbsp; % consults both .pro Files.
+yes
+?- load([duck1, duck2]).&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % loads both .plm files.
+yes
+?- consult([duck1, 'duck2.plm']).
+% consults one, loads the other.
+yes</FONT></PRE>
+</UL>
+Consult can also be specified by simply giving a list as the goal at the
+prompt. In other words, if you specify just a list, the listener assumes
+you want to consult those files.
+<UL>
+<PRE><FONT COLOR="#000080">?- ['duck1.plm'].
+yes</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="AddingandRemovingClauses"></A><FONT COLOR="#0000FF">Adding and
+Removing Clauses</FONT></H2>
+<!AMZI_INDEX = Clauses>In addition to consulting files, clauses can be
+added to the dynamic database in a number of ways.
+<H3>
+<A NAME="assert"></A><FONT COLOR="#000080">assert</FONT></H3>
+
+<UL>
+<PRE><!AMZI_INDEX = assert><FONT COLOR="#000080">?- assert( likes(ella, crackers) ).
+yes</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="TypinginaRule"></A><FONT COLOR="#000080">Typing in a Rule</FONT></H3>
+<!AMZI_INDEX = Rules>A term with a neck symbol, ":-", is a rule. If the
+rule has no body, then use the body true to ensure the clause is added.
+<UL>
+<PRE><FONT COLOR="#000080">?- likes(ella, pizza) :- true.
+Term asserted</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="Consultinguser"></A><FONT COLOR="#000080">Consulting user</FONT></H3>
+
+<UL>
+<PRE><!AMZI_INDEX = Consulting User><FONT COLOR="#000080">?- consult(user).
+|&nbsp; likes(leona, lettuce).
+|&nbsp; likes(leona, pool).
+|&nbsp; quit.
+yes</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="add"></A><FONT COLOR="#000080">add</FONT></H3>
+
+<UL>
+<PRE><!AMZI_INDEX = add; replace><FONT COLOR="#000080">?- add.
+|&nbsp; likes(basil, carrots).
+|&nbsp; likes(basil, hay).
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % [Ctrl-Z] key pressed
+yes</FONT></PRE>
+</UL>
+Clauses can be replaced by using <B>replace</B>, just like add. The only
+difference is the old clauses for the predicate are removed first, and
+replaced with the new ones.
+<H3>
+<A NAME="RemovingClauses"></A><FONT COLOR="#000080">Removing Clauses</FONT></H3>
+<!AMZI_INDEX = Clauses>Once in the dynamic database, clauses can be removed
+with any of the built-in predicates that provide that service, such as
+retract and abolish. See the <A HREF="Rfdatabs.htm">Prolog Database</A>
+section for details.
+<UL>
+<PRE><FONT COLOR="#000080">?- retractall( likes(basil, X) ).
+yes</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="ListingClauses"></A><FONT COLOR="#0000FF">Listing Clauses</FONT></H2>
+<!AMZI_INDEX = listing; Clauses; pp>The <A HREF="rfdatabs.htm">listing</A>
+predicates displays a listing of your clauses. It has a few forms.
+<MENU>
+<LI>
+<B>listing</B> - list all of the clauses in the dynamic database</LI>
+
+<LI>
+<B>listing</B>(Name) - list all of the clauses of predicate Name. Note
+that this will display clauses of different arities that have the same
+name.</LI>
+
+<LI>
+<B>listing</B>(Name/Arity) - list all of the clauses of Name/Arity</LI>
+</MENU>
+The listing is displayed using the built-in predicate <A HREF="rfrunenv.htm">pp/1</A>,
+the "pretty printer." You can define your own pretty printer and call it
+<A HREF="rfrunenv.htm">user_pp/1</A>. If so, listing and other built-in
+predicates will use your pretty printer.
+
+<P>Variable names are not preserved when clauses are asserted to the dynamic
+database, so <B>listing</B> generates new names for the variables as it
+displays. The names are of the form _n where n is an integer.
+<H2>
+<A NAME="ProvingGoals"></A><FONT COLOR="#0000FF">Proving Goals</FONT></H2>
+<!AMZI_INDEX = Listener; Goals>At the listener prompt "<B>?-</B>" You may
+enter any Prolog goal, including compound conjunctions of goals, separated
+by ",", and disjunctions, separated by ";".
+
+<P>The listener attempts to prove the goal, returning values of any variables.
+A ";" requests more solutions. Pressing [Enter] means you've seen enough.
+
+<P>Examples:
+<UL>
+<PRE><FONT COLOR="#000080">?- likes(ella, X).
+X = crackers ;
+X = pizza ;
+no
+?- likes(X, Y).
+X = ella
+Y = crackers ;
+X = ella
+Y = pizza&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % [Enter] key pressed
+yes
+?- likes(X, A), likes(X, B), A \= B.
+X = ella
+A = crackers
+B = pizza ;
+X = leona
+A = lettuce
+B = pool ;
+no</FONT></PRE>
+</UL>
+If the value of a variable is undefined, then the internal notation for
+the variable is displayed. It is of the form Hn, where n is an integer.
+For example
+<UL>
+<PRE><FONT COLOR="#000080">?- X = foo(A,B,A).
+X = foo(H8,H9,H8)
+A = H8
+B = H9</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="SyntaxErrors"></A><FONT COLOR="#0000FF">Syntax Errors</FONT></H2>
+<!AMZI_INDEX = Syntax Errors; Errors; Read Errors; Error Handler>If you
+enter a clause or goal that is unreadable by Prolog then the error handler
+is entered.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that
+the listener ?- prompt does not support a full line editor. You can type
+in queries and correct them with the backspace key. In the IDE you can
+cut and paste to create a new query, but you can only edit it with the
+backspace key.</I>
+
+<P>The error message in this case will indicate some kind of parsing error
+(<I>parsing</I> is the act of reading Prolog and checking to see if it
+can be understood). For "read" errors, the text of the term just read in
+is displayed along with an indication of where Prolog thinks the error
+lies.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that
+in the case of an error in mismatched delimiters, such as quotes or parenthesis,
+the error might have occurred many lines before the point the reader failed.</I>
+
+<P>When an error occurs you will get a message similar to the following:
+<UL>
+<PRE><FONT COLOR="#000080">?- name(78, X).
+Execution Error 401:
+Argument type error: arg1 must be an atom or variable
+While executing: name/2
+Call Stack (approximate)
+...</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="OtherCommandLineServices"></A><FONT COLOR="#0000FF">Other Command-Line
+Services</FONT></H2>
+<!AMZI_INDEX = Command-Line; edit; debug>Some goals built into the listener
+are designed just to provide useful service to the command-line alis user.
+These are:
+<MENU>
+<LI>
+<B>consult_project</B>,<B> reconsult_project</B> - to consult/load all
+the files in a project.</LI>
+
+<LI>
+<B>debug</B> - to start the debugger.</LI>
+</MENU>
+See the respective sections for more details on each.
+<H2>
+<A NAME="LeavingtheListener"></A><FONT COLOR="#0000FF">Exiting</FONT></H2>
+<!AMZI_INDEX = halt>The listener is exited in one of two ways:
+<UL>
+<LI>
+quit. typed in response to the<B> ?-</B> prompt.</LI>
+
+<LI>
+any attempt to prove the <A HREF="rfexecut.htm">halt</A> predicate.</LI>
+</UL>
+<p>In each case the listener cleans house and then exits.</p>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P>&nbsp; 
+</BODY>
+</HTML>

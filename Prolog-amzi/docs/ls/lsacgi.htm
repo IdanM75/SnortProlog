@@ -1,0 +1,569 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+   <TITLE>CGI Interface</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>
+<A NAME="CGIInterface"></A><FONT COLOR="#D2AA00">CGI Interface</FONT></H1>
+
+<H2>
+<!AMZI_INDEX=CGI Interface><A NAME="Libraries"></A><FONT COLOR="#0000FF">Introduction</FONT></H2>
+<!AMZI_INDEX=CGI; Web Servers; HTML; Internet>The Amzi! Logic Server Common
+Gateway Interface (CGI) interface allows you to integrate Prolog logic
+with web servers through CGI scripts written in Prolog. The Prolog code
+can read information from a Web form and dynamically generate HTML to send
+back to the user.
+
+<P>A straight-forward class of applications for the CGI-Amzi! interface
+is intelligent form editors. Prolog code can be used to analyze user input
+from forms and then, based on that analysis, generate either responses
+or other HTML user input elements to gather or correct missing or wrong
+information.
+
+<P>Expert systems can be implemented that dynamically generate HTML forms
+to query the user, and, based on user answers, either generate more questions
+or provide answers in HTML to the user.
+
+<P>Expert systems are just one form of intelligent interaction enabled
+by the CGI-Amzi! interface. Others include intelligent tutorials, natural
+language processing applications, database or other information retrieval,
+and, of course, interactive games.
+
+<P>WebLS is another Amzi! product that is an example of the type of application
+you can implement using the CGI-Amzi! interface. WebLS is a custom rule
+engine that uses a simple rule language to let webmasters add expertise
+to their Web pages. The rule engine is written in Prolog and uses HTML
+specified in WebLS question and answer fields to communicate with the user.
+<H2>
+<FONT COLOR="#0000FF">Architecture</FONT></H2>
+<!AMZI_INDEX=Architecture>CGI provides a way for an application to communicate
+with a Web server. The Web server calls the CGI application when it receives
+information from the user, and the CGI application can send generated HTML
+back to the user through the Web server.
+
+<P><IMG SRC="cgiarch.gif" HEIGHT=546 WIDTH=583>
+
+<P>The executable file that the server calls is written in C, and is provided
+with full source code. That program starts the Amzi! Logic Server and loads
+the Prolog CGI script. Before calling the main entry point of the Prolog
+script, the CGI executable program first gathers information from the HTML
+form and asserts that information to the Prolog dynamic database. This
+step is what allows the Prolog code to easily reason over the information
+entered by the user in the incoming HTML form.
+
+<P>The CGI executable than calls the Prolog portion of the CGI-Amzi! interface.
+This is a Prolog wrapper that provides many of the bookkeeping functions
+necessary for CGI. That Prolog program then calls predicates that are defined
+in the user-written Prolog script. From this point, the user Prolog program
+is processing the CGI data.
+
+<P>The Prolog program communicates back with the CGI interface through a number 
+  of extended predicates that are implemented in both the Prolog wrapper and C 
+  executable program. 
+<h2><font color="0000FF">Hello Prolog</font></h2>
+<p><font color="0000FF"><!AMZI_INDEX=  Hello Prolog></font>Hello CGI is the simplist 
+  CGI program. It simply displays a greeting. The source code is in samples/internet/cgi/hello.</p>
+<p>Installing CGI programs can be complex, and depends on the web server you are 
+  using. Regardless of the web server, the following tasks must be completed: 
+</p>
+<ol>
+  <li>Write your CGI script. Compile it and link it with acgi.plm into an .xpl 
+    file. </li>
+  <li>Copy the CGI script and the executable acgi[.exe] (from amzi/lsapis/cgi) 
+    to the directory your web server runs CGI programs from (usually cgi-bin). 
+  </li>
+  <li>Rename acgi[.exe] to have the same name as your XPL file. For example, hellocgi.exe 
+    runs hellocgi.xpl. </li>
+  <li>Ensure the process that runs your web server can find the Amzi! Logic Server 
+    (amzi.dll or libamzi.so). This might mean putting the library on your path 
+    or another environment variable, or copying it to cgi-bin or the /lib directory. 
+  </li>
+  <li>If you are using a .cfg file, ensure the web server process can find it. 
+    This might mean putting it in cgi-bin or having the AMZI_DIR environment variable 
+    set for the web server process. </li>
+  <li>Ensure your web server process and read and/or execute access to all of 
+    the above files. </li>
+</ol>
+<p>To help in debugging CGI scripts, you will want to consult the error log files 
+  for your server. Following are two sample set-ups. </p>
+<h3><font color="#000080">Windows NT with Netscape FastTrack</font> </h3>
+<p><!AMZI_INDEX=FastTrack>Copy the .xpl file, the .exe (copied 
+  from acgi.exe), amzi.dll and amzi.cfg in the cgi-bin directory. </p>
+<h3><font color="#000080">Solaris with Apache</font> </h3>
+<p><!AMZI_INDEX=Apache>Copy the .xpl file and acgi (renamed) 
+  to the /apache/cgi-bin directory. Use Apache directives to tell it where to 
+  find libamzi.so or copy libamzi.so to /lib. Use the Apache setEnv or passEnv 
+  directives to set the value of AMZI_DIR and put your amzi.cfg file in /amzi/config. 
+</p>
+<H2> <FONT COLOR="#0000FF">Forms Example</FONT></H2>
+<!AMZI_INDEX=CGI Interface; Infoform Sample>Infoform is a simple example of a 
+form editting application. The full source is available in the samples/internet/cgi/infoform 
+directory, and it is running on Amzi!'s Web site to gather user's information 
+requests. 
+<P>The main entry point looks at the CGI variable request_method, which
+was asserted by the CGI executable shell, and calls processMethod with
+its value. Usually a 'get' request is used when the user wants to receive
+a form for the first time, and a 'post' request is used to submit information.
+You can control which type of request is used by setting 'method=' in your
+&lt;FORM ...> definition.
+<PRE><FONT COLOR="#000080">cgiMain :-
+&nbsp; cgi(request_method, RM),
+&nbsp; processMethod(RM).
+cgiMain :-
+&nbsp; throw($cgiMain failed\n$).</FONT></PRE>
+The predicate processMethod/1 calls various helper predicates to check
+the information on the form and either thanks the user or gives them the
+opportunity to edit and fix the inputs. It generates HTML for the output
+form using the extended predicate cgiSend/1.
+<PRE><FONT COLOR="#000080">%&nbsp;
+% For the initial get, simply return our HTML form
+%
+processMethod('GET') :-
+&nbsp; cgiSend($Content-type: text/html$),
+&nbsp; cgiSend($$),
+&nbsp; cgiSendLocalHTMLFile('infoform.htm').</FONT></PRE>
+
+<PRE><FONT COLOR="#000080">%&nbsp;
+% After the user has filled in the form, we need to check it, then&nbsp;
+% send a response back.&nbsp;
+%&nbsp;
+processMethod('POST') :-&nbsp;
+&nbsp; sendHeader,
+&nbsp; checkFacts,
+&nbsp; writeRequestLog,
+&nbsp; cgiSend($Thank you! Your information request has been successfully submitted!$),
+&nbsp; cgiSend($&lt;P>Return to &lt;A HREF="/index.html">Amzi!'s home page&lt;/A>.$),
+&nbsp; sendFooter.
+processMethod('POST') :-
+&nbsp; cgiSend($&lt;P>Press the 'Back' or '&amp;lt;-' button on your browser to change your form and resubmit it.$),
+&nbsp; sendFooter.</FONT></PRE>
+Here is one of the checking predicates. It looks at the various fact/2
+clauses that were asserted in the dynamic database by the CGI executable
+shell. Each fact represents an input field that was filled in on the original
+HTML form. In this case it sees if the user has requested a catalog or
+newsletters. If not,then there is no potential problem. If so, then make
+sure there is information entered for the three address fields.
+<PRE><FONT COLOR="#000080">checkAddress :-
+&nbsp; fact(request, RL),
+&nbsp; not(member(catalog, RL)),
+&nbsp; not(member(newsletters, RL)),
+&nbsp; !.
+checkAddress :-
+&nbsp; fact(address1, A1),
+&nbsp; fact(city, C1),
+&nbsp; fact(country, C2),
+&nbsp; !.
+checkAddress :-
+&nbsp; cgiSend($Please fill in your mailing address including street, city, region and country.$),
+&nbsp; fail, !.</FONT></PRE>
+
+<H2>
+<FONT COLOR="#0000FF">Implementation</FONT></H2>
+<!AMZI_INDEX= acgi.pro; amzicgi.c; amzisub.c >The Amzi! implementation
+supports the current CGI 1.1 standard.
+
+<P>The CGI interface consists of two parts. First, there is a Prolog library
+which provides the basic framework for the script and many supporting functions.
+Second, there is a C program that invokes the script framework in the Prolog
+library and also provides some additional supporting functions. The files
+are:
+<UL>
+  <LI> acgi.pro - The script framework and supporting functions</LI>
+
+  <LI> amzicgi.c, amzisub.c- The executable C program that invokes the Prolog 
+    script</LI>
+</UL>
+In the samples/internet/cgi subdirectory, you will find an examples that use the 
+CGI interface. 
+<H2>
+<A NAME="BuildingTheCProgram"></A><FONT COLOR="#0000FF">Building the C
+Program</FONT></H2>
+<!AMZI_INDEX= amzicgi.c; amzisub.c; CGI Interface>The first step is to compile 
+and link amzicgi.c and amzisub.c into an executable. This is provided in amzi/lsapis/cgi/acgi[.exe].
+<p>As currently written, the C program loads an .xpl file with the same name. 
+  For example, acgi.exe will load acgi.xpl. </p>
+<H2>
+<A NAME="WritingThePrologScript"></A><FONT COLOR="#0000FF">Writing the
+Prolog Script</FONT></H2>
+<!AMZI_INDEX= CGI Interface; cgiStart; cgiLoad; cgiMain; cgiErrorNote>The second 
+step is to write a Prolog script that conforms to the framework provided in acgi.pro. 
+You need to define the following predicates: 
+<DL>
+<DT>
+cgiLoad/0</DT>
+
+<DD>
+This predicate needs to consult or load any external Prolog modules, rule
+sets or logic-bases. All the cgi and system variables are already asserted
+into the dynamic database and the output file has been opened.</DD>
+
+<DT>
+cgiMain/0</DT>
+
+<DD>
+This is your main script which processes get and post requests from forms.</DD>
+
+<DT>
+cgiErrorNote/0</DT>
+
+<DD>
+This outputs additional information (via cgiSend) when an unexpected but
+fatal error occurs. Generally you will want to output who to contact about
+the problem.</DD>
+</DL>
+
+<H2>
+<A NAME="CGIVariables"></A><FONT COLOR="#0000FF">CGI Variables</FONT></H2>
+<!AMZI_INDEX= CGI Variables><FONT COLOR="#000000">Within your CGI script (cgiMain) 
+you will want to access the values entered into the forms. These are all dynamically 
+asserted as:</FONT> 
+<blockquote>
+  <PRE><FONT COLOR="#000080">fact(<I>field_name</I>, <I>value</I>)</FONT></PRE>
+</blockquote>
+<FONT COLOR="#000000">The field names and values are Prolog atoms.</FONT> 
+<P><FONT COLOR="#000000">You script can also access the values of many
+CGI variables. The Amzi! implementation uses lowercase versions of the
+standard CGI names (replacing spaces with underscores) and create predicates
+of arity 2 representing each value. For example:</FONT>
+<blockquote>
+  <PRE><FONT COLOR="#000080">cgi(content_length, $1462$)</FONT></PRE>
+</blockquote>
+All cgi, extraheader and accept variables have string values. All system
+variables have atom values.
+
+<P>The following table lists the possible CGI variables that may be set.
+Web servers differ in the variables they set and the format of the values
+they use.
+<BR>&nbsp;
+<TABLE BORDER CELLSPACING=3 CELLPADDING=3 >
+<TR>
+<TD><B>Standard CGI Name</B></TD>
+
+<TD><B>Predicate Name</B></TD>
+</TR>
+
+<TR>
+<TD>auth_name</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>auth_user</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>auth_type</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>cgi_version</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>content_file</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>content_length</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>content_type</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>cookie</TD>
+
+<TD>extraheaders&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>gateway_interface</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>http_cookie</TD>
+
+<TD>extraheaders</TD>
+</TR>
+
+<TR>
+<TD>http_from</TD>
+
+<TD>cgi&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>http_referer</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>http_user_agent</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>logname</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>path_info</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>path_translated</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>query_string</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>referer_url</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>remote_addr</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>remote_host</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>remote_user</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>request_method</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>request_range</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>script_name</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>server_admin</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>server_name</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>server_port</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>server_protocol</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>server_software</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>user_agent</TD>
+
+<TD>cgi</TD>
+</TR>
+
+<TR>
+<TD>debug_mode</TD>
+
+<TD>system</TD>
+</TR>
+
+<TR>
+<TD>gmt_offset</TD>
+
+<TD>system</TD>
+</TR>
+</TABLE>
+<p>There are some additional system variables that affect the operation of the 
+  functions provided by acgi.pro. These are: </p>
+<DL>
+<DT>
+'Log File'</DT>
+
+<DD>
+This is the name of the file to write logging information to (via cgiLog).
+It is the pathname passed to the operating system to open the file. It
+must be an atom. If you have not defined a log file, then all calls to
+cgiLog are ignored.</DD>
+
+<DT>
+'Log File URL'</DT>
+
+<DD>
+This is the URL of the log file for easy access to the file from your web
+browser.</DD>
+</DL>
+
+<H2>
+<A NAME="CGIPredicates"></A><FONT COLOR="#0000FF">CGI Predicates</FONT></H2>
+<!AMZI_INDEX= CGI Predicates>All CGI predicates provided by A5CGI.PRO and
+by amzisub.c begin with 'cgi'. They are:
+<DL>
+<DT>
+<!AMZI_INDEX=cgiExpandChars>cgiExpandChars(InputList, OutputList)</DT>
+
+<DD>
+Given a character list, these clauses expand special characters into their
+proper HTML representations, e.g. > becomes &amp;gt; This could be used
+by the error handler when reporting syntax (read) errors as the buffer
+contains parts of the logic-base which include HTML tags which are not
+to be interpreted, simply displayed.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiSend>cgiSend(ListOrTerm)</DT>
+
+<DD>
+Outputs the list of terms or the term (which may be a string, atom, number,
+etc. to the output file.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiSendLocalHTMLFile>cgiSendLocalHTMLFile(FileName)</DT>
+
+<DD>
+Outputs the contents of an existing HTML text file to the output file.
+You must output the header separately before calling this function. This
+allows you to intermix "canned" HTML with generated HTML.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiSendURL>cgiSendURL(URL)</DT>
+
+<DD>
+Tells the server to redirect to the specified URL.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiAskField>cgiAskField(Key, Prompt, Length, Separator, DefaultValue)</DT>
+
+<DD>
+Outputs the Prompt into the current HTML output file with the input box
+of the specified Length and DefaultValue, followed by the Separator.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiAskYesNo>cgiAskYesNo(Key, Prompt, Separator)</DT>
+
+<DD>
+Outputs the Prompt and asks for a yes, no or unknown radio button to be
+checked.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiAskMenu>cgiAskMenu(Key, Prompt, Choices, Type, Separator)</DT>
+
+<DD>
+Outputs the Prompt and a checkbox, radio or drop-down menu containing the
+items in the Choices list, each separated by the Separtor.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiAskTextbox>cgiAskTextbox(Key, Prompt, Length, Separator)</DT>
+
+<DD>
+Outputs a textarea with Length rows followed by Separator.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiLog>cgiLog(Stuff)</DT>
+
+<DD>
+If logging is enabled (by the existence of a system fact named 'Log File')
+then write Stuff to it. The first write causes the file to be opened, and
+all the system, cgi and facts to be written to it. The file is closed automatically
+when the script finishes.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiLogSuspend>cgiLogSuspend</DT>
+
+<DD>
+Suspends output to the log file via cgiLog calls.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiLogResume>cgiLogResume</DT>
+
+<DD>
+Resumes output to the log file via cgiLog calls.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiDecodeURL>cgiDecodeURL(URL, DecodedURL)</DT>
+
+<DD>
+Converts +'s to spaces and &amp;nn's to characters in a URL string.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiExtractFileName>cgiExtractFileName(Path, File)</DT>
+
+<DD>
+Extracts the name of a program or file from the end of a pathname.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiExtractPath>cgiExtractPath(Path, PathOnly)</DT>
+
+<DD>
+Removes the ending file name from a full path.</DD>
+
+<DT>
+<!AMZI_INDEX=cgiPathSeparator>cgiPathSeparator(SepChar)</DT>
+
+<DD>
+Returns the path separator character for the current operating system.</DD>
+</DL>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+</BODY>
+</HTML>

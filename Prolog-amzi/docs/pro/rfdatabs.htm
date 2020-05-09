@@ -1,0 +1,411 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Prolog Database</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="PrologDatabase"></A><FONT COLOR="#D2AA00">Prolog Database</FONT> 
+</h1>
+<MENU>
+<LI><A HREF="#Populating the Database">Populating the Database</A> </LI>
+
+<LI><A HREF="#Modifying the Database">Modifying the Database</A> </LI>
+
+<LI><A HREF="#Keys to the Database">Keys to the Database</A> </LI>
+</MENU>
+
+<P><!AMZI_INDEX = Prolog Database; Dynamic Database; Static Database>Prolog
+forces one to stretch one's understanding of the terms program and database.
+A Prolog program is not really a program in the conventional sense because
+it is not an ordered sequence of instructions for a computer to execute.
+It is not really a database either because, in addition to declarations
+of factual information, it contains potentially very complex declarations
+of the relationships between those facts. For this reason you often see
+the terms Prolog database and Prolog program used interchangeably. </P>
+
+<P>When the Prolog runtime responds to a query posed against the Prolog
+database/program, the behavior can be the same as that from a conventional
+program, as a simple query triggers another, which triggers another, and
+so on, solving some large computational problem. </P>
+
+<P>Understanding that, the term Prolog Database refers to all of the clauses
+and facts of a Prolog program. These can be dynamically changed during
+the execution of a Prolog program. Typically, however, to maintain the
+sanity of the developer, a Prolog program has many predicates that do not
+change and that do all of the work. The work they do might involve changing
+another set of predicates. This section describes the tools for dynamically
+manipulating the Prolog database. </P>
+
+<P>Clauses in the Prolog database can be in one of two forms: </P>
+
+<UL>
+<LI>In source code form- when a proof involves these clauses they are passed
+to the Prolog interpreter. </LI>
+
+<LI>In compiled form- Prolog executes these clauses directly. </LI>
+</UL>
+
+<P>We partition the database into these two types of clauses. The database
+of source clauses we call the <I>dynamic database</I> (comprising<I> dynamic
+clauses</I>). The database of compiled clauses we call the <I>static database</I>
+(and its clauses are <I>static clauses</I>). </P>
+
+<P>If all of your program is interpreted, then all of the clauses are maintained
+in the dynamic database, and your static database is empty. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>The clauses
+defining a predicate can be either all dynamic or all static--never mixed.</I>
+</P>
+
+<H2><A NAME="Populating the Database"></A><FONT COLOR="#0000FF">Populating</FONT></H2>
+
+<P><!AMZI_INDEX =Dynamic Database>The predicates<B> consult</B> and<B>
+reconsult</B> check to see whether the file being loaded is a source file
+or a compiled file. (They do <I>not</I> use the file extension for this
+purpose, rather they examine the first few locations of the file. However,
+if you leave off the extension in the filename, they assume you meant PRO.).
+Then the correct mechanism is used to load the file. </P>
+
+<P>The <B>load</B> predicate simply loads a compiled file (.plm). </P>
+
+<H3><A NAME="consult"></A><FONT COLOR="#000080">consult(FileA), consult([F1,
+F2, ...]), [F1, F2, ...]</FONT></H3>
+
+<P><!AMZI_INDEX = consult; pro Files; Clauses; Predicates><B>consult/1</B>
+reads a source (.pro) or object (.plm), or list of files. Each file name
+must be an atom representing the actual file name or path name. If the
+file exists and can be opened, then Prolog will open it and start reading
+its contents. If a file name is given with no extension, and there is no
+corresponding file, then <B>consult/1</B> assumes the extension was PRO
+and consults it. </P>
+
+<UL>
+<LI>If the file is a compiled file then the code for the predicates <I>replaces</I>
+any previous definitions of the same predicates. </LI>
+
+<LI>If the file is a Prolog source file then the clauses are asserted at
+the end of the database. </LI>
+</UL>
+
+<P><B>consult/1</B> can also be called from a Prolog listener by simply
+giving a list as a goal. That is, when the listener encounters a goal that
+is a list, it assumes the list is a list of file names to be consulted.
+</P>
+
+<P>Here are some examples of consult. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- consult(ducks).              % consults ducks.pro
+?- [ducks].                     % same as above
+?- consult([duck1, duck2])      % consults duck1.pro &amp; duck2.pro
+?- [duck1, duck2].              % same as above
+?- consult('c:\\amzi\\toolbox\\rdtok.plm').% loads the rdtok object file
+?- [duck1, 'duck2.plm'].        % consults one, loads the other</FONT></PRE>
+</UL>
+
+<P><B>consult</B> can, of course be called from your applications as well.
+For example </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">main :-
+   consult(mydata), 
+   write($mydata consulted\n$), 
+   ...</FONT></PRE>
+</UL>
+
+<H3><A NAME="reconsult"></A><FONT COLOR="#000080">reconsult(FileA), reconsult([F1,
+F2, ...])</FONT></H3>
+
+<P><!AMZI_INDEX = reconsult; pro Files; Clauses; Predicates><B>reconsult/1</B>
+is similar to <B>consult/1</B> except that for the case that the file is
+a Prolog source file. Then the first time a clause defining predicate P
+of arity N is read from File then any clauses in the database defining
+P of arity N which already exist are first retracted. Thus clauses in File
+completely replace any preexisting clauses in the database which define
+the same predicate/arity. </P>
+
+<P>If you are consulting a file for a second time, you usually want to
+<B>reconsult</B>, because otherwise you will wind up with duplicate clauses
+in the dynamic database. For example, the built-in <B>edit</B> predicate
+allows you to edit your source file and then <B>reconsult</B> it, replacing
+the old version. </P>
+
+<H3><A NAME="load"></A><FONT COLOR="#000080">load(FileA), load([F1, F2,
+...])</FONT></H3>
+
+<P><!AMZI_INDEX = load; plm Files; Predicates><B>load/1</B> is similar
+to consult, but it only loads object (.plm) files. If no
+file extension is given, and no files match the name, then it assumes the
+extension is PLM. </P>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- load([duck1, duck2]).   % loads duck1.plm and duck2.plm</FONT></PRE>
+</UL>
+
+<P>Note, <B>abolish </B>used inconjuction with <B>load </B>makes it possible
+to have a program dynamically loaded different .plm files that have alternate
+definitions for certain predicates.  You can also use the 'multifile'
+directive to allow multiple 'load' commands to be used for compiled files with
+clauses defining the same predicate.</P>
+
+
+<H3><A NAME="unload"></A><FONT COLOR="#000080">unload(FileA), unload([F1, F2,
+...])</FONT></H3>
+
+<P><!AMZI_INDEX = unload; plm Files; Predicates><B>unload/1</B>allows you to
+'unload' all of the clauses that resulted from a 'load' of the same
+file.  This, along with multifile, lets you dynamically change the
+state of the static database.</P>
+
+<P>For example, consider a tech support application with a predicate
+rule/3.  If a problem area is determined to be a printer problem, then
+the file printer_rules.plm can be loaded.  Once the problem is
+resolved, it can be unloaded, clearing the decks for the next
+problem. </P>
+
+
+<H3><A NAME="add"></A><FONT COLOR="#000080">add<B>, </B>[user]</FONT></H3>
+
+<P><!AMZI_INDEX = add; [user]; consult; Clauses; Predicates>The special
+file name <B>user</B> can be used to indicate that you want to consult
+clauses entered from the keyboard. You can use this capability from within
+your program (as opposed to from a listener) by including the goal, <B>consult</B>(user).
+</P>
+
+<P>In response to the prompt <B>?-</B> it is possible to give Prolog a
+&quot;special&quot; goal, <B>add</B> or <B>[user]</B>. This issues the
+prompt &quot;|&quot;. Now, whenever a clause is entered in response to
+this prompt, instead of trying to prove it, Prolog will just <I>add</I>
+it to the database following any current definitions for that predicate.
+It will then print another | and wait for the next clause to be input.
+Clauses entered this way must still be terminated with a period. </P>
+
+<P>To return to top and its ?- prompt, reply to a | prompt with [Ctrl-Z]
+or give it the clause quit<B>. </B>(which will not be added to the database-rather
+it just indicates to Prolog that you are through adding goals to the database).
+</P>
+
+<H3><A NAME="replace"></A><FONT COLOR="#000080">replace</FONT></H3>
+
+<P><!AMZI_INDEX = reconsult; replace; Clauses; Predicates><B>replace</B>
+can be called from the listener and is equivalent to <B>reconsult</B>(user).
+</P>
+
+<H3><A NAME="listing"></A><FONT COLOR="#000080">listing, listing(Name),
+listing(Name/Arity)</FONT></H3>
+
+<P><!AMZI_INDEX = listing; Clauses; Predicates><B>listing/1</B> prints
+out all dynamic clauses of Name [/Arity] to the current output file. Name
+should be bound to the name of a dynamic predicate and, optionally, Arity
+to the arity of that predicate. Output is paused after each page. Press
+&quot;n&quot; or &quot;q&quot; to stop the listing at the &quot;More?&quot;
+prompt. </P>
+
+<P><B>listing/0</B> lists out <I>all</I> dynamic predicates to the current
+output. Output is paused after each page. </P>
+
+<H3><A NAME="dynamicNameArity"></A><FONT COLOR="#000080">:- dynamic Name/Arity.</FONT></H3>
+
+<P><!AMZI_INDEX = dynamic; Predicates>The dynamic directive is used by
+the compiler to flag certain predicates as being dynamic rather than compiled.
+Those predicates will always be 'consulted' rather than loaded, even when
+the file is compiled. </P>
+
+<H2><A NAME="Modifying the Database"></A><FONT COLOR="#0000FF">Modifying</FONT></H2>
+
+<P><!AMZI_INDEX = Dynamic Database>A number of predicates are provided
+for adding and removing static and dynamic clauses. </P>
+
+<H3><A NAME="abolishNameArity"></A><FONT COLOR="#000080">abolish(Name/Arity),
+abolish(Name, Arity)</FONT></H3>
+
+<P><!AMZI_INDEX = abolish; Clauses; Predicates><B>abolish</B> removes all
+clauses (dynamic or compiled) defining the predicate whose name is Name
+and whose arity is Arity using this predicate. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- abolish(expenses/3).</FONT></PRE>
+</UL>
+
+<P><B>abolish </B>removes the definitions of predicates, thus allowing
+that predicate to be loaded again from a new .PLM file. This feature makes
+it possible to have a program dynamically loaded different .PLM files that
+have alternate definitions for certain predicates.</P>
+
+<H3><A NAME="assertaTerm"></A><FONT COLOR="#000080">asserta(Term)</FONT></H3>
+
+<P><!AMZI_INDEX = asserta; Terms; Clauses><B>asserta</B> adds clauses.
+Term must be sufficiently instantiated to be a term which represents a
+clause. The clause is added at the <I>front</I> of the database. This predicate
+fails if the term being asserted is a predicate defined internally by the
+Prolog system. Such predicates may not be redefined. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- asserta(happy).</FONT></PRE>
+</UL>
+
+<H3><A NAME="assertzTerm"></A><FONT COLOR="#000080">assertz(Term)</FONT></H3>
+
+<P><!AMZI_INDEX = assertz; Terms; Clauses><B>assertz</B> is similar to
+<B>asserta</B> except the clause is added at the <I>end</I> of the database.
+Again system predicates may not be redefined. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- assertz(customer('John Henry', 'Oshkosh', 'WI')).</FONT></PRE>
+</UL>
+
+<H3><A NAME="assertTerm"></A><FONT COLOR="#000080">assert(Term)</FONT></H3>
+
+<P><!AMZI_INDEX = assert; assertz><B>assert</B> is a synonym for <B>assertz</B>.
+</P>
+
+<H3><A NAME="clauseHeadBody"></A><FONT COLOR="#000080">clause(Head, Body)</FONT></H3>
+
+<P><!AMZI_INDEX = clause; Head; Body; Clauses><B>clause</B> succeeds if
+Head can be unified with the head of a dynamic clause in the database,
+and Body with its body. If clause is backtracked into, it will keep on
+succeeding as long as there is an untried clause whose head matches Head,
+in which case it will unify Body with the new body. Eventually the backtracking
+will fail. </P>
+
+<P>Head must be sufficiently instantiatedthe name and arity of the structure
+must be apparent in Head. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- clause(fox, Body).
+Body = (loc(ducks, yard) , loc(you, house) , write($ The fox has taken a duck. $) , nl) ;
+Body = true</FONT></PRE>
+</UL>
+
+<H3><A NAME="retractTerm"></A><FONT COLOR="#000080">retract(Term)</FONT></H3>
+
+<P><!AMZI_INDEX = retract; Terms; Clauses><B>retract</B> removes clauses.
+Term must be sufficiently instantiated to represent a clause. In particular
+the subterm representing the head of the clause must have a well-defined
+principal functor and number of arguments. The first clause in the database
+which matches Term is removed from the database. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- retract(happy).</FONT></PRE>
+</UL>
+
+<H3><A NAME="retractallTerm"></A><FONT COLOR="#000080">retractall(Term)</FONT></H3>
+
+<P><!AMZI_INDEX = retractall; Terms; Clauses><B>retractall</B> is similar
+to <B>retract</B> except all clauses which match Term are removed, and
+it always succeeds. For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- retractall(customer(_, _, 'WI')).</FONT></PRE>
+</UL>
+
+<H2><A NAME="Keys to the Database"></A><FONT COLOR="#0000FF">Keys</FONT></H2>
+
+<P><!AMZI_INDEX = Keys; Database References; Dynamic Database>There is
+a slightly more general mechanism at work underlying the assertion and
+retraction of dynamic clauses. </P>
+
+<P>Terms may be stored in dynamic form by recording them under a <I>Key</I>.
+A key is an atom and is used to indicate a tag under which terms may be
+stored. The following predicates record terms under a key. </P>
+
+<H3><A NAME="dbrefHeadBodyDbref"></A><FONT COLOR="#000080">db_ref(Head,
+Body, Dbref)</FONT></H3>
+
+<P><!AMZI_INDEX = Head; Body; db_ref; Keys><B>db_ref</B> sets/reads the
+database. If DBref is bound to a database reference then <B>db_ref</B>
+succeeds if Head and Body can be bound to the head and body of the dynamic
+clause specified. </P>
+
+<P>If Ref is unbound and Head and Body are well instantiated enough to
+specify a dynamic clause, then <B>db_ref</B> unifies Ref with the database
+reference of the clause. </P>
+
+<P>The built-in predicate <B>db_ref</B> is used to associate a clause in
+the database whose head matches Head and whose body matches Body with the
+database reference DBref. </P>
+
+<P>This association is bi-directionalgiven a DBref it will find the clause,
+or, if DBref is a variable, then it binds to the clause whose head matches
+with Head and whose body matches Body. </P>
+
+<P>For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- a :- b.
+Term asserted
+?- db_ref(a, Y, R).
+Y = b
+R = @19203 
+?- db_ref(a, Y, R), db_ref(H, B, R).
+Y = b
+R = @19203
+H = a
+B = b
+R = @19203 </FONT></PRE>
+</UL>
+
+<P>In general, database references can only be printed out, unified with
+themselves or variables, or passed in and out of <B>db_ref</B>. </P>
+
+<H3><A NAME="eraseDBref"></A><FONT COLOR="#000080">erase(DBref)</FONT></H3>
+
+<P><!AMZI_INDEX = erase; Keys><B>erase</B> removes the database entry corresponding
+to DBref. DBref should be bound to a valid database reference. </P>
+
+<H3><A NAME="eraseallKey"></A><FONT COLOR="#000080">eraseall(Key)</FONT></H3>
+
+<P><!AMZI_INDEX = eraseall; Keys><B>eraseall/1</B> erases all database
+terms recorded under Key. </P>
+
+<H3><A NAME="instanceDBrefTerm"></A><FONT COLOR="#000080">instance(DBref,
+Term)</FONT></H3>
+
+<P><!AMZI_INDEX = Keys; instance><B>instance</B> succeeds if Term can be
+unified with the Term at DBref. DBref should be bound to a valid database
+reference. </P>
+
+<H3><A NAME="recordaKeyTermDbref"></A><FONT COLOR="#000080">recorda(Key,
+Term, Dbref)</FONT></H3>
+
+<P><!AMZI_INDEX = Keys; recorda><B>recorda </B>adds terms to the database.
+Key should be bound to an atom. Term is added to the database as the first
+term recorded under Key. The Database Reference for Term is unified with
+DBref. </P>
+
+<H3><A NAME="recordzKeyTermDbref"></A><FONT COLOR="#000080">recordz(Key,
+Term, Dbref)</FONT></H3>
+
+<P><!AMZI_INDEX = recordz; Keys><B>recordz</B> also adds terms to the database.
+Key should be bound to an atom. Term is added to the database as the last
+term recorded under Key. The Database Reference for Term is unified with
+DBref. </P>
+
+<H3><A NAME="recordKeyTermDbref"></A><FONT COLOR="#000080">record(Key,
+Term, Dbref)</FONT></H3>
+
+<P><!AMZI_INDEX = recorda; record><B>record</B> is a synonym for <B>recorda</B>
+above. </P>
+
+<H3><A NAME="recordedKeyTermDbref"></A><FONT COLOR="#000080">recorded(Key,
+Term, Dbref)</FONT></H3>
+
+<P><!AMZI_INDEX = recorded; Keys><B>recorded</B> searches for terms in
+the database. Key must be bound to an atom. Term is unified with the first
+term it can which was recorded under Key. DBref is unified with the corresponding
+database reference of the Term. Upon backtracking Term and Dbref are unified
+successively with subsequent terms/references recorded under Key until
+exhausted. Then <B>recorded</B> fails. </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Note that,
+for all the recordx predicates, Term may be any term-even a variable-whereas
+for assert etc., Term must be in a valid Prolog clause form.</I> </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P>&nbsp; </P>
+
+</BODY>
+</HTML>

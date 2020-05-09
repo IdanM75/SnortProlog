@@ -1,0 +1,11 @@
+# Microsoft Developer Studio Generated Dependency File, included by wjnilib.mak
+
+.\amzijni.cpp : \
+	"..\..\..\..\..\..\..\installed\microsoft\visual_studio_6\vc98\include\basetsd.h"\
+	"..\..\..\..\..\..\..\installed\sun\jdk1.3.0_02\include\jni.h"\
+	"..\..\..\..\..\..\..\installed\sun\jdk1.3.0_02\include\win32\jni_md.h"\
+	"..\..\..\..\include\amzi.h"\
+	".\amzi_ls_LogicServer.h"\
+	".\amzi_ls_LSException.h"\
+	".\amzijni.h"\
+	

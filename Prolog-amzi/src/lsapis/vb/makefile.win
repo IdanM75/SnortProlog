@@ -1,0 +1,8 @@
+HERE = $(AMZI_DEV_DIR)\src\lsapis\vb
+DIST = $(AMZI_DEV_DIR)\lsapis\vb
+
+all: _vb
+
+_vb:
+	copy amzi.bas $(DIST)\amzi.bas
+

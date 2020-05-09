@@ -1,0 +1,26 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: odbc - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\TEMP\RSP58D.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /incremental:no /pdb:"Release/aodbc.pdb" /machine:I386 /out:"d:\amzi\dev\a5\bin\aodbc.lsx" /implib:"Release/aodbc.lib" 
+.\Release\aodbc.obj
+..\..\..\lib\amzi.lib
+]
+Creating command line "link.exe @C:\TEMP\RSP58D.tmp"
+<h3>Output Window</h3>
+Linking...
+   Creating library Release/aodbc.lib and object Release/aodbc.exp
+
+
+
+<h3>Results</h3>
+aodbc.lsx - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

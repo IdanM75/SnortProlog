@@ -1,0 +1,38 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (WinNT; I) [Netscape]">
+   <title>Amzi! lsx devdoc</title>
+</head>
+<body bgcolor="#FFFFFF">
+
+<h1>
+lsx</h1>
+Amzi! is designed to support plug-in like extensions of extended predicates,
+called Logic Server extensions (LSX). These are predicates that become
+part of the system, but are implemented in a non-Prolog language as system
+libraries, shared objects under Unix and DLLs under Windows. They allow
+Prolog to easily integrate with other systems.
+<p>The makefile in the lsx directory calls the makefiles for the various
+lsxs:
+<p>sockets - A library providing predicates that give Prolog full sockets
+programming support. (Windows, Linux)
+<br>osutils - A library of OS dependent predicates, primarily for file/directory
+handling. (Windows)
+<h3>
+Unix builds</h3>
+Each LSX has it own makefile and can be made individually. You can make
+all the LSXs from the lsx src directory with:
+<pre>make -f makefile.X</pre>
+where X is the platform for the build.
+<h3>
+Windows builds</h3>
+The C++ projects are implemented using VC++. They can either be built individually
+from the VC++ IDE, or you can go to the VC++ IDE and export, with the dependencies
+box checked, the project makefile. Then you can call the lsx makefile in
+batch using Borland's bmake:
+<pre>bmake -f makefile.win</pre>
+This will call nmake for each of the exported VC++ makefiles.
+</body>
+</html>

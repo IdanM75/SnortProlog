@@ -1,0 +1,449 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+   <TITLE>Java Class</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<H1>
+<A NAME="JavaClass"></A><FONT COLOR="#D2AA00">Java Class</FONT></H1>
+<!AMZI_INDEX= Java Class>Java is designed to be an object oriented language
+for deploying secure, multithreaded network applications (both clients
+and servers). Prolog is ideal for building intelligent components, expert
+systems and logic-bases. In combination, Java and Prolog are an ideal pair
+for delivering useful intelligent applications on the Internet. The Java
+Class encapsulates the Amzi! Logic Server for use by Java applications
+and applets. It includes:
+<UL>
+<LI>
+A Java Class Package the encapsulates a Logic Server Engine</LI>
+
+<LI>
+Methods that correspond to the Logic Server API Functions</LI>
+
+<LI>
+Use of Java's exception handling for API errors, and</LI>
+
+<LI>
+Java-like method interfaces.</LI>
+</UL>
+<p>In addition, you can extend the Java Class to allow Prolog to call methods 
+  in your Java code. </p>
+<p>The sections of this document are: </p>
+<ul>
+  <li><a href="#WheretoLearnAboutJava">Where to Learn About Java</a> - Where to 
+    get Java software, tutorials and information.</li>
+  <li><a href="#InstallingtheJavaClass">Installation</a> - How to install the 
+    Logic Server as a Java class.</li>
+  <li> <a href="#HelloPrologfromJava">Hello Prolog</a>- Getting the Hello Prolog 
+    application up and running from Java.</li>
+  <li> <a href="#JavaClassOverview">Overview</a> - Conceptual overview of the 
+    Java version of the Logic Server.</li>
+  <li> <a href="#UsingtheJavaClass">Using the Java Class</a> - How to use the 
+    Logic Server from Java.</li>
+  <li> <a href="#ImplementingExtendedPredicatesInJava">Implementing Extended Predicates</a> 
+    - How to add Prolog extended predicates written in Java.</li>
+  <li> <a href="#JavaLogicServerandLSExceptionM">Reference</a> - Full listing 
+    of all of the Java Logic Server methods.</li>
+</ul>
+<h2></h2>
+<H2>
+<A NAME="WheretoLearnAboutJava"></A><FONT COLOR="#0000FF">Where to Learn
+About Java</FONT></H2>
+<!AMZI_INDEX= Java>If you want to learn more about Java and Java Applets and Servlets, 
+see java.sun.com. You can also download Sun's Java Development Kit (JDK) from 
+there. 
+<H2>
+<A NAME="InstallingtheJavaClass"></A><FONT COLOR="#0000FF">Installation</FONT></H2>
+<!AMZI_INDEX=Java Class>The Java Class and its samples are distributed for JDK 
+2.0 (1.2). 
+<P>To use the Java Class, you must make these files accessible to the calling 
+  environment: 
+<UL>
+  <LI> <B>Amzi! Dynamic/Shared Library</B> - The Amzi! Logic Server, amzi.dll 
+    or libamzi.so, and the Amzi! Java interface, amzijni.dll, must be in your 
+    PATH or otherwise accessible to the calling environment. These files are in 
+    the amzi/\bin directory.</LI>
+
+  <LI> <B>Amzi! Java Classes</B> - The amzi/ls directory structure, containing 
+    the amzi.ls.* package must be accessible via your CLASSPATH. You can do this 
+    by adding amzi/lsapis/java20 to your CLASSPATH or copying the amzi\ls subdirectory 
+    structure to a directory already in your CLASSPATH.</LI>
+</UL>
+<IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Do not put any other 
+files in your amzi/ls directory as they will be included when you import amzi.ls.*; 
+and may cause naming conflicts.</I> 
+<H2>
+<A NAME="HelloPrologfromJava"></A><FONT COLOR="#0000FF">Hello Prolog</FONT></H2>
+<!AMZI_INDEX=Hello Prolog>To make sure the Amzi! Java interface is ready
+to use, run the Amzi! Hello sample for Java. It is in the directory amzi5\samples\java\hello.
+To build the Hello program from Java, first open a 'DOS' window and change
+to the sample directory containing Hello.java. To compile it, type:
+<UL>
+<PRE><FONT COLOR="#000080">javac Hello.java</FONT></PRE>
+</UL>
+This will produce Hello.class which is simply run by typing:
+<UL>
+<PRE><FONT COLOR="#000080">java Hello</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="JavaClassOverview"></A><FONT COLOR="#0000FF">Overview</FONT></H2>
+<!AMZI_INDEX= Java Class>The Java Class is implemented using the Java Native
+Interface (JNI). This allows methods used in a Java class to be implemented
+in C/C++. In the case of Amzi!, the JNI is used to build a bridge to the
+Logic Server API, which is the external interface on the Amzi! Prolog engine.
+The bridge is necessary because many of the Logic Server API functions
+have to be changed slightly to conform to Java parameter passing and return
+conventions (such as accommodating the lack of pointer support in Java).
+
+<P>So, the Amzi! Java interface defines a Java class, LogicServer, whose methods 
+  are implemented by calls to C++ functions in a dynamic/shared libary that, in 
+  turn, calls the main Amzi! engine dynamic/shared library. This is illustrated 
+  in Figure 1. 
+<P><IMG SRC="javacls1.gif" HEIGHT=68 WIDTH=418>
+
+<P>Figure 1
+
+<P>Working right to left in the diagram, amzi.dll is the Amzi! Logic Server (Prolog 
+  engine). amzijni.dll/libamzijni.so is the interface library that implements 
+  the Java versions of Logic Server API functions. Those, in turn are wrapped 
+  in the Java classes, LogicServer and LSException. 
+<P>There are a number of features of the Java class that were dictated
+by the distinct characteristics of Java. These are detailed in the following
+sections.
+<H3>
+<A NAME="ObjectOriented"></A><FONT COLOR="#000080">Object Oriented</FONT></H3>
+<!AMZI_INDEX= Java>The Amzi! Logic Server is implemented as an object oriented
+program, so that each Logic Server is an object and the Logic Server API
+functions are methods of that object. It is natural, therefor, to provide
+object oriented interfaces to the Logic Server for object oriented languages
+such as Java. (Amzi! is also available in a C++ and Delphi class.) The
+Logic Server class can then be used as any other class in an object oriented
+application, supporting, for example, subclassing, embedding and multiple
+instances. This makes for an elegant approach to encapsulating Prolog services
+in applications. (see "<A HREF="../articles/procpp.htm">Objects and Logic-C++
+Meets Prolog</A>", PC AI May/Jun 95)
+
+<P>Figure 2 is an expanded architecture diagram that illustrates the package
+and its classes.
+
+<P><IMG SRC="javacls2.gif" HEIGHT=101 WIDTH=419>
+
+<P>Figure 2
+<H3>
+<A NAME="PointerlessMethods"></A><FONT COLOR="#000080">Pointerless Methods</FONT></H3>
+<!AMZI_INDEX= Java>The biggest challenge in the design of the Amzi! Java
+class was the requirement for pointerless methods. The creators of Java
+wanted to keep their language simple, so they did not include support for
+pointers, specifically in function parameter lists. For this reason the
+Java methods had to be implemented so they return a single value.
+
+<P>A fundamental data type for the Prolog interface is a Prolog term. Internally,
+a Prolog term is a pointer, but, since that pointer is not manipulated
+by the application, it can be stored as an integer. For Java, it is stored
+in a 64-bit integer so Java can support both 64- and 32-bit versions of
+the Amzi! Prolog engine.
+
+<P>Many Logic Server API (LSAPI) functions return error codes, and use
+argument pointers to pass values back and forth. The Java class, like other
+Amzi! lsapis, is designed to use exception handling for errors, with
+return values passed directly as return values, without using pointers.
+
+<P>There are a number of Java LSAPI functions that differ from the corresponding
+base LSAPI because of lack of pointers. These are discussed in the following
+sections.
+<H3>
+<A NAME="IssuingPrologQueries"></A><FONT COLOR="#000080">Issuing Prolog
+Queries</FONT></H3>
+<!AMZI_INDEX=Calling Prolog>The base LSAPI functions that issue Prolog
+queries return TRUE or FALSE, corresponding to Prolog success or failure,
+and use a pointer to the calling Prolog term to pass back the term resulting
+from the query. For example a function issuing the query 'available(com,
+Port)' will return true or false plus the term representing the query with
+the Port variable unified with the result.
+
+<P>For Java, the query LSAPI functions (Exec, ExecStr, Call, CallStr) return
+the term (a long) directly, instead of a true false. If the query fails,
+that is indicated by a zero (0) value returned. (Errors are indicated by
+LSExceptions.)
+<H3>
+<A NAME="StringConversion"></A><FONT COLOR="#000080">String Conversion</FONT></H3>
+<!AMZI_INDEX= Strings; Converting>The Java LSAPI automatically converts
+the internal Unicode Java representation of character strings to and from
+the Amzi! internal Unicode representation.
+<H3>
+<A NAME="Exceptions"></A><FONT COLOR="#000080">Exceptions</FONT></H3>
+<!AMZI_INDEX=Exceptions; Errors>Instead of returning error codes, all the
+LogicServer methods use Java's exception mechanism. The LSException class
+is thrown when an error occurs. LSException contains a number of methods
+for learning details about the exceptions.
+<H3>
+<A NAME="MultiThreaded"></A><FONT COLOR="#000080">Multi-Threaded</FONT></H3>
+<!AMZI_INDEX= Java; Multi-Threaded>Java allows you to start multiple threads
+in the same program, and Amzi! supports multiple simultaneous Prolog engines.
+So each instance of the Java Logic Server class will contain its own Prolog
+runtime environment.
+<H2>
+<A NAME="UsingtheJavaClass"></A><FONT COLOR="#0000FF">Using the Java Class</FONT></H2>
+<!AMZI_INDEX= Java Class>To use the LogicServer class you import the amzi.ls
+package into your Java program:
+<UL>
+<PRE><FONT COLOR="#000080">import amzi.ls.*;</FONT></PRE>
+</UL>
+<p>From there you can either instantiate a new LogicServer object and invoke its 
+  methods, or you can define a new class that extends the LogicServer class adding 
+  new methods and variables. </p>
+<h2> <A name="ImplementingExtendedPredicatesInJava"></A><font color="#0000FF">Implementing
+  Extended Predicates</font></h2>
+<!AMZI_INDEX= Extended Predicates>Java, like C/C++, Delphi and VB 5.0 (and later), 
+can be used to implement custom extended predicates to the Prolog language. These 
+custom extensions give the Prolog code the ability to directly access anything 
+Java can access. 
+<p>The Java methods that implement extended predicates, must be declared as returning 
+  type boolean, and as public. They can be added one at a time using the API function 
+  AddPred, which adds a single predicate at a time. If your extended predicate 
+  is in a package, then the package name must be included in the class name, delimited 
+  by forward slashes, to AddPred as follows:
+<blockquote>
+  <pre><font color="#000080">ls.AddPred("extpred", 1, "javapkg/jprolog", "extpred", this);</font></pre>
+</blockquote>
+<p><img src="arrowrt.gif" height=18 width=18><i> Note: Extended predicate definitions 
+  must always be added after calling InitLS and before calling LoadXPL.</i> 
+<p>The sample in directory /samples/java/pets_callback is an example of how to 
+  implement an extended predicate in Java. 
+<H2>
+<A NAME="JavaLogicServerandLSExceptionM"></A><FONT COLOR="#0000FF">LogicServer
+and LSException Methods</FONT></H2>
+<!AMZI_INDEX= Methods>The LogicServer class includes all the methods that
+give the developer full control over the Prolog engine. These include methods
+for:
+<UL>
+<LI>
+<A HREF="#SetUptheLogicServer">Setting Up the Logic Server</A></LI>
+
+<LI>
+<A HREF="#CallingProlog">Calling Prolog</A></LI>
+
+<LI>
+<A HREF="#ManipulatingtheDynamicDatabase">Manipulating the Dynamic Database</A></LI>
+
+<LI>
+<A HREF="#ConvertingStringTerm">Converting Strings and Terms</A></LI>
+
+<LI>
+<A HREF="#MakingGettingPrologTypes">Making/Getting Prolog Types</A></LI>
+
+<LI>
+<A HREF="#ManipulatingStructures">Manipulating Structures</A></LI>
+
+<LI>
+<A HREF="#ExtendedPredicates">Building Extended Predicates</A></LI>
+
+<LI>
+<A HREF="#ManipulatingLists">Manipulating Lists</A></LI>
+
+<LI>
+<A HREF="#ErrorHandling">Error Handling</A></LI>
+
+<LI>
+<A HREF="#MiscellaneousMethods">Miscellaneous Java Methods</A></LI>
+</UL>
+The LSException class has no methods and is simply used to signal and catch
+errors as described in the section on 'Exceptions.'
+<H3>
+<A NAME="SetUptheLogicServer"></A><FONT COLOR="#000080">Logic Server Set-Up</FONT></H3>
+<!AMZI_INDEX=Logic Server Set-Up; lsInit; lsLoad; lsMain; lsReset; lsClose;
+Init; Init2; InitLSX; AddLSX; AddPred; Load; Main; Reset; Close;>These
+methods provide the basic API services. They are used to initialize and
+close down the Prolog environment. Most are similar to their base LSAPI
+equivalents, with the exception of AddPred, which is used to defined extended
+predicates.
+
+<P>For AddPred, the Java method that implements the predicate is defined
+with two string parameters, giving the class and method names, and one
+Object reference for the particular instance of the object that will be
+used for the functions. (AddPred does not allow the use of static methods
+for extended predicates.) See the samples for an example of its use.
+<UL>
+<PRE><FONT COLOR="#000080">public native void Init(String ININame) throws LSException;
+public native void Init2(String INIParms) throws LSException;
+public native void InitLSX(long Arg) throws LSException;
+public native void AddLSX(String LSXName, long Arg) throws LSException;
+public native void AddPred(String PredName, int Arity,
+&nbsp;&nbsp; String Class, String Method, Object Obj) throws LSException;
+public native void Load(String XPLName) throws LSException;
+public native boolean Main() throws LSException;
+public native void Reset() throws LSException;
+public native void Close() throws LSException;</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="CallingProlog"></A><FONT COLOR="#000080">Calling Prolog</FONT></H3>
+<!AMZI_INDEX= Calling Prolog; lsExec; lsExecStr; lsCall; lsCallStr; lsRedo;
+lsClearCall>These
+are the methods that actually call predicate in a Prolog module. The query
+term can be represented as a string or a Prolog term. The methods return
+the term representing the result, or the value 0 if the query fails.
+<UL>
+<PRE><FONT COLOR="#000080">public native long Exec(long Term) throws LSException;
+public native long ExecStr(String Query) throws LSException;
+public native long Call(long Term) throws LSException;
+public native long CallStr(String Query) throws LSException;
+public native boolean Redo() throws LSException;
+public native void ClearCall() throws LSException;</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="ManipulatingtheDynamicDatabase"></A><FONT COLOR="#000080">Dynamic
+Database</FONT></H3>
+<!AMZI_INDEX=  Dynamic Database; lsAsserta; lsAssertz; lsRetract; lsAssertaStr; lsAssertzStr; lsRetractStr>These
+methods make it easy to assert and retract terms to and from Prolog's dynamic
+database.
+<UL>
+<PRE><FONT COLOR="#000080">public native void Asserta(long Term) throws LSException;
+public native void Assertz(long Term) throws LSException;
+public native long Retract(long Term) throws LSException;
+public native void AssertaStr(String TermStr) throws LSException;
+public native void AssertzStr(String TermStr) throws LSException;
+public native boolean RetractStr(String TermStr) throws LSException;</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="ConvertingStringTerm"></A><FONT COLOR="#000080">Converting Strings/Terms</FONT></H3>
+<!AMZI_INDEX= Strings; Terms; Converting; lsTermToStr; lsTermToStrQ; lsStrToTerm; lsStrTermLen>These
+methods convert strings to terms and terms to strings. The 'Q' version
+create quoted strings when necessary for atoms and strings that require
+delimiter symbols. They are necessary for those cases when you want to
+use the resulting string in another query.
+
+<P>TermToStr is especially useful during development to display the results
+of a Prolog query.
+<UL>
+<PRE>
+<FONT COLOR="#000080">public native String TermToStr(long Term, int Len) throws LSException;
+public native String TermToStrQ(long Term, int Len) throws LSException;
+public native long StrToTerm(String TermStr) throws LSException;
+public native int&nbsp; StrTermLen(long Term) throws LSException;</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="MakingGettingPrologTypes"></A><FONT COLOR="#000080">Making/Getting
+Prolog Types</FONT></H3>
+<!AMZI_INDEX= Prolog Types; Types; lsMakeAtom; lsMakeStr; lsMakeInt; lsMakeFloat; lsGetTermType; lsGetTerm>These
+methods map Prolog types to Java types.
+<UL>
+<PRE><FONT COLOR="#000080">public native long MakeAtom(String AtomStr) throws LSException;
+public native long MakeStr(String Str) throws LSException;
+public native long MakeInt(int Num) throws LSException;
+public native long MakeFloat(double Num) throws LSException;
+public native int GetTermType(long Term) throws LSException;
+public native String GetStrTerm(long Term) throws LSException;
+public native int GetIntTerm(long Term) throws LSException;
+public native double GetFloatTerm(long Term) throws LSException;</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="ManipulatingStructures"></A><FONT COLOR="#000080">Manipulating
+Structures</FONT></H3>
+<!AMZI_INDEX= Structures; lsGetFunctor; lsGetArity; lsMakeFA; lsGetArg; lsUnifyArg; lsGetArgType; lsStrArgLen>These
+methods let you create and take apart terms that represent structures.
+This is especially useful for retrieving arguments in a query. For example,
+for the query 'sibling(mary, X)' GetStrArg can be used to retrieve the
+second argument of the strucutre.
+<UL>
+<PRE><FONT COLOR="#000080">public native String GetFunctor(long Term) throws LSException;
+public native int GetArity(long Term) throws LSException;
+public native long MakeFA(String Functor, int Arity) throws LSException;
+public native long GetArg(long Term, int Num) throws LSException;
+public native String GetStrArg(long Term, int Num) throws LSException;
+public native int GetIntArg(long Term, int Num) throws LSException;
+public native double GetFloatArg(long Term, int Num) throws LSException;
+public native long UnifyStrArg(long Term, int Num, String Str) throws LSException;
+public native long UnifyIntArg(long Term, int Num, int Val) throws LSException;
+public native long UnifyFloatArg(long Term, int Num, double Val) throws LSException;
+public native int GetArgType(long Term, int Num) throws LSException;
+public native int StrArgLen(long Term, int Num) throws LSException;</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="ExtendedPredicates"></A><FONT COLOR="#000080">Manipulating Parameters
+for Extended Predicates</FONT></H3>
+<!AMZI_INDEX= Parameters; Extended Predicates; lsGetParmType; lsGetParm;
+lsUnifyParm; GetParmType; GetParm; GetStrParm; GetIntParm; GetFloatParm;
+UnifyParm; UnifyStrParm; UnifyIntParm; UnifyFloatParm;>These
+methods let you get and set (unify) the parameters that are passed with
+a Prolog extended predicate. The term parameter is used to distinguish
+them from functor arguments, although in pure Prolog terminology the parameters
+are simply the arguments of the functor of the extended predicate. For
+example, if you implemented an extended predicate call get_url/1 in Java,
+these predicates would let you unify a URL with the first parameter of
+that predicate.
+<UL>
+<PRE><FONT COLOR="#000080">public native int GetParmType(int iarg) throws LSException;
+public native long GetParm(int iarg) throws LSException;
+public native String GetStrParm(int iarg) throws LSException;
+public native int GetIntParm(int iarg) throws LSException;
+public native double GetFloatParm(int iarg) throws LSException;
+public native boolean UnifyParm(int iarg, long Term) throws LSException;
+public native boolean UnifyStrParm(int iarg, String s) throws LSException;
+public native boolean UnifyIntParm(int iarg, int i) throws LSException;
+public native boolean UnifyFloatParm(int iarg, double f) throws LSException;</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="ManipulatingLists"></A><FONT COLOR="#000080">Manipulating Lists</FONT></H3>
+<!AMZI_INDEX= Lists; lsMakeList; lsPushList; lsGetHead; lsGetTail>These
+methods let you create Prolog lists, add items to lists and retrieve items
+from lists. The Get__Head family of functions can be used in loops to get
+all the items in a list (in conjunction with GetTail).
+<UL>
+<PRE><FONT COLOR="#000080">public native long MakeList() throws LSException;
+public native long PushList(long ListTerm, long Term) throws LSException;
+public native long GetHead(long ListTerm) throws LSException;
+public native String GetStrHead(long ListTerm) throws LSException;
+public native int GetIntHead(long ListTerm) throws LSException;
+public native double GetFloatHead(long ListTerm) throws LSException;
+public native long GetTail(long ListTerm) throws LSException;</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="ErrorHandling"></A><FONT COLOR="#000080">Error Handling</FONT></H3>
+<!AMZI_INDEX=Error Handling; lsGetExceptMsg>These methods are all implemented
+as part of the LSException class, and let you get details about the exception.
+<UL>
+<PRE><FONT COLOR="#000080">public native int GetType();
+public native int GetRC();
+public native int GetLineno();
+public native String GetMsg();
+public native String GetReadFileName();
+public native String GetReadBuffer();
+public native String GetCallStack();</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="MiscellaneousMethods"></A><FONT COLOR="#000080">Miscellaneous
+Methods</FONT></H3>
+<!AMZI_INDEX= Miscellaneous Methods; lsGetVersion>This method lets you
+get the current version number.
+<UL>
+<PRE><FONT COLOR="#000080">public native String GetVersion() throws LSException;</FONT></PRE>
+</UL>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --> 
+<hr>
+<div align="center"><a href="http://babelfish.altavista.com/translate.dyn">Deutsch&nbsp;&nbsp; 
+  Espa&ntilde;ol&nbsp;&nbsp; Fran&ccedil;ais&nbsp;&nbsp; Italiano&nbsp;&nbsp; 
+  Portugu&ecirc;s</a> 
+  <hr>
+<p align="center"><i><font size=-1>Copyright &copy;1995-2000 Amzi! inc. All Rights 
+  Reserved. <a href="mailto:info@amzi.com">info@amzi.com</a></font></i>
+</div>
+<p align="center"><font size="-2"><i>Amzi! is a registered trademark and Adventure 
+  in Prolog, Logic Server, Logic Explorer, Adventure in Prolog, SupportKT, Subscription 
+  Plus and WebLS are trademarks of Amzi! inc.</i></font> 
+<p></p>
+<p align="center">&nbsp; 
+<!-- #EndLibraryItem --> 
+<p>&nbsp;</p>
+</BODY>
+</HTML>

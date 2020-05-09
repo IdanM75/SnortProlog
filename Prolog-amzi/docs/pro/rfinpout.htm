@@ -1,0 +1,603 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Input and Output</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="InputandOutput"></A><FONT COLOR="#D2AA00">Input and Output</FONT> 
+</h1>
+<P><!AMZI_INDEX= Input and Output>There are a number of predicates that
+perform I/O. The general categories are:</P>
+
+<UL>
+<LI><A HREF="#IObyIds">I/O by IDs</A></LI>
+
+<LI><A HREF="#IObyStreams">I/O by&nbsp;Streams</A></LI>
+
+<LI><A HREF="#StreamandIDInputOutput">I/O by IDs and Streams</A></LI>
+
+<LI><A HREF="#Files">File-Only I/O</A></LI>
+
+<LI><A HREF="#Keyboard">Keyboard Input</A></LI>
+
+<LI><A HREF="#LogFiles">Logging</A></LI>
+</UL>
+
+<P>Exactly where the I/O takes place is determined in two different ways.
+</P>
+
+<UL>
+<LI>Each I/O predicate can include an identifier specifying where the I/O
+is to take place. </LI>
+
+<LI>The current input and output streams can be changed so that all non-directed
+I/O goes to them. </LI>
+</UL>
+
+<P>I/O can be directed to/from the console, a file or a C/C++ function.
+There are predicates designed just for dealing with files, and predicates
+designed just for dealing with the console. </P>
+
+<P>For example, <B>write</B>(hello), will write hello to the current output
+stream. It might be &quot;stdout&quot;or a file. <B>write</B>(ID, hello)
+will write hello to the file identified by the value of the variable ID
+no matter what the current output stream is. </P>
+
+<P>The predicates which perform I/O succeed only once--they cannot be resatisfied
+by backtracking, since in general there is no way to &quot;push&quot; an
+arbitrary number of characters back into a file, or remove them from a
+file. </P>
+
+<H2><A NAME="IObyIds"></A><FONT COLOR="#0000FF">I/O by Ids</FONT></H2>
+
+<P><!AMZI_INDEX= Input and Output; I/O by Ids; handle_name>A device has
+to be opened for reading or writing before it can be used. The predicates
+which open the device return, in one of their arguments, a small integer,
+called a handle. </P>
+
+<P>The handle can be used to identify the device for future I/O predicates.
+You can also simply use the device name to identify the device. The predicate
+<B>handle_name/2</B> can be used to get the name of a device from its handle
+and the handle from the name of the device. </P>
+
+<P>While always using the device name as an ID is probably the most straightforward
+approach, both types of ID are supported. So you can use either the filename
+or the handle as the ID. </P>
+
+<P>All forms of reading and writing predicates that accept an ID, will
+decide whether the ID is a name or handle based on whether it is an atom
+or an integer. </P>
+
+<P>There are 4 predefined IDs as follows: </P>
+
+<TABLE BORDER=1 >
+<TR>
+<TD WIDTH=48><B>ID</B></TD>
+
+<TD WIDTH=96><B>Name</B></TD>
+
+<TD WIDTH=288><B>Description</B> </TD>
+</TR>
+
+<TR>
+<TD WIDTH=48>0</TD>
+
+<TD WIDTH=96>stdin </TD>
+
+<TD WIDTH=288>standard input</TD>
+</TR>
+
+<TR>
+<TD WIDTH=48>1</TD>
+
+<TD WIDTH=96>stdout </TD>
+
+<TD WIDTH=288>standard output</TD>
+</TR>
+
+<TR>
+<TD WIDTH=48>2</TD>
+
+<TD WIDTH=96>stderr </TD>
+
+<TD WIDTH=288>standard error</TD>
+</TR>
+
+<TR>
+<TD WIDTH=48>3</TD>
+
+<TD WIDTH=96>function </TD>
+
+<TD WIDTH=288>directs I/O through C/C++ functions defined via the Logic
+Server API </TD>
+</TR>
+</TABLE>
+
+<P>For more information on ID=3, see &quot;Capturing Prolog I/O from C/C++&quot;
+in the Logic Server section. </P>
+
+<H2><A NAME="IObyStreams"></A><FONT COLOR="#0000FF">I/O by Streams</FONT></H2>
+
+<P><!AMZI_INDEX= I/O by Streams>Prolog maintains two classes of streamsthe
+current streams and the &quot;user&quot; streams. </P>
+
+<P>The I/O that is directed to the these streams is I/O from predicates
+that do <B>not</B> have a device ID associated with them. If an ID is specified,
+then the I/O from that predicate overrides the current stream. </P>
+
+<H3><A NAME="CurrentStreams"></A><FONT COLOR="#000080">Current Streams</FONT></H3>
+
+<P><!AMZI_INDEX= Current Streams>The current streams define the stream
+I/O devices currently in effect, for input, output and errors. Current
+input and current output are separate entities. So, input could be coming
+from a file and output to the terminal, input could be coming from the
+keyboard and output to a file, or any other combination of the two. </P>
+
+<P>Some predicates are designed to change both streams at the same time,
+such as <B>seetell/1</B> which sets both current input and current output
+to its argument. </P>
+
+<H3><A NAME="UserStreams"></A><FONT COLOR="#000080">User Streams</FONT></H3>
+
+<P><!AMZI_INDEX= User Streams; seen; told>The poorly named &quot;user&quot;
+streams actually define the default I/O devices, used when a current stream
+is closed via <B>seen/1</B> or <B>told/1</B>. At start-up, &quot;user input&quot;,
+&quot;user output&quot; and &quot;user error&quot; are set to &quot;stdin&quot;,
+&quot;stdout&quot;, and &quot;stderr&quot; and the current streams and
+user streams are the same. </P>
+
+<H3><A NAME="StreamManagement"></A><FONT COLOR="#000080">Stream Management</FONT></H3>
+
+<P><!AMZI_INDEX=Streams; current_streams; user_stream>The fundamental predicates
+for setting and retrieving stream IDs are <B>current_streams/3</B> and
+<B>user_stream/3</B>. The other stream predicates are implemented using
+them. Because Prolog is more expressive at logic than English, the Technotes
+contains the source code used to implement the various stream predicates.
+</P>
+
+<P>The stream I/O predicates generally expect the device to have already
+been opened. However, if it hasn't been they will attempt to open it. In
+this case they assume the device is a file. This means you don't have to
+necessarily open files before directing streams to them. </P>
+
+<H2><A NAME="StreamandIDInputOutput"></A><FONT COLOR="#0000FF">I/O by IDs
+and Streams</FONT></H2>
+
+<P>The following predicates are used for performing I/O with streams and
+IDs. </P>
+
+<H3><A NAME="EOFEndofFile"></A><FONT COLOR="#000080">!EOF End of File</FONT></H3>
+
+<P><!AMZI_INDEX= End of File; !EOF; read; get; get0>When you are reading
+from a file, it is very possible that you will eventually have read the
+whole file by making repeated calls to one or more of the reading predicates.
+In this case <B>read</B>, <B>get</B> and <B>get0</B> will attempt to unify
+their argument with the special atom '!EOF'. Further attempts to read the
+file will result in this atom's being returned over and over. Thus it is
+the programmer's responsibility to look for this atom and take the appropriate
+action. </P>
+
+<H3><A NAME="currentstreamsInputIDOutputIDE"></A><FONT COLOR="#000080">current_streams(Input_ID,
+Output_ID, Error_ID)</FONT></H3>
+
+<P><!AMZI_INDEX=  current_streams><B>current_streams/3</B> sets or returns
+the IDs for each of the three streams, current_input, current_output, and
+current_error. </P>
+
+<H3><A NAME="currentuserUserInIDUserOutIDUs"></A><FONT COLOR="#000080">current_user(UserIn_ID,
+UserOut_ID, UserErr_ID)</FONT></H3>
+
+<P><!AMZI_INDEX= current_user><B>current_user/3</B> sets or returns the
+IDs for each of the three streams, user_input, user_output, and user_error.
+</P>
+
+<H3><A NAME="displayTerm"></A><FONT COLOR="#000080">display(Term)</FONT></H3>
+
+<P><!AMZI_INDEX=display; Terms><B>display/1</B> displays a Prolog term
+without expanding operators (useful for seeing precedence and associativity
+of operators) </P>
+
+<H3><A NAME="flushinandflushout"></A><FONT COLOR="#000080">flush_in and
+flush_out</FONT></H3>
+
+<P><!AMZI_INDEX= flush_in; flush_out; fflush>These predicates flush the
+input and output streams. They are defined using <B>fflush/1</B>. </P>
+
+<H3><A NAME="getChargetIDChar"></A><FONT COLOR="#000080">get(Char), get(ID,
+Char)</FONT></H3>
+
+<P><!AMZI_INDEX= get><B>get/1</B> or <B>get/2</B> succeeds if Char can
+be unified with the ASCII value of the next non-white space character read
+from the appropriate file. A character is white space if its ASCII value
+is less than or equal to 32. </P>
+
+<H3><A NAME="getChargetIDChar"></A><FONT COLOR="#000080">get0(Char), get0(ID,
+Char)</FONT></H3>
+
+<P><!AMZI_INDEX= get0><B>get0/1</B> or <B>get0/2</B> succeeds if Char can
+be unified with the integer ASCII value of the next character read in from
+the stream specified by ID. '!EOF' is returned if an end-of-file condition
+is met. </P>
+
+<H3><A NAME="handlenameHandleDeviceName"></A><FONT COLOR="#000080">handle_name(Handle,
+DeviceName)</FONT></H3>
+
+<P><!AMZI_INDEX= handle_name><B>handle_name/2</B> will provide the handle
+for the named device, or the name of a device associated with a handle.
+One of the arguments must be a variable. </P>
+
+<H3><A NAME="nlnlID"></A><FONT COLOR="#000080">nl, nl(ID)</FONT></H3>
+
+<P><!AMZI_INDEX= nl><B>nl/0</B> or <B>nl/1</B> prints out a newline to
+the current output stream or to the device specified by ID. </P>
+
+<H3><A NAME="putCharputIDChar"></A><FONT COLOR="#000080">put(Char), put(ID,
+Char)</FONT></H3>
+
+<P><!AMZI_INDEX= put><B>put/1</B> or <B>put/2</B> prints a character. Char
+should be bound to an integer which is a valid ASCII value. The corresponding
+character is printed at the current output stream or device identified
+by ID. </P>
+
+<H3><A NAME="readTermreadIDTerm"></A><FONT COLOR="#000080">read(Term),
+read(ID, Term)</FONT></H3>
+
+<P><!AMZI_INDEX= read><B>read/1</B> or <B>read/2</B> succeeds if Term can
+be unified with the next term read from current input (or device identified
+by ID). Fails if Term does not unify with the term. Raise an error condition
+if a term cannot be read (or fail, depending on <B>fileerrors</B> mode).
+The built-in predicate <B>read/1</B> is the main predicate for reading
+a term from current input. If current input is the terminal the predicate
+waits for a term to be entered at the terminal (terminated with a<B> &quot;.'</B>).
+The goal succeeds if its argument can be unified with the term read in.
+For example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- read(X).
+foo(bar).
+X = foo(bar) </FONT></PRE>
+</UL>
+
+<P>After the initial goal was typed in, Prolog waited until a term was
+entered (here<B> &quot;</B>foo(bar)') and then Prolog tried to prove<B>
+&quot;</B>read(X)&quot;, unifying X<B> </B>with<B> &quot;</B>foo(bar)&quot;.
+</P>
+
+<P>If the current input is a file then Prolog expects to be able to read
+a Term from the file exactly as it would from the terminala stream of ASCII
+characters which represent a Prolog term terminated with a period. </P>
+
+<P>If the argument cannot be unified with the input term then <B>read</B>
+fails. If backtracking passes over <B>read</B> then there is no way that
+its proof can be totally undonethis would require that the term typed in
+during the previous proof is somehow pushed back into the terminal. This
+does not happen. Any bindings caused by the <B>read</B> predicate are discarded
+on backtracking. </P>
+
+<P>If the end-of-file is reached (or [Ctrl-Z] is read from the terminal)
+then read behaves as though the atom<B> '</B>!EOF' had been read. Successive
+reads will cause rereadings of the<B> '</B>!EOF' atom. Thus it is up to
+your program to detect the end-of-file condition. </P>
+
+<H3><A NAME="readstringStringreadstringIDSt"></A><FONT COLOR="#000080">read_string(String),
+read_string(ID, String)</FONT></H3>
+
+<P><!AMZI_INDEX=  read_string; Strings><B>read_string/1</B> or <B>read_string/2</B>
+succeeds if String can be unified with the next string read from current
+input (or device identified by ID). Fails if String does not unify with
+the string. Raise an error condition if a term cannot be read (or fail,
+depending on <B>fileerrors</B> mode). </P>
+
+<P>A string is a series of ASCII characters ending with a newline (\n).
+The string has a maximum length of 255 characters. </P>
+
+<P>If the end-of-file is reached (or [Ctrl-Z] is read from the terminal
+on the IBM-PC) then read behaves as though the atom<B> '</B>!EOF' had been
+read. Successive reads will cause rereadings of the<B> '</B>!EOF' atom.
+Thus it is up to your program to detect the end-of-file condition. </P>
+
+<H3><A NAME="seeStreamA"></A><FONT COLOR="#000080">see(StreamA)</FONT></H3>
+
+<P><!AMZI_INDEX=see><B>see/1</B> opens the device named StreamA as the
+current input stream. StreamA must be instantiated to an atom naming a
+file or window, which must exist. </P>
+
+<P>If StreamA is not an atom, or the named file does not exist then an
+error is raised (or the predicate may failsee <B>fileerrors </B>and<B>
+nofileerrors</B>). </P>
+
+<P>The initial current input stream defaults to your terminal. This is
+represented by the &quot;special&quot; file whose name is &quot;user&quot;.
+</P>
+
+<H3><A NAME="seen"></A><FONT COLOR="#000080">seen</FONT></H3>
+
+<P><!AMZI_INDEX= seen>The current input stream is closed and is redirected
+to &quot;user.&quot; </P>
+
+<H3><A NAME="seeingSName"></A><FONT COLOR="#000080">seeing(SName)</FONT></H3>
+
+<P><!AMZI_INDEX= seeing><B>seeing/1</B> returns the name of the current
+input stream. SName must be a variable. </P>
+
+<H3><A NAME="seetellStreamA"></A><FONT COLOR="#000080">seetell(StreamA)</FONT></H3>
+
+<P><!AMZI_INDEX= seetell><B>seetell/1</B> does a simultaneous see and tell,
+which is useful for windows when you want to direct both input and output
+streams to the window. </P>
+
+<H3><A NAME="seentold"></A><FONT COLOR="#000080">seentold</FONT></H3>
+
+<P><!AMZI_INDEX=  seentold>The current input and output streams are closed
+and redirected to &quot;user.&quot; </P>
+
+<H3><A NAME="seterrorsStreamA"></A><FONT COLOR="#000080">set_errors(StreamA)</FONT></H3>
+
+<P><!AMZI_INDEX= set_errors><B>set_errors/1</B> sets the standard error
+stream to the window or file specified by the atom, StreamA. </P>
+
+<H3><A NAME="skipCharskipIDChar"></A><FONT COLOR="#000080">skip(Char),
+skip(ID, Char)</FONT></H3>
+
+<P><!AMZI_INDEX= skip><B>skip/1</B> or <B>skip/2</B> keeps reading characters
+from the appropriate stream until one is read whose ASCII value matches
+Char<B>, </B>then succeeds. Fails if end-of-file condition is reached.
+</P>
+
+<H3><A NAME="streamtypeIDType"></A><FONT COLOR="#000080">stream_type(ID,
+Type)</FONT></H3>
+
+<P><!AMZI_INDEX= stream_type><B>stream_type</B> identifies the type of
+stream represented by ID. ID must be bound to a stream name. Type is instantiated
+to: </P>
+
+<DL> 
+  <dl>
+    <dt><B>0</B> </dt>
+    <dd>for stdin or stdout </dd>
+    <dt><B>1</B> </dt>
+    <dd>for a file </dd>
+    <dt><B>2</B> </dt>
+    <dd>for a window </dd>
+    <dt><B>3</B> </dt>
+    <dd>if I/O for the stream is redirected through a function set-up using the 
+      Logic Server API </dd>
+    <dt><B>-1</B> </dt>
+    <dd>if the I/O stream is not defined </dd>
+  </dl>
+</DL>
+
+<P>The -1 check is useful for Logic Server API applications running under
+Windows that do not redefine the I/O streams. In those cases normal Prolog
+reads and writes will generate errors, so this check can be used for applications
+where the Prolog code might run in different environments. </P>
+
+<H3><A NAME="tabNtabIDN"></A><FONT COLOR="#000080">tab(N), tab(ID, N)</FONT></H3>
+
+<P><!AMZI_INDEX=  tab><B>tab</B>(N) or <B>tab</B>(ID, N) prints out N spaces
+to the current output or the file identified by ID. An error is generated
+if N is not bound to an integer. </P>
+
+<H3><A NAME="tellStreamA"></A><FONT COLOR="#000080">tell(StreamA)</FONT></H3>
+
+<P><!AMZI_INDEX= tell><B>tell</B> opens device StreamA as the current output
+device. If StreamA does not exist then a file with its name is created.
+If it cannot be created or StreamA is not an atom then an error is raised
+or the predicate fails. </P>
+
+<P>It should be noted that all output (except error messages) generated
+by a Prolog stream write predicate goes to the current output stream. This
+includes all the prompts generated by the system (e.g. <B>?-</B>, <B>|</B>
+). </P>
+
+<H3><A NAME="told"></A><FONT COLOR="#000080">told</FONT></H3>
+
+<P><!AMZI_INDEX= told>Closes the current output file, flushing any buffers
+to the file. Redirects current output to &quot;user&quot;. </P>
+
+<H3><A NAME="tellingSName"></A><FONT COLOR="#000080">telling(SName)</FONT></H3>
+
+<P><!AMZI_INDEX= telling><B>telling/1</B> returns the name of the current
+output stream. SName must be a variable. </P>
+
+<H3><A NAME="writeTermwriteIDTerm"></A><FONT COLOR="#000080">write(Term),
+write(ID, Term)</FONT></H3>
+
+<P><!AMZI_INDEX=write><B>write/1</B> and <B>write/2</B> write out term
+Term to the current output stream or the device identified by ID. Prolog
+does not keep the names of variables, but will produce its own internal
+names when writing out any unbound variables. </P>
+
+<P>The atom 'XYZ' (notice the quotes), prints as XYZ (no quotes). Thus
+files written using <B>write</B> are not guaranteed to be readable by <B>read</B>
+and retain their original Prolog meaning. (XYZ would be read back as a
+variable above). </P>
+
+<H3><A NAME="writeqTermwriteqIDTerm"></A><FONT COLOR="#000080">writeq(Term),
+writeq(ID, Term)</FONT></H3>
+
+<P><!AMZI_INDEX= writeq><B>writeq/1</B> or <B>writeq/2</B> is similar to
+<B>write</B> (see the section on Streams) except that quoted atoms are
+quoted on output. This makes it possible to read back in the term that
+was written. </P>
+
+<H2><A NAME="Files"></A><FONT COLOR="#0000FF">File-Only I/O</FONT></H2>
+
+<P><!AMZI_INDEX= Files>This section describes the predicates for working
+directly with files. Like the streams described above, ID in the predicates
+below can either be the file handle obtained from <B>fopen</B>, or the
+file name passed to <B>fopen</B>. </P>
+
+<P>Binary files have an associated <I>file pointer</I>. This is a pointer
+into the file which indicates where the next byte will be written to or
+read from. It is normally adjusted after each read or write so that bytes
+are read or written consecutively. </P>
+
+<H3><A NAME="fopenHandleFileMode"></A><FONT COLOR="#000080">fopen(ID, File,
+Mode)</FONT></H3>
+
+<P><!AMZI_INDEX= fopen; file_errors; Unicode><B>fopen</B> opens the file
+with filename File in a specific Mode and returns its ID. </P>
+
+<P>File can be an atom, a string, or a character list. Mode should be one
+of r (read), w (write), a (append), rb (read binary), wb (write binary)
+or ab (append binary). The Mode can include a u to indicate the file to
+be opened is a Unicode file, instead of an ASCII file.</P>
+
+<P>If the binary option is not used then the file system may do some strange
+things to carriage-return / line-feed pairs of characters. As long as ASCII
+text is being read (e.g. in a .pro file) then this manipulation is beneficial.
+</P>
+
+<P>For text files that are open in read mode, <B>fopen/3</B> determines
+the type of file from the data in the file (Unicode or ASCII). For text
+files to be written with Unicode characters, you must add a 'u' to the
+Mode (the default is ASCII):</P>
+
+<UL>
+<PRE><FONT COLOR="#000080">fopen(H, 'pekingduck.pro', wu).</FONT></PRE>
+</UL>
+
+<P>If File cannot be opened then an error is raised (or failure occurs,
+depending on the <B>file_errors</B> mode). </P>
+
+<H3><A NAME="fcloseID"></A><FONT COLOR="#000080">fclose(ID)</FONT></H3>
+
+<P><!AMZI_INDEX=  fclose><B>fclose</B> closes the file corresponding to
+ID. It raises an error if the file could not be closed. If the file was
+opened for writing it is flushed before being closed. </P>
+
+<H3><A NAME="fflushID"></A><FONT COLOR="#000080">fflush(ID)</FONT></H3>
+
+<P><!AMZI_INDEX= fflush><B>fflush</B> flushes pending writes to disk for
+the file identified by ID, if it has been opened for writing. </P>
+
+<H3><A NAME="freadIDValueType"></A><FONT COLOR="#000080">fread(ID, Value,
+Type)</FONT></H3>
+
+<P><!AMZI_INDEX= fread><B>fread</B> reads data from a file. It is the same
+as <B>fwrite</B> except Value is unified with the value read from the disk
+file. If end-of-file is met then <B>fread</B> fails, rather than returning
+an error condition. </P>
+
+<H3><A NAME="fseekIDOffsetMethodNewOff"></A><FONT COLOR="#000080">fseek(ID,
+Offset, Method, NewOff)</FONT></H3>
+
+<P><!AMZI_INDEX= fseek><B>fseek</B> repositions the pointer of the file
+associated with ID. Offset is a number representing the number of byte
+positions to be added to the starting point, which is determined by the
+value of Method as follows: </P>
+
+<DL> 
+  <dl>
+    <dt><B>0</B> </dt>
+    <dd>offset from 0 </dd>
+    <dt><B>1</B> </dt>
+    <dd>offset from the current file position </dd>
+    <dt><B>2</B> </dt>
+    <dd>offset from the end of file </dd>
+  </dl>
+</DL>
+
+<P>NewOff is bound to the new position, and the file is repositioned to
+point to it. For example, to get the current position of a file: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- fseek(H, 0, 1, X).
+X = 42</FONT></PRE>
+</UL>
+
+<H3><A NAME="fwriteIDValueType"></A><FONT COLOR="#000080">fwrite(ID, Value,
+Type)</FONT></H3>
+
+<P><!AMZI_INDEX= fwrite><B>fwrite</B> is for random file I/O. Value must
+be instantiated to a value which is written to the file ID at the current
+file position. Either one byte is written (Type = 0) or one 16 bit word
+(Type = 1) or one 32 bit floating point number (Type = 2) or one 32-bit
+integer (Type = 3). </P>
+
+<H3><A NAME="fileexistsFilefileexistsFileTy"></A><FONT COLOR="#000080">file_exists(File),
+file_exists(File, Type)</FONT></H3>
+
+<P><!AMZI_INDEX= file_exists><B>file_exists/1</B> succeeds if the File
+exists. File can be an atom, a string, or a character list specifying the
+path name of a file. </P>
+
+<P><B>file_exists/2</B> is similar to <B>file_exists/1</B> above. It succeeds
+if File exists, unifying Type with 1 if File is a Prolog Object file or
+with 0 if Type is an ASCII file. Note that <B>file_exists</B> does not
+examine the whole file before deciding on the type of the file, and in
+fact will classify any file into one of two types. However if the file
+is either source or compiled code then Type will accurately indicate which
+it is. </P>
+
+<H2><A NAME="Keyboard"></A><FONT COLOR="#0000FF">Keyboard Input</FONT></H2>
+
+<P><!AMZI_INDEX= Keyboard>These predicates read or simulate reading the
+keyboard. </P>
+
+<H3><A NAME="getKey"></A><FONT COLOR="#000080">get1(Key)</FONT></H3>
+
+<P><!AMZI_INDEX= get1><B>get1/1</B> gets a single character response key
+for environments that don't support keyb/1. Unlike <B>keyb/1</B> and friends,
+<B>get1/1</B> does not respond until after the [Enter] key is struck. See
+also <B>respkey/1</B>. </P>
+
+<H3><A NAME="keybAscii"></A><FONT COLOR="#000080">keyb(Ascii)</FONT></H3>
+
+<P><!AMZI_INDEX=; keyb><B>keyb/1</B> returns the ASCII character code of
+the next key struck without echoing to the screen. keyb/1 is not available
+in all environments. It is implemented in DOS, and is available for Windows
+programs running in the IDE environment, but not for Windows programs running
+in other environments. </P>
+
+<H3><A NAME="respkeyChar"></A><FONT COLOR="#000080">respkey(Char)</FONT></H3>
+
+<P><!AMZI_INDEX= respkey><B>respkey/1</B> gets a single character response
+key by calling <B>keyb/1</B> predicate if it exists, and <B>get1/1</B>
+if not. Here is its definition: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">respkey(A) :- keyb(A), put(A), nl, !.
+respkey(A) :- get1(A).</FONT>
+</PRE>
+</UL>
+
+<H2><A NAME="LogFiles"></A><FONT COLOR="#0000FF">Logging</FONT></H2>
+
+<P><!AMZI_INDEX= Log Files>The log file capability allows you to record
+a transcript of a Prolog session. This is especially useful in recording
+long traces during debugging. </P>
+
+<P>Logging can be controlled from a listener, or within a Prolog program
+through the use of built-in predicates. </P>
+
+<H3><A NAME="openlogFname"></A><FONT COLOR="#000080">openlog(Fname)</FONT></H3>
+
+<P><!AMZI_INDEX= openlog>This opens the file Fname and sets a flag letting
+Prolog know it is logging. The file overwrites any previous file of the
+same name. Fname must be an atom, such as &quot;temp.log&quot; or simply
+log. </P>
+
+<H3><A NAME="closelog"></A><FONT COLOR="#000080">closelog</FONT></H3>
+
+<P><!AMZI_INDEX= closelog>This closes the log file and stops the logging
+process. </P>
+
+<H3><A NAME="writelogX"></A><FONT COLOR="#000080">writelog(X)</FONT></H3>
+
+<P><!AMZI_INDEX= writelog>Writes X just to the log file. </P>
+
+<H3><A NAME="nllog"></A><FONT COLOR="#000080">nllog</FONT></H3>
+
+<P><!AMZI_INDEX= nllog>Writes a newline to the log file. </P>
+
+<P>Logging can also be turned on for an application by specifying a log
+file in the application's .cfg file. </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P>&nbsp; </P>
+
+</BODY>
+</HTML>

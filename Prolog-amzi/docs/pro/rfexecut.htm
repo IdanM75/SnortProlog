@@ -1,0 +1,575 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; U) [Netscape]">
+   <TITLE>Prolog Execution</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="PrologExecution"></A><FONT COLOR="#D2AA00">Prolog Execution</FONT> 
+</h1>
+<UL>
+<LI>
+<A HREF="#Clauses">Clauses</A></LI>
+
+<LI>
+<A HREF="#Unification">Unification</A></LI>
+
+<LI>
+<A HREF="#BacktrackingSearch">Backtracking Search</A></LI>
+
+<LI>
+<A HREF="#FlowofControlPredicates">Flow-of-Control</A></LI>
+
+<LI>
+<A HREF="#ComplexGoals">Complex Goals</A></LI>
+
+<LI>
+<A HREF="#Counters">Counters</A></LI>
+</UL>
+
+<H2>
+<A NAME="Clauses"></A><FONT COLOR="#0000FF">Clauses</FONT></H2>
+<!AMZI_INDEX =  Clauses; Head; Body; Neck; Functor; Arity; :->A Prolog
+program is a collection of Prolog structures called <I>clauses</I>. A clause
+is a structure of the form
+<UL>
+<PRE><FONT COLOR="#000080">head :- body.</FONT></PRE>
+</UL>
+where <I>head</I> is a Prolog structure and <I>body</I> is optionally a
+series of Prolog structures separated by commas. The ":-" symbol is called
+the <I>neck</I> and is often read as "if".
+
+<P>A number of clauses with the same functor and arity are said to define
+a <I>predicate</I> of that functor and arity, often written in the form
+"functor/arity". The clauses must be contiguous unless the predicate is
+mentioned in a 'multifile' or 'discontiguous' directive.
+
+<P>Here, for example, are three clauses defining a predicate called <B>is_ordered/1</B>.
+<UL>
+<PRE><FONT COLOR="#000080">is_ordered([]).
+is_ordered([E1]).
+is_ordered([E1, E2 | Rest]) :-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; is_less_than(E1, E2),&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; is_ordered([E2 | Rest]).</FONT></PRE>
+</UL>
+
+<H2>
+<A NAME="Unification"></A><FONT COLOR="#0000FF">Unification</FONT></H2>
+<!AMZI_INDEX = Unification; Binding>Prolog proves goals by matching patterns
+of a query goal with the patterns of the clauses of a Prolog program. It
+does this by finding a clause whose head matches the query goal and then
+trying to prove the goals, if any, in the clause's body.
+
+<P>Prolog has to have a method for matching the goal it is currently trying
+to prove against heads of clauses. When the head of a clause and the current
+goal match, the clause is chosen and Prolog goes on to try and prove the
+goals in its body (if any).
+
+<P>The act of matching two Prolog terms is called <I>unification</I> and
+is described by the following rules:
+<OL>
+<LI>
+Two atoms unify if they are the same.</LI>
+
+<LI>
+In the case of numbers, both must be integers or both must be real numbers.</LI>
+
+<LI>
+Two structures unify if they have the same name and arity, and each pair
+of respective arguments unify.</LI>
+
+<LI>
+Two lists unify if their initial elements unify, and the lists which remain
+after removing both initial elements unify.</LI>
+
+<LI>
+A variable unifies with a non-variable by being replaced by the non-variable.
+This is known as<I> binding</I>.</LI>
+
+<LI>
+Two variables unify by agreeing to "share" bindings. This means that if
+later on, one or the other unifies with another term, then both unify with
+the term.</LI>
+
+<LI>
+Two strings unify if and only if they have precisely the same characters
+in them.</LI>
+
+<LI>
+A string and an atom will unify if they have precisely the same characters
+in them.</LI>
+</OL>
+When a clause is under consideration to match against a goal, space is
+reserved to hold variable bindings. If the clause is chosen again later
+on in the proof, then new space is reserved for the variable bindings caused
+by the new choice.
+<H2>
+<A NAME="BacktrackingSearch"></A><FONT COLOR="#0000FF">Backtracking Search</FONT></H2>
+<!AMZI_INDEX = Goals; Backtracking Search>We have seen that Prolog uses
+unification to match a goal to the head of a clause, but if there are several
+candidate clauses, which does Prolog choose to try first? The answer is
+simple : <I>Prolog looks through the clauses in the order in which they
+are entered in the database</I>. Usually this is the order in which they
+occur in the file, or the order in which they are typed into the system
+(under the <B>add</B> or <B>[user]</B> directives).
+
+<P>Prolog's backtracking top-to-bottom, left-to-right search is simple
+and effective. Backtracking works as follows:
+<OL>
+<LI>
+If Prolog cannot prove a sub-goal in the body of a clause, then it looks
+at the sub-goal <I>immediately to its left</I>. If there are any other
+clauses which can be used to re-prove this goal, then any variable bindings
+which resulted from the previous clause selection are discarded, and Prolog
+continues with the new proof.</LI>
+
+<LI>
+If the sub-goal which initially failed was the <I>first</I> goal in the
+body of the clause, then the whole goal fails, and the backtracking continues
+in the <I>parent</I><B> </B>clause (the clause containing the reference
+to the goal whose proof just failed).</LI>
+</OL>
+Backtracking is a very powerful tool since it will try and generate a solution
+by automated search. Unfortunately it can sometimes be too powerfulgenerating
+solutions that were not wanted, and so we have to have some way of controlling
+it. This leads us to the next section.
+<H2>
+<A NAME="ComplexGoals"></A><FONT COLOR="#0000FF">Complex Goals</FONT></H2>
+<!AMZI_INDEX = Complex Goals>In addition to simple predicates, Amzi! Prolog
+may be given compound or complex goals.
+
+<P><!AMZI_INDEX= import; export; findall; bagof; setof><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM>
+<I>Note that call/1, findall/3, bagof/3 and setof/3 access the database,
+and for this reason, if they are compiled into modules with import and
+export, the goals they call must be accessible, which means if they are
+not in the local code they must be listed in an import directive.</I>
+<H3>
+<A NAME="XandY"></A><FONT COLOR="#000080">X , Y</FONT></H3>
+<!AMZI_INDEX= and>X , Y succeeds if both X and Y both can be proved; else
+it fails.
+<H3>
+<A NAME="XorY"></A><FONT COLOR="#000080">X ; Y</FONT></H3>
+<!AMZI_INDEX= or>X ; Y succeeds if X can be proved or Y can be proved;
+else it fails.
+<H3>
+<A NAME="IfThenElse"></A><FONT COLOR="#000080">Goal1 -> Goal2 ; Goal3</FONT></H3>
+<!AMZI_INDEX= if-then>Goal1 <B>-></B> Goal2 <B>;</B> Goal3 is an if-then-else
+construct. If Goal1 can be proved then Prolog tries to prove Goal2. Otherwise
+if Goal1 fails Prolog tries to prove Goal3. Goal1 is not backtrackable
+into once it has been proved.
+
+<P>This predicate can also be used in the form Goal1 -> Goal2, which only
+succeeds once, if at all, and if so executes Goal2.
+<H3>
+<A NAME="callGoal"></A><FONT COLOR="#000080">call(Goal)</FONT></H3>
+<!AMZI_INDEX= call><B>call</B> succeeds if Goal can be proved. Goal must
+be instantiated to a term which could be a valid goal in a clause body.
+Then <B>call</B> succeeds if and only if that goal can be proved. Note
+that Goal may be provable using compiled code or dynamic clausesthe call
+predicate handles both with no need for declarations.
+<H3>
+<A NAME="notGoal"></A><FONT COLOR="#000080">not(Goal)</FONT></H3>
+<!AMZI_INDEX= not><B>not</B> succeeds if and only if Goal cannot be proved.
+Gola is subject to the same restrictions on Goal as in <B>call</B> above.
+
+<P>Note that <B>not</B>(<B>not</B>(Goal)) has the interesting, and sometimes
+useful, effect of succeeding if Goal can be proved, but not unifying any
+of its variables and failing on backtracking.
+<H3>
+<A NAME="Goal"></A><FONT COLOR="#000080">\+ Goal</FONT></H3>
+<!AMZI_INDEX= not; \+><B>\+</B> X is a synonym for <B>not</B> X.
+<H3>
+<A NAME="findallInstanceGoalList"></A><FONT COLOR="#000080">findall(Instance,
+Goal, List)</FONT></H3>
+<!AMZI_INDEX= Complex Goals; findall><B>findall</B> succeeds if List can
+be unified with the list of all instances of Instance making Goal provable.
+
+<P>For example, <B>findall</B>(X, a(X), [1, 2, 3]) is true if the database
+contains precisely the following clauses for <B>a</B>:
+<UL>
+<PRE><FONT COLOR="#000080">a(1).&nbsp;
+a(2).&nbsp;
+a(3).</FONT></PRE>
+</UL>
+If Goal cannot be proved for any values of Instance, then List<B> </B>is
+unified with the empty list [].
+
+<P><B>findall</B> is generally used to generate lists from database entries,
+so for example it might be used as follows (with the database shown above):
+<UL>
+<PRE><FONT COLOR="#000080">?- findall(X, a(X), L).
+L = [1, 2, 3]</FONT></PRE>
+</UL>
+For a database containing:
+<UL>
+<PRE><FONT COLOR="#000080">fact(bird, duck).
+fact(sound, quack).
+fact(color, white).</FONT></PRE>
+</UL>
+Then you can construct arbitrary terms with:
+<UL>
+<PRE><FONT COLOR="#000080">?- findall(Name : Value, fact(Name, Value), List).
+List = [bird : duck, sound : quack, color : white]</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="bagofInstanceGoalList"></A><FONT COLOR="#000080">bagof(Instance,
+Goal, List)</FONT></H3>
+<!AMZI_INDEX= bagof><B>bagof</B> is like <B>findall</B> above except in
+the way it deals with variables occurring in Goal which are not in Instance.
+These are known as free variables. In this case, <B>bagof</B> is backtrackable
+into and produces one list List for each possible binding of the free variables.
+
+<P>It is possible to convert an otherwise free variable to a non-free variable
+by using the ^ symbol as follows:
+<UL>
+<PRE><FONT COLOR="#000080">bagof(W, a(W, X, Y, Z), L).&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; % Here X, Y and Z are free
+bagof(W, X ^ Y ^ a(W, X, Y, Z), L)&nbsp;&nbsp; % Here only Z is free</FONT></PRE>
+</UL>
+So, for example, consider the following database:
+<UL>
+<PRE><FONT COLOR="#000080">likes(fred, beer).
+likes(tom, wine).
+likes(jane, beer).
+likes(jane, coke).
+
+?- bagof(P, likes(X, P), L).&nbsp;&nbsp; % X is free so we will backtrack&nbsp;
+P = H47
+X = fred
+L = [beer] ;
+P = H47
+X = tom
+L = [wine] ;
+P = H47
+X = jane
+L = [beer, coke] ;
+no
+?- bagof(P, X ^ likes(X, P), L).
+P = H47
+X = H48
+L = [beer, wine, beer, coke].</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="getpredsPredList"></A><FONT COLOR="#000080">get_preds(PredList)</FONT></H3>
+<!AMZI_INDEX= get_preds><B>get_preds/1</B> is called with an unbound variable,
+PredList, and returns a list with the names and arities of all the predicates
+in the dynamic database. The predicates are returned in the form: functor/arity.
+For example, if DUCKY.PRO were loaded in the listener, then:
+<UL>
+<PRE><FONT COLOR="#000080">?- get_preds(X).
+X = [ main / 0, goto / 1, ...</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="onceGoal"></A><FONT COLOR="#000080">once(Goal)</FONT></H3>
+<!AMZI_INDEX= once; cut>The predicate <B>once</B> behaves like <B>call</B>
+except it is only executed once. This is useful for isolating code that
+you don't intend to be backtracked into, and makes for more readable code
+than inserting lots of cuts (!).
+
+<P>Note that like all such predicates, more than one goal can be given
+as an argument by enclosing them in parenthesis:
+<UL>
+<PRE><FONT COLOR="#000080">main :-
+&nbsp;&nbsp;&nbsp; first_backtracking_goal,
+&nbsp;&nbsp;&nbsp; once(
+&nbsp;&nbsp;&nbsp; (
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; first_once_goal,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; second_once_goal,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; third_once_goal
+&nbsp;&nbsp;&nbsp; )),
+&nbsp;&nbsp;&nbsp; next_backtracking_goal,
+&nbsp;&nbsp;&nbsp; ...</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="setofInstanceGoalList"></A><FONT COLOR="#000080">setof(Instance,
+Goal, List)</FONT></H3>
+<!AMZI_INDEX= setof><B>setof</B> is like <B>bagof/3</B> above except the
+list List is sorted according to the standard order and any duplicates
+are removed.
+<H2>
+<A NAME="FlowofControlPredicates"></A><FONT COLOR="#0000FF">Flow-of-Control</FONT></H2>
+<!AMZI_INDEX = Flow-of-Control; Backtracking Search>The top-down, left-to-right
+search coupled with backtracking will try to ferret out a solution to a
+problem. Sometimes it can be too industrious. What we need is a way of
+saying "if you have got this far then there is no backtracking !"
+<H3>
+<A NAME="Cut"></A><FONT COLOR="#000080">!Cut</FONT></H3>
+<!AMZI_INDEX = !; Cut>There is a Prolog predicate which does just this.
+It is called<B> </B><I>cut</I>, and is denoted with a "<B>!".</B>
+
+<P><B>!</B> is always true, so if a clause containing a cut is read as
+a statement of truth, it behaves as if there were no cut there. But cut
+affects the way backtracking is performed as follows:
+
+<P>Once a cut is executed, the choice of the clause which contains it is
+<I>frozen</I> as a proof step. Also any choices made during the proof of
+the goals between the head of the clause and the cut are frozen. Thus cut
+acts like a fence. When backtracking passes over the cut (heading left
+in a clause), then proof reconsideration continues not with the goal to
+the left of the <B>!</B>, but <I>the goal to the left of the goal which
+chose the clause containing the cut.</I>
+<H3>
+<A NAME="repeat"></A><FONT COLOR="#000080">repeat</FONT></H3>
+<!AMZI_INDEX = repeat><B>repeat</B> is always provable, and can be backtracked
+into an arbitrary number of times. It behaves as though it had been defined
+by:
+<UL>
+<PRE><FONT COLOR="#000080">repeat.
+repeat :- repeat.</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="fail"></A><FONT COLOR="#000080">fail</FONT></H3>
+<!AMZI_INDEX = fail><B>fail</B> always fails.
+<H3>
+<A NAME="true"></A><FONT COLOR="#000080">true</FONT></H3>
+<!AMZI_INDEX = true><B>true</B> always succeeds.
+<H3>
+<A NAME="forIndexStartEndIncrement"></A><FONT COLOR="#000080">for(Index,
+Start, End, Increment)</FONT></H3>
+<!AMZI_INDEX = for><B>for</B> provides a shorthand for implementing repeat/fail
+loops that execute a prespecified number of times. Bottom, Top and Increment
+must be bound to integers with Bottom being less than or equal to Top.
+When first proved Index is unified with Bottom and checked to see whether
+it is less than or equal to Top. If so, <B>for</B> succeeds otherwise it
+fails.
+
+<P>On backtracking Increment is added to the current value of Index and
+Index is bound to this new value. Again a range check is performed.
+<UL>
+<PRE><FONT COLOR="#000080">?- for(X, 1, 5, 1), write(X), fail.
+12345
+no</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="catchGoalCatcherRecoverandthro"></A><FONT COLOR="#000080">catch(Goal,
+Catcher, Recover) and throw(Term)</FONT></H3>
+<!AMZI_INDEX = catch; throw; Error Handler>Two predicates, <B>catch/3</B>
+and <B>throw/1</B>, are a general purpose mechanism for handling user-defined
+exceptions in Prolog code. These predicates are the ISO standard predicates
+for exception handling, and provide an alternative to the current <B>tag/1</B>
+and <B>cut_tag/1</B> predicates.
+
+<P>The two key predicates' arguments are:
+
+<P><B>catch</B>(Goal, Catcher, Recover)
+<DL> 
+  <dl>
+    <dt> Goal</dt>
+    <dd> is a normal Prolog goal to be proved</dd>
+    <dt> Catcher</dt>
+    <dd> is a term used as a pattern to be checked against possible thrown exceptions</dd>
+    <dt> Recover</dt>
+    <dd> is a goal to be proved if a thrown exception is caught.</dd>
+  </dl>
+</DL>
+<B>throw</B>(Term)
+<DL> 
+  <dl>
+    <dt> Term</dt>
+    <dd> a term that is used in a search for a matching catch term</dd>
+  </dl>
+</DL>
+<B>catch</B>(Goal,Catcher,Recover) is fully equivalent to '<B>call</B>(Goal)'
+for the normal case where no exception is thrown during the execution of
+goal Goal. If a '<B>throw</B>(Catcher)' is encountered, then the <B>catch/3</B>
+Goal is replaced with the goal '<B>call</B>(Recover)' instead.
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18> <I>Catch statements are subject
+to the limitations of local predicates. If a catch is used in a module
+(a file containing :-import or :-export statements) then the goals mentioned
+in the catch must be global, not local.</I>
+
+<P>The catch/throw pair allow the flow-of-control to skip over all of the
+intermediate predicates, which is especially useful for dealing with error
+exceptions.
+
+<P>Throw will only succeed if the term thrown matches an active catch term.
+After the goal of the catch is satisfied the catch term can no longer be
+thrown to. An attempt to throw an uncaught term results in a system error.
+
+<P>The following is the example from samples/prolog/misc/catch.pro: <BR>
+  &nbsp;
+<TABLE BORDER CELLPADDING=3 >
+<TR>
+<TD>
+<PRE><FONT COLOR="#000080">main :-
+
+&nbsp; /* Catch and process all throws not handled by&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; subsequent catches, including throw(quit)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; used to end the program. */
+
+&nbsp;&nbsp; catch(doit, X, error_handler(X)).
+
+error_handler(quit) :-
+&nbsp; write($Quitting\n$).
+error_handler(X) :-
+&nbsp; write($Unknown Error$ : X), nl.
+
+doit :-
+&nbsp; repeat,
+&nbsp; write($Enter one or done or something else: $),
+&nbsp; read_string(S),
+&nbsp; string_atom(S, A),
+&nbsp; catch(do(A), badcommand(X),
+&nbsp; (write($Bad Command$:X),nl)),
+&nbsp; fail.
+
+do(one) :-
+&nbsp; catch(do_one, except(X), except(X)), !.
+do(done) :-
+&nbsp; throw(quit).
+do(X) :-
+&nbsp; throw(badcommand(X)).
+
+except(notinteger:X) :-
+&nbsp; write(X), write($ not an integer\n$).
+except(toosmall:X) :-
+&nbsp; write(X), write($ is too small\n$).
+except(toobig:X) :-
+&nbsp; write(X), write($ is too big\n$).
+
+do_one :-
+&nbsp; repeat,
+&nbsp; write($Enter a number between 10 and 20,\n$),
+&nbsp; write($'q' to quit,
+&nbsp;&nbsp;&nbsp; or anything else to see an&nbsp;&nbsp; error:\n$),
+&nbsp; read_string(S),
+&nbsp; string_term(S,T),
+&nbsp; check(T),
+&nbsp; fail.
+
+check(q) :- throw(quit).
+check(X) :-
+&nbsp; not(integer(X)),
+&nbsp; throw(except(notinteger:X)).
+check(X) :-
+&nbsp; X > 10,
+&nbsp; X &lt; 20,
+&nbsp; !, write($Very good\n$).
+check(X) :-
+&nbsp; X =&lt; 10,
+&nbsp; throw(except(toosmall:X)).
+check(X) :-
+&nbsp; X >= 20,
+&nbsp; throw(except(toobig:X)).
+check(X) :-
+&nbsp; throw(badcheck(X)).</FONT></PRE>
+</TD>
+</TR>
+</TABLE>
+<p>Note that multiple goals can be provided to <B>catch/3</B>, such as: </p>
+<UL>
+<PRE><FONT COLOR="#000080">main :-
+&nbsp;&nbsp;&nbsp;&nbsp; catch(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (goal1,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goal2,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goal3),
+&nbsp;&nbsp;&nbsp;&nbsp; error(X,Y),
+&nbsp;&nbsp;&nbsp;&nbsp; process_error(X,Y)).</FONT></PRE>
+</UL>
+
+<H3>
+<A NAME="tagTermandcuttagTerm"></A><FONT COLOR="#000080">tag(Term) and
+cut_tag(Term)</FONT></H3>
+<IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>Tags are an
+advanced feature of Amzi! Prolog. See also the ISO standard predicates
+<B>catch/3</B> and <B>throw/1</B>.</I>
+
+<P><!AMZI_INDEX = tag; cut_tag>Cut is very useful to control backtracking
+behavior in Prolog programs but its effects are confined only to the code
+of the predicate in which the clause containing the cut is a part. There
+are occasions in which we would like to modify backtracking behavior beyond
+the current predicate- an example of which is in handling errors.
+
+<P>To facilitate a form of more general backtracking control Amzi! Prolog
+has introduced the concept of the <I>tag</I>.
+
+<P>A tag is a marked instance of a <I>choice point</I> in the execution
+environment of a Prolog program. The choice point is marked by associating
+it with some term using the predicate <B>tag/1</B>. The predicate <B>cut_tag/1</B>
+allows the removal of all choice points back to and including the choice
+point marked by a given term.
+
+<P><B>tag</B> associates the most current choice point with Term. This
+association is only removed when the tagged choice point is removed by
+backtracking.
+
+<P><B>cut_tag</B> scans back through the choice points until it comes across
+the first choice point with a tag which can be unified with Term. All choice
+points more recent than the tagged choice point are removed.
+
+<P>As an example, consider the use of tags to "fail out of" the infinite
+loop of a <B>repeat</B> (<B>repeat</B> is a special built in predicate
+which can always be reproved an unlimited number of times) so
+<UL>
+<PRE><FONT COLOR="#000080">repeat, do, fail</FONT></PRE>
+</UL>
+acts like an infinite loop.
+<UL>
+<PRE><FONT COLOR="#000080">loop :-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tag(loop_marker),&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; repeat,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; doit,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; fail.
+doit :- want_to_stop, cut_tag(loop_marker), !.
+doit :- do_something.</FONT></PRE>
+</UL>
+When the clause for loop is entered it will tag the most recent choice
+point with label "loop_marker.<B>"</B>
+
+<P>Then the <B>repeat</B> will be proved and <B>doit</B> will be tried.
+As long as <B>want_to_stop</B> is not provable, <B>do_something</B> will
+be proved and then <B>fail</B> will be tried. <B>fail</B> always fails,
+so backtracking takes us eventually back to <B>repeat</B> and <B>doit</B>
+is proved again.
+
+<P>Once we can prove <B>want_to_stop</B>, <B>cut_tag</B>(loop_marker) is
+proved. This looks back along the proof and finds that the choice point
+before <B>repeat</B> was marked with loop marker. So every choice point
+since then (including the choice point for <B>repeat</B>) is removed. Finally
+<B>fail</B> is proved one more time. But now the <B>repeat</B> has been
+effectively removed and so backtracking will go all the way back to some
+point before loop was entered.
+<H3>
+<A NAME="halt"></A><FONT COLOR="#000080">halt</FONT></H3>
+<!AMZI_INDEX = halt>When proved, <B>halt</B> returns to the operating system.
+<B>halt</B> will flush any files to disk and close them so no data will
+be lost.
+<H2>
+<A NAME="Counters"></A><FONT COLOR="#0000FF">Counters</FONT></H2>
+<!AMZI_INDEX= Counters>It is often desirable to do the non-logical thing
+and count things. For this purpose, Amzi! Prolog supports five global registers
+called <I>counters</I>. A counter is simply a storage space reserved for
+a Prolog integer. Its value can be easily accessed by all parts of a Prolog
+program without having to pass its value as an argument through the predicates.
+The Counters are accessed by Counter, an integer between 0 and 20.
+<H3>
+<A NAME="cntrgetCounterValue"></A><FONT COLOR="#000080">cntr_get(Counter,
+Value)</FONT></H3>
+<!AMZI_INDEX= cntr_get><B>cntr_get</B> succeeds if Value can be unified
+with the contents of register Counter.
+<H3>
+<A NAME="cntrdecCounterValue"></A><FONT COLOR="#000080">cntr_dec(Counter,
+Value)</FONT></H3>
+<!AMZI_INDEX= cntr_dec><B>cntr_dec/2</B> unifies Value with the current
+value of the Counter, and then decrements the counter.
+<H3>
+<A NAME="cntrincCounterValue"></A><FONT COLOR="#000080">cntr_inc(Counter,
+Value)</FONT></H3>
+<!AMZI_INDEX= cntr_inc><B>cntr_inc/2</B> unifies Value with the current
+value of the Counter, and then increments the counter.
+<H3>
+<A NAME="cntrsetCounterValue"></A><FONT COLOR="#000080">cntr_set(Counter,
+Value)</FONT></H3>
+<!AMZI_INDEX= cntr_set><B>cntr_set</B>(Counter, Value) sets the value of Counter 
+to be Value. So Value must be bound to an integer. 
+<p>&nbsp;</p>
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P>&nbsp; 
+</BODY>
+</HTML>

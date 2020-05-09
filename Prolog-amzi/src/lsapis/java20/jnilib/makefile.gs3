@@ -1,0 +1,18 @@
+FILES = amzijni.cpp
+JAVA_DIR = /usr/java
+
+HEADERS = amzijni.h amzi_ls_LogicServer.h amzi_ls_LSException.h
+I_DIRS = -I$(AMZI_DEV_DIR)/include -I$(JAVA_DIR)/include -I$(JAVA_DIR)/include/solaris
+L_DIRS = -L$(AMZI_DEV_DIR)/lib
+
+#C_FLAGS = -D_UNICODE -O6 -static -lamzi -lm -ldl -lstdc++ -shared
+#C_FLAGS = -D_UNICODE -fpic -lamzi -lm -lstdc++ -shared
+C_FLAGS = -D_UNICODE -O6 -lamzi -lm -fpic -shared
+
+CC = gcc
+
+all: amzijni
+
+amzijni: $(FILES) $(HEADERS)
+	$(CC) -o $(AMZI_DEV_DIR)/lib/libamzijni.so \
+		$(I_DIRS) $(L_DIRS) $(C_FLAGS) $(FILES)

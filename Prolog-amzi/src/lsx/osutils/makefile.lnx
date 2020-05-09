@@ -1,0 +1,17 @@
+ifdef DEBUG
+C_FLAGS = -c -g -fpic -Wimplicit
+else
+C_FLAGS = -c -fpic -Wimplicit
+endif
+
+CC = gcc
+
+aosutils.lsx: osutils.o
+	$(CC) -shared -o aosutils.lsx osutils.o
+	cp aosutils.lsx $(AMZI_DEV_DIR)/lib/
+
+osutils.o: osutils.cpp
+	$(CC) -I$(AMZI_DEV_DIR)/include $(C_FLAGS) -o osutils.o osutils.cpp
+
+clean:
+	rm *.o

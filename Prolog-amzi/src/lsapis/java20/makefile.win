@@ -1,0 +1,36 @@
+HERE = $(AMZI_DEV_DIR)\src\lsapis\java20
+DIST = $(AMZI_DEV_DIR)\lsapis\java20
+
+all: _dirs _java _amzijni
+
+_dirs:
+	-md $(DIST)
+	-md $(DIST)\amzi
+	-md $(DIST)\amzi\ls
+
+_java: amzi\ls\LogicServer.class
+
+amzi\ls\LogicServer.class: amzi\ls\LogicServer.java
+	javac amzi\ls\LSException.java
+	javac amzi\ls\LogicServer.java
+	copy amzi\ls\LSException.class $(DIST)\amzi\ls\LSException.class
+	copy amzi\ls\LogicServer.class $(DIST)\amzi\ls\LogicServer.class
+
+_amzijni: jnilib\amzi_ls_LogicServer.h jnilib\amzi_ls_LSException.h
+	cd jnilib
+	NMAKE /a /f "wjnilib.mak" CFG="wjnilib - Win32 Release"
+	cd ..
+
+jnilib\amzi_ls_LogicServer.h: amzi\ls\LogicServer.java
+	javah -jni -d jnilib amzi.ls.LogicServer
+
+jnilib\amzi_ls_LSException.h: amzi\ls\LSException.java
+	javah -jni -d jnilib amzi.ls.LSException
+
+clean:
+	-del /Q jnilib\Release\*.*
+	-del /Q jnilib\Debug\*.*
+	-del /Q amzi\ls\*.class
+	-del /Q jnilib\amzi_ls_LogicServer.h
+	-del /Q jnilib\amzi_ls_LSException.h
+

@@ -1,0 +1,106 @@
+
+lsInit(007C1990, acmp)
+   returns OK
+lsInitLSX(007C1990, 00000000)
+  returns OK
+lsLoad(007C1990, acmp)
+  returns OK
+lsSetCommandArgs(007C1990)
+  returns OK
+lsMain(007C1990)
+Amzi! Prolog Compiler 5.0.24 Windows
+Apr 30 2001 13:54:06
+
+Copyright (c)1987-2000 Amzi! inc. All Rights Reserved.
+
+
+Compiling... asock.pro
+define('SOCK_STREAM',1)define('SOCK_STREAM',1)
+|-- define / 2
+define('SOCK_DGRAM',2)define('SOCK_DGRAM',2)
+|-- define / 2
+define('SOCK_RAW',3)define('SOCK_RAW',3)
+|-- define / 2
+define('SOCK_RDM',4)define('SOCK_RDM',4)
+|-- define / 2
+define('SOCK_SEQPACKET',5)define('SOCK_SEQPACKET',5)
+|-- define / 2
+define('INADDR_ANY',0)define('INADDR_ANY',0)
+|-- define / 2
+define('INADDR_LOOPBACK',2130706433)define('INADDR_LOOPBACK',2130706433)
+|-- define / 2
+define('INADDR_BROADCAST',-1)define('INADDR_BROADCAST',-1)
+|-- define / 2
+define('INADDR_NONE',-1)define('INADDR_NONE',-1)
+|-- define / 2
+define('SO_DEBUG',1)define('SO_DEBUG',1)
+|-- define / 2
+define('SO_ACCEPTCONN',2)define('SO_ACCEPTCONN',2)
+|-- define / 2
+define('SO_REUSEADDR',4)define('SO_REUSEADDR',4)
+|-- define / 2
+define('SO_KEEPALIVE',8)define('SO_KEEPALIVE',8)
+|-- define / 2
+define('SO_DONTROUTE',16)define('SO_DONTROUTE',16)
+|-- define / 2
+define('SO_BROADCAST',32)define('SO_BROADCAST',32)
+|-- define / 2
+define('SO_USELOOPBACK',64)define('SO_USELOOPBACK',64)
+|-- define / 2
+define('SO_LINGER',128)define('SO_LINGER',128)
+|-- define / 2
+define('SO_DONTLINGER',65407)define('SO_DONTLINGER',65407)
+|-- define / 2
+define('SO_OOBINLINE',256)define('SO_OOBINLINE',256)
+|-- define / 2
+define('SO_SNDBUF',4097)define('SO_SNDBUF',4097)
+|-- define / 2
+define('SO_RCVBUF',4098)define('SO_RCVBUF',4098)
+|-- define / 2
+define('SO_SNDLOWAT',4099)define('SO_SNDLOWAT',4099)
+|-- define / 2
+define('SO_RCVLOWAT',4100)define('SO_RCVLOWAT',4100)
+|-- define / 2
+define('SO_SNDTIMEO',4101)define('SO_SNDTIMEO',4101)
+|-- define / 2
+define('SO_RCVTIMEO',4102)define('SO_RCVTIMEO',4102)
+|-- define / 2
+define('SO_ERROR',4103)define('SO_ERROR',4103)
+|-- define / 2
+define('SO_TYPE',4104)define('SO_TYPE',4104)
+|-- define / 2
+define('SOL_SOCKET',65535)define('SOL_SOCKET',65535)
+|-- define / 2
+define('IPPROTO_IP',0)define('IPPROTO_IP',0)
+|-- define / 2
+define('IPPROTO_ICMP',1)define('IPPROTO_ICMP',1)
+|-- define / 2
+define('IPPROTO_GGP',2)define('IPPROTO_GGP',2)
+|-- define / 2
+define('IPPROTO_TCP',6)define('IPPROTO_TCP',6)
+|-- define / 2
+define('IPPROTO_PUP',12)define('IPPROTO_PUP',12)
+|-- define / 2
+define('IPPROTO_UDP',17)define('IPPROTO_UDP',17)
+|-- define / 2
+define('IPPROTO_IDP',22)define('IPPROTO_IDP',22)
+|-- define / 2
+define('IPPROTO_ND',77)define('IPPROTO_ND',77)
+|-- define / 2
+define('IPPROTO_RAW',255)define('IPPROTO_RAW',255)
+|-- define / 2
+define('IPPROTO_MAX',256)define('IPPROTO_MAX',256)
+|-- define / 2
+define('FIONREAD',1074030207)define('FIONREAD',1074030207)
+|-- define / 2
+define('FIONBIO',-2147195266)define('FIONBIO',-2147195266)
+|-- define / 2
+define('SIOCATMARK',1074033415)define('SIOCATMARK',1074033415)
+|-- define / 2
+'!EOF''!EOF'
+
+[CodeSize 3753 Bytes, Compile time 0.08 seconds.]
+Done
+
+  returns TRUE
+lsClose(007C1990)

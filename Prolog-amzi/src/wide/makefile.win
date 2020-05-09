@@ -1,0 +1,17 @@
+all:
+	NMAKE /a /f "wide.mak" CFG="wide - Win32 ReleaseW"
+	NMAKE /a /f "wide.mak" CFG="wide - Win32 ReleaseA"
+
+clean:
+	-del /Q ReleaseW\*.*
+	-del /Q ReleaseA\*.*
+	-del /Q DebugW\*.*
+	-del /Q DebugA\*.*
+	-del /Q ReleaseTW\*.*
+	-del /Q ReleaseTA\*.*
+	-del /Q DebugTW\*.*
+	-del /Q DebugTA\*.*
+
+remove_cvs:
+	-rmdir /S /Q CVS
+	-rmdir /S /Q Res/CVS

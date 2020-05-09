@@ -1,0 +1,14 @@
+all: _odbc
+
+_odbc:
+	NMAKE /a /f "odbc.mak" CFG="odbc - Win32 Release"
+	acmp aodbc
+	copy aodbc.plm $(AMZI_DEV_DIR)\abin\aodbc.plm
+
+clean:
+	-del /Q Release\*.*
+	-del /Q Debug\*.*
+
+remove_cvs:
+	-rmdir /S /Q CVS
+

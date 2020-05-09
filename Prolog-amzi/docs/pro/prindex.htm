@@ -1,0 +1,1201 @@
+<HTML>
+<BODY BGCOLOR=#000055 TEXT=white LINK=white VLINK=white ALINK=red>
+
+<P>
+<B><FONT COLOR=yellow>Amzi! Prolog User's Guide &amp; Reference</FONT></B>
+<P><A HREF="prtoc.htm"><B>Contents</B></A><P>
+
+<A HREF="#A">A</A> <A HREF="#B">B</A> <A HREF="#C">C</A> <A HREF="#D">D</A> <A HREF="#E">E</A> <A HREF="#F">F</A> <A HREF="#G">G</A> <A HREF="#H">H</A> <A HREF="#I">I</A> <A HREF="#J">J</A> <A HREF="#K">K</A> <A HREF="#L">L</A> <A HREF="#M">M</A> <A HREF="#N">N</A> <A HREF="#O">O</A> <A HREF="#P">P</A> <A HREF="#Q">Q</A> <A HREF="#R">R</A> <A HREF="#S">S</A> <A HREF="#T">T</A> <A HREF="#U">U</A> <A HREF="#V">V</A> <A HREF="#W">W</A> <A HREF="#X">X</A> <A HREF="#Y">Y</A> <A HREF="#Z">Z</A><P><PRE>
+
+
+<B><A NAME="-"></A>  <FONT COLOR=yellow SIZE=4>-</FONT></B><P>
+<B>-</B>
+  <A HREF="rfarithm.htm#NegativeX" TARGET="content">Arithmetic: - X</A>
+  <A HREF="rfarithm.htm#X-Y" TARGET="content">Arithmetic: X - Y</A>
+
+
+<B><A NAME="!"></A>  <FONT COLOR=yellow SIZE=4>!</FONT></B><P>
+<A HREF="rfexecut.htm#Cut" TARGET="content">!</A>
+<A HREF="rfinpout.htm#EOFEndofFile" TARGET="content">! EOF</A>
+
+
+<B><A NAME="%"></A>  <FONT COLOR=yellow SIZE=4>%</FONT></B><P>
+<A HREF="rfprterm.htm#Comments" TARGET="content">%</A>
+
+
+<B><A NAME="&"></A>  <FONT COLOR=yellow SIZE=4>&</FONT></B><P>
+<B>&gt</B>
+  <A HREF="rfarithm.htm#XgtgtY" TARGET="content">Arithmetic: X &gt ; &gt ; Y</A>
+  <A HREF="rfarithm.htm#XgtY" TARGET="content">Arithmetic: X &gt ; Y</A>
+<A HREF="rfarithm.htm#XgteY" TARGET="content">&gt =</A>
+<B>&lt</B>
+  <A HREF="rfarithm.htm#XltltY" TARGET="content">Arithmetic: X &lt ; &lt ; Y</A>
+  <A HREF="rfarithm.htm#XltY" TARGET="content">Arithmetic: X &lt ; Y</A>
+
+
+<B><A NAME="*"></A>  <FONT COLOR=yellow SIZE=4>*</FONT></B><P>
+<A HREF="rfarithm.htm#X*Y" TARGET="content">*</A>
+<A HREF="rfarithm.htm#X**Y" TARGET="content">**</A>
+
+
+<B><A NAME="/"></A>  <FONT COLOR=yellow SIZE=4>/</FONT></B><P>
+<A HREF="rfarithm.htm#X/Y" TARGET="content">/</A>
+<A HREF="rfprterm.htm#Comments" TARGET="content">/ * * /</A>
+<A HREF="rfarithm.htm#X//Y" TARGET="content">/ /</A>
+<A HREF="rfarithm.htm#X/\Y" TARGET="content">/ \</A>
+
+
+<B><A NAME=":"></A>  <FONT COLOR=yellow SIZE=4>:</FONT></B><P>
+<A HREF="rfexecut.htm#Clauses" TARGET="content">:-</A>
+
+
+<B><A NAME="?"></A>  <FONT COLOR=yellow SIZE=4>?</FONT></B><P>
+<A HREF="prdbgprg.htm#DebuggerLikeIO" TARGET="content">?</A>
+
+
+<B><A NAME="@"></A>  <FONT COLOR=yellow SIZE=4>@</FONT></B><P>
+<A HREF="rfmantrm.htm#XlteqY" TARGET="content">@</A>
+<A HREF="rfmantrm.htm#XlteqY" TARGET="content">@ =</A>
+<A HREF="rfmantrm.htm#XlteqY" TARGET="content">@ = &lt</A>
+<B>@&gt</B>
+  <A HREF="rfmantrm.htm#XgteqY" TARGET="content">Manipulating Terms: X @&gt ; = Y</A>
+  <A HREF="rfmantrm.htm#XgtY" TARGET="content">Manipulating Terms: X @&gt ; Y</A>
+<A HREF="rfmantrm.htm#XltY" TARGET="content">@&lt</A>
+
+
+<B><A NAME="["></A>  <FONT COLOR=yellow SIZE=4>[</FONT></B><P>
+<A HREF="rfprterm.htm#Lists" TARGET="content">[]</A>
+<A HREF="rfdatabs.htm#add" TARGET="content">[user]</A>
+
+
+<B><A NAME="\"></A>  <FONT COLOR=yellow SIZE=4>\</FONT></B><P>
+<A HREF="rfarithm.htm#ComplementX" TARGET="content">\</A>
+<A HREF="rfarithm.htm#X\/Y" TARGET="content">\ /</A>
+<A HREF="rfmantrm.htm#XneqY" TARGET="content">\ =</A>
+<A HREF="rfmantrm.htm#XneqeqY" TARGET="content">\ = =</A>
+<A HREF="rfexecut.htm#Goal" TARGET="content">\+</A>
+
+
+<B><A NAME="_"></A>  <FONT COLOR=yellow SIZE=4>_</FONT></B><P>
+<A HREF="rfprterm.htm#Variables" TARGET="content">_</A>
+
+
+<B><A NAME="|"></A>  <FONT COLOR=yellow SIZE=4>|</FONT></B><P>
+<A HREF="rfprterm.htm#Lists" TARGET="content">|</A>
+
+
+<B><A NAME="+"></A>  <FONT COLOR=yellow SIZE=4>+</FONT></B><P>
+<A HREF="rfarithm.htm#X+Y" TARGET="content">+</A>
+
+
+<B><A NAME="="></A>  <FONT COLOR=yellow SIZE=4>=</FONT></B><P>
+<B>=</B>
+  <A HREF="rfmantrm.htm#XeqY" TARGET="content">Manipulating Terms: X = Y</A>
+  <A HREF="rfmantrm.htm#XgteqY" TARGET="content">Manipulating Terms: X @&gt ; = Y</A>
+<A HREF="rfarithm.htm#XlteY" TARGET="content">= &lt</A>
+<A HREF="rfmantrm.htm#TermListBunivB" TARGET="content">= ..</A>
+<A HREF="rfarithm.htm#X=:=Y" TARGET="content">= : =</A>
+<A HREF="rfarithm.htm#X=\=Y" TARGET="content">= \ =</A>
+<A HREF="rfmantrm.htm#XeqeqY" TARGET="content">= =</A>
+
+
+<B><A NAME="A"></A>  <FONT COLOR=yellow SIZE=4>A</FONT></B><P>
+<A HREF="prprojct.htm#BuildingAProject" TARGET="content">abld</A>
+<A HREF="rfdatabs.htm#abolishNameArity" TARGET="content">abolish</A>
+<A HREF="rfrunenv.htm#abortSeverity" TARGET="content">abort</A>
+<A HREF="prwinide.htm#Help" TARGET="content">About Amzi!</A>
+<B>acmp</B>
+  <A HREF="prcomplr.htm#Compiler" TARGET="content">Compiler</A>
+  <A HREF="prcomplr.htm#StartingtheCompilerfromtheComm" TARGET="content">Compiler: Running from the Command-Line</A>
+  <A HREF="prcomplr.htm#StartingtheCompilerfromtheWind" TARGET="content">Compiler: Running from the IDE</A>
+  <A HREF="prqkover.htm#acmp" TARGET="content">Quick Overview: Compiler</A>
+<A HREF="rfarithm.htm#acosX" TARGET="content">acos</A>
+<B>add</B>
+  <A HREF="prqktutr.htm#UsingtheListener" TARGET="content">Quick Tutorial: Using the Listener</A>
+  <A HREF="prlisten.htm#add" TARGET="content">Listener</A>
+  <A HREF="rfdatabs.htm#add" TARGET="content">Prolog Database: add , [user]</A>
+  <A HREF="rfrunenv.htm#add" TARGET="content">Runtime and Environment</A>
+<A HREF="rfarithm.htm#X+Y" TARGET="content">Addition</A>
+<B>alis</B>
+  <A HREF="prqktutr.htm#ConsultingaSourceFile" TARGET="content">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="prlisten.htm#ConsultingFilesfromtheCommandL" TARGET="content">Listener: Consulting Files</A>
+  <A HREF="prlisten.htm#ExecutingmainfromtheCommandLin" TARGET="content">Listener: Executing main / 0</A>
+  <A HREF="prlisten.htm#Listener" TARGET="content">Listener</A>
+  <A HREF="prlisten.htm#StartingtheListener" TARGET="content">Listener: Running in the IDE</A>
+  <A HREF="prqktutr.htm#StartingtheListener" TARGET="content">Quick Tutorial: Starting the Listener</A>
+  <A HREF="prqktutr.htm#UsingalisandBATFiles" TARGET="content">Quick Tutorial: Using alis and BAT Files</A>
+  <A HREF="prqktutr.htm#UsingtheListener" TARGET="content">Quick Tutorial: Using the Listener</A>
+  <A HREF="prqkover.htm#alis" TARGET="content">Quick Overview: Listener</A>
+<B>alnk</B>
+  <A HREF="prlinker.htm#EnvironmentSpecificandUtilityL" TARGET="content">Linker: Libraries</A>
+  <A HREF="prlinker.htm#StartingtheLinkerfromtheComman" TARGET="content">Linker: Running from the Command-Line</A>
+  <A HREF="prlinker.htm#StartingtheLinkerfromtheWindow" TARGET="content">Linker: Running from the IDE</A>
+  <A HREF="prqkover.htm#alnk" TARGET="content">Quick Overview: Linker</A>
+  <A HREF="prlinker.htm#alnkTheLinker" TARGET="content">Linker</A>
+<B>Amzi! Runtime</B>
+  <A HREF="prruntim.htm#AmziPrologRuntime" TARGET="content">Amzi! Runtime</A>
+  <A HREF="prqkover.htm#arun" TARGET="content">Quick Overview</A>
+<A HREF="rfexecut.htm#XandY" TARGET="content">and</A>
+<A HREF="rfprterm.htm#Variables" TARGET="content">Anonymous Variables</A>
+<A HREF="rfexpred.htm#ExtendedPredicates" TARGET="content">aolsutil.lsx</A>
+<B>apitrace</B>
+  <A HREF="prruntim.htm#CFGParameters" TARGET="content">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="prdbgprg.htm#TracingAPICalls" TARGET="content">Debugging Your Programs: Tracing LSAPI Calls</A>
+<A HREF="prcomplr.htm#HiddenPredicates" TARGET="content">append</A>
+<A HREF="rfmantrm.htm#argNTermArgument" TARGET="content">arg</A>
+<A HREF="rfmantrm.htm#argNTermArgument" TARGET="content">Arguments</A>
+<A HREF="rfarithm.htm#ManipulatingTerms" TARGET="content">Arithmetic</A>
+<A HREF="rfarithm.htm#ArithmeticComparisons" TARGET="content">Arithmetic Comparisons</A>
+<A HREF="rfarithm.htm#ArithmeticFunctions" TARGET="content">Arithmetic Functions</A>
+<A HREF="rfarithm.htm#ArithmeticOperators" TARGET="content">Arithmetic Operators</A>
+<B>Arity</B>
+  <A HREF="rfexecut.htm#Clauses" TARGET="content">Prolog Execution: Clauses</A>
+  <A HREF="rfmantrm.htm#functorTermFunctorN" TARGET="content">Manipulating Terms: functor(Term, Functor, N)</A>
+<A HREF="prwinide.htm#WindowMenu" TARGET="content">Arrange Icons</A>
+<B>arun</B>
+  <A HREF="prruntim.htm#AmziPrologRuntime" TARGET="content">Amzi! Runtime</A>
+  <A HREF="prdstprg.htm#DistributingYourPrograms" TARGET="content">Distributing Your Programs</A>
+  <A HREF="rfexpred.htm#ExtendedPredicates" TARGET="content">Extended Predicates</A>
+  <A HREF="prruntim.htm#StartingarunfromtheCommandLine" TARGET="content">Amzi! Runtime: Running arun from the Command-Line</A>
+  <A HREF="prqkover.htm#arun" TARGET="content">Quick Overview: Amzi ! Runtime</A>
+  <A HREF="prruntim.htm#stringesc" TARGET="content">Amzi! Runtime: string_esc</A>
+  <A HREF="prruntim.htm#verbose" TARGET="content">Amzi! Runtime: verbose</A>
+<A HREF="prwinide.htm#UnicodeAndASCII" TARGET="content">ASCII</A>
+<A HREF="rfarithm.htm#asinX" TARGET="content">asin</A>
+<B>assert</B>
+  <A HREF="prlisten.htm#assert" TARGET="content">Listener</A>
+  <A HREF="rfdatabs.htm#assertTerm" TARGET="content">Prolog Database: assert(Term)</A>
+<A HREF="rfdatabs.htm#assertaTerm" TARGET="content">asserta</A>
+<B>assertz</B>
+  <A HREF="rfdatabs.htm#assertTerm" TARGET="content">Prolog Database: assert(Term)</A>
+  <A HREF="rfdatabs.htm#assertzTerm" TARGET="content">Prolog Database: assertz(Term)</A>
+<A HREF="rfprterm.htm#Associativity" TARGET="content">Associativity</A>
+<A HREF="rfarithm.htm#atanX" TARGET="content">atan</A>
+<A HREF="rfmantrm.htm#atomX" TARGET="content">atom</A>
+<A HREF="rfstrlst.htm#atomcodesAtomCharList" TARGET="content">atom_codes</A>
+<A HREF="rfstrlst.htm#atomconcatAtomAtomAtomVar" TARGET="content">atom_concat</A>
+<A HREF="rfstrlst.htm#atomlengthAtomLength" TARGET="content">atom_length</A>
+<A HREF="rfstrlst.htm#atomuplowAtomUpperAtomLower" TARGET="content">atom_uplow</A>
+<A HREF="rfmantrm.htm#atomicX" TARGET="content">atomic</A>
+<A HREF="rfstrlst.htm#atomlistconcatAtomListAtom" TARGET="content">atomlist_concat</A>
+<B>Atoms</B>
+  <A HREF="rfprterm.htm#Atoms" TARGET="content">Prolog Terms</A>
+  <A HREF="rfarithm.htm#BuiltinAtoms" TARGET="content">Arithmetic: Built-in Atoms</A>
+  <A HREF="rfstrlst.htm#atomcodesAtomCharList" TARGET="content">Atoms, Lists and Strings: atom_codes(Atom, CharList)</A>
+  <A HREF="rfstrlst.htm#atomconcatAtomAtomAtomVar" TARGET="content">Atoms, Lists and Strings: atom_concat(Atom1, Atom2, AtomVar3)</A>
+  <A HREF="rfmantrm.htm#atomicX" TARGET="content">Manipulating Terms: atomic(X)</A>
+  <A HREF="rfstrlst.htm#atomlengthAtomLength" TARGET="content">Atoms, Lists and Strings: atom_length(Atom, Length)</A>
+  <A HREF="rfstrlst.htm#atomlistconcatAtomListAtom" TARGET="content">Atoms, Lists and Strings: atomlist_concat(AtomList, Atom)</A>
+  <A HREF="rfstrlst.htm#atomuplowAtomUpperAtomLower" TARGET="content">Atoms, Lists and Strings: atom_uplow(AtomUpper, AtomLower)</A>
+  <A HREF="rfmantrm.htm#atomX" TARGET="content">Manipulating Terms: atom(X)</A>
+  <A HREF="rfstrlst.htm#currentatomAtom" TARGET="content">Atoms, Lists and Strings: current_atom(Atom)</A>
+  <A HREF="rfmantrm.htm#gensymRootSym" TARGET="content">Manipulating Terms: gensym(Root, Sym)</A>
+  <A HREF="rfstrlst.htm#nameAtomCharList" TARGET="content">Atoms, Lists and Strings: name(Atom, CharList)</A>
+  <A HREF="rfstrlst.htm#stringatomStringAtom" TARGET="content">Atoms, Lists and Strings: string_atom(String, Atom)</A>
+  <A HREF="rfstrlst.htm#subatomAtomIndexLengthSubAtom" TARGET="content">Atoms, Lists and Strings: sub_atom(Atom, Index, Length, SubAtom)</A>
+
+
+<B><A NAME="B"></A>  <FONT COLOR=yellow SIZE=4>B</FONT></B><P>
+<B>Backtracking Search</B>
+  <A HREF="rfexecut.htm#BacktrackingSearch" TARGET="content">Prolog Execution</A>
+  <A HREF="prmemgmt.htm#BacktrackPoints" TARGET="content">Managing Memory: Backtrack Points</A>
+  <A HREF="rfexecut.htm#FlowofControlPredicates" TARGET="content">Prolog Execution: Flow-of-Control</A>
+<B>bagof</B>
+  <A HREF="rfexecut.htm#ComplexGoals" TARGET="content">Prolog Execution: Complex Goals</A>
+  <A HREF="prcomplr.htm#HiddenPredicates" TARGET="content">Compiler: Hidden Predicates</A>
+  <A HREF="rfexecut.htm#bagofInstanceGoalList" TARGET="content">Prolog Execution: bagof(Instance, Goal, List)</A>
+<A HREF="prqktutr.htm#UsingalisandBATFiles" TARGET="content">BAT</A>
+<A HREF="rfexecut.htm#Unification" TARGET="content">Binding</A>
+<B>Body</B>
+  <A HREF="rfexecut.htm#Clauses" TARGET="content">Prolog Execution: Clauses</A>
+  <A HREF="rfdatabs.htm#clauseHeadBody" TARGET="content">Prolog Database: clause(Head, Body)</A>
+  <A HREF="rfdatabs.htm#dbrefHeadBodyDbref" TARGET="content">Prolog Database: db_ref(Head, Body, Dbref)</A>
+<A HREF="prdebugr.htm#BoxModelofProcedureFlow" TARGET="content">Box Model</A>
+<A HREF="prdbgprg.htm#DebuggerLikeIO" TARGET="content">BUG.PLM</A>
+<A HREF="prwinide.htm#BuildMenu" TARGET="content">Build</A>
+<B>Built-In Atoms</B>
+  <A HREF="rfarithm.htm#BuiltinAtoms" TARGET="content">Arithmetic: Built-in Atoms</A>
+  <A HREF="rfprterm.htm#BuiltinAtoms" TARGET="content">Prolog Terms: Built-in Atoms</A>
+
+
+<B><A NAME="C"></A>  <FONT COLOR=yellow SIZE=4>C</FONT></B><P>
+<A HREF="prqktutr.htm#InterfacingwithOtherTools" TARGET="content">C++</A>
+<B>call</B>
+  <A HREF="prdebugr.htm#BoxModelofProcedureFlow" TARGET="content">Debugger: Box Model</A>
+  <A HREF="prcomplr.htm#HiddenPredicates" TARGET="content">Compiler: Hidden Predicates</A>
+  <A HREF="rfexecut.htm#callGoal" TARGET="content">Prolog Execution: call(Goal)</A>
+<A HREF="prwinide.htm#WindowMenu" TARGET="content">Cascade</A>
+<B>catch</B>
+  <A HREF="prdbgprg.htm#catchandthrow" TARGET="content">Debugging Your Programs: catch and throw</A>
+  <A HREF="rfexecut.htm#catchGoalCatcherRecoverandthro" TARGET="content">Prolog Execution: catch(Goal, Catcher, Recover) and throw(Term)</A>
+<B>cfg Files</B>
+  <A HREF="prqkover.htm#AQuickOverview" TARGET="content">Quick Overview</A>
+  <A HREF="prruntim.htm#CFGParameters" TARGET="content">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="prruntim.htm#ConfigurationFiles" TARGET="content">Amzi! Runtime: Configuration Files</A>
+  <A HREF="prruntim.htm#DefaultINIValues" TARGET="content">Amzi! Runtime: Default .cfg Values</A>
+<A HREF="prwinide.htm#Help" TARGET="content">Change Browser</A>
+<B>Character Lists</B>
+  <A HREF="rfprterm.htm#CharacterLists" TARGET="content">Prolog Terms</A>
+  <A HREF="rfstrlst.htm#atomcodesAtomCharList" TARGET="content">Atoms, Lists and Strings: atom_codes(Atom, CharList)</A>
+  <A HREF="rfstrlst.htm#nameAtomCharList" TARGET="content">Atoms, Lists and Strings: name(Atom, CharList)</A>
+<B>chdir</B>
+  <A HREF="rfexpred.htm#chdirDirL" TARGET="content">Extended Predicates: chdir(DirL)</A>
+  <A HREF="rfexpred.htm#chdirDirLErr" TARGET="content">Extended Predicates: chdir(DirL, Err)</A>
+<B>clause</B>
+  <A HREF="prcomplr.htm#DisadvantagesofCompiling" TARGET="content">Compiler: Disadvantages</A>
+  <A HREF="rfdatabs.htm#clauseHeadBody" TARGET="content">Prolog Database: clause(Head, Body)</A>
+<B>Clauses</B>
+  <A HREF="prlisten.htm#AddingandRemovingClauses" TARGET="content">Listener: Adding and Removing Clauses</A>
+  <A HREF="rfexecut.htm#Clauses" TARGET="content">Prolog Execution</A>
+  <A HREF="prcomplr.htm#ComplexClauses" TARGET="content">Compiler: Complex Clauses</A>
+  <A HREF="prdebugr.htm#DebuggerDisplay" TARGET="content">Debugger: Display</A>
+  <A HREF="prcomplr.htm#DiscontiguousClauses" TARGET="content">Compiler: Discontiguous Directive</A>
+  <A HREF="prcomplr.htm#DynamicClausesinCompiledCode" TARGET="content">Compiler: Dynamic Clauses in Compiled Code</A>
+  <A HREF="prlisten.htm#ListingClauses" TARGET="content">Listener: Listing Clauses</A>
+  <A HREF="prcomplr.htm#MultifileClauses" TARGET="content">Compiler: Multifile Directive</A>
+  <A HREF="prlisten.htm#RemovingClauses" TARGET="content">Listener: Removing Clauses</A>
+  <A HREF="rfdatabs.htm#abolishNameArity" TARGET="content">Prolog Database: abolish(Name / Arity), abolish(Name, Arity)</A>
+  <A HREF="rfdatabs.htm#add" TARGET="content">Prolog Database: add , [user]</A>
+  <A HREF="rfdatabs.htm#assertaTerm" TARGET="content">Prolog Database: asserta(Term)</A>
+  <A HREF="rfdatabs.htm#assertzTerm" TARGET="content">Prolog Database: assertz(Term)</A>
+  <A HREF="rfdatabs.htm#clauseHeadBody" TARGET="content">Prolog Database: clause(Head, Body)</A>
+  <A HREF="rfdatabs.htm#consult" TARGET="content">Prolog Database: consult(FileA), consult([F1, F2, ...]), [F1, F2, ...]</A>
+  <A HREF="rfdatabs.htm#listing" TARGET="content">Prolog Database: listing, listing(Name), listing(Name / Arity)</A>
+  <A HREF="rfdatabs.htm#reconsult" TARGET="content">Prolog Database: reconsult(FileA), reconsult([F1, F2, ...])</A>
+  <A HREF="rfdatabs.htm#replace" TARGET="content">Prolog Database: replace</A>
+  <A HREF="rfrunenv.htm#replace" TARGET="content">Runtime and Environment: replace</A>
+  <A HREF="rfdatabs.htm#retractallTerm" TARGET="content">Prolog Database: retractall(Term)</A>
+  <A HREF="rfdatabs.htm#retractTerm" TARGET="content">Prolog Database: retract(Term)</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Close</A>
+<B>Close All</B>
+  <A HREF="prwinide.htm#FileMenu" TARGET="content">IDE: File Menu</A>
+  <A HREF="prwinide.htm#WindowMenu" TARGET="content">IDE: Window Menu</A>
+<B>closelog</B>
+  <A HREF="prdbgprg.htm#Logging" TARGET="content">Debugging Your Programs: Logging</A>
+  <A HREF="prdebugr.htm#Logging" TARGET="content">Debugger: Logging</A>
+  <A HREF="rfinpout.htm#closelog" TARGET="content">Input and Output</A>
+<A HREF="rfexecut.htm#cntrdecCounterValue" TARGET="content">cntr_dec</A>
+<A HREF="rfexecut.htm#cntrgetCounterValue" TARGET="content">cntr_get</A>
+<A HREF="rfexecut.htm#cntrincCounterValue" TARGET="content">cntr_inc</A>
+<A HREF="rfexecut.htm#cntrsetCounterValue" TARGET="content">cntr_set</A>
+<B>Command-Line</B>
+  <A HREF="prlisten.htm#ConsultingFilesfromtheCommandL" TARGET="content">Listener: Consulting Files</A>
+  <A HREF="prlisten.htm#ExecutingmainfromtheCommandLin" TARGET="content">Listener: Executing main / 0</A>
+  <A HREF="prlisten.htm#OtherCommandLineServices" TARGET="content">Listener: Other Command-Line Services</A>
+  <A HREF="prruntim.htm#StartingarunfromtheCommandLine" TARGET="content">Amzi! Runtime: Running arun from the Command-Line</A>
+  <A HREF="prcomplr.htm#StartingtheCompilerfromtheComm" TARGET="content">Compiler: Running from the Command-Line</A>
+  <A HREF="prlinker.htm#StartingtheLinkerfromtheComman" TARGET="content">Linker: Running from the Command-Line</A>
+  <A HREF="prlisten.htm#StartingtheListener" TARGET="content">Listener: Running in the IDE</A>
+<A HREF="rfrunenv.htm#commandlineArgsL" TARGET="content">command_line</A>
+<A HREF="rfprterm.htm#Comments" TARGET="content">Comments</A>
+<A HREF="rfmantrm.htm#compareResultTermTerm" TARGET="content">compare</A>
+<A HREF="rfstrlst.htm#comparelistsListListDiffList" TARGET="content">compare_lists</A>
+<A HREF="prwinide.htm#BuildMenu" TARGET="content">Compile</A>
+<B>Compiler</B>
+  <A HREF="prcomplr.htm#Compiler" TARGET="content">Compiler</A>
+  <A HREF="prcomplr.htm#StartingtheCompilerfromtheComm" TARGET="content">Compiler: Running from the Command-Line</A>
+  <A HREF="prcomplr.htm#StartingtheCompilerfromtheWind" TARGET="content">Compiler: Running from the IDE</A>
+  <A HREF="prqkover.htm#acmp" TARGET="content">Quick Overview</A>
+<B>Compiling</B>
+  <A HREF="prcomplr.htm#AdvantagesofCompiling" TARGET="content">Compiler: Advantages</A>
+  <A HREF="prcomplr.htm#CompilationErrors" TARGET="content">Compiler: Errors</A>
+  <A HREF="prcomplr.htm#CompilerMessages" TARGET="content">Compiler: Messages</A>
+  <A HREF="prqktutr.htm#Compiling" TARGET="content">Quick Tutorial</A>
+  <A HREF="prcomplr.htm#ComplexClauses" TARGET="content">Compiler: Complex Clauses</A>
+  <A HREF="prcomplr.htm#ComplexPredicates" TARGET="content">Compiler: Complex Predicates</A>
+  <A HREF="prcomplr.htm#DisadvantagesofCompiling" TARGET="content">Compiler: Disadvantages</A>
+  <A HREF="prcomplr.htm#DiscontiguousClauses" TARGET="content">Compiler: Discontiguous Directive</A>
+  <A HREF="prcomplr.htm#DynamicClausesinCompiledCode" TARGET="content">Compiler: Dynamic Clauses in Compiled Code</A>
+  <A HREF="prqkover.htm#IntermixingInterpretedandCompi" TARGET="content">Quick Overview: Intermixing Interpreted and Compiled Code</A>
+  <A HREF="prcomplr.htm#LatentExpressions" TARGET="content">Compiler: Latent Expressions</A>
+  <A HREF="prcomplr.htm#MultifileClauses" TARGET="content">Compiler: Multifile Directive</A>
+  <A HREF="prcomplr.htm#RequirementsonCompiledFiles" TARGET="content">Compiler: Requirements</A>
+<A HREF="rfarithm.htm#ComplementX" TARGET="content">Complement</A>
+<B>Complex Goals</B>
+  <A HREF="rfexecut.htm#ComplexGoals" TARGET="content">Prolog Execution</A>
+  <A HREF="rfexecut.htm#findallInstanceGoalList" TARGET="content">Prolog Execution: findall(Instance, Goal, List)</A>
+<A HREF="prruntim.htm#ConfigurationFiles" TARGET="content">Configuration Files</A>
+<A HREF="rfprterm.htm#CharacterConstants" TARGET="content">Constants</A>
+<B>consult</B>
+  <A HREF="prlisten.htm#LoadingPrologCodeFiles" TARGET="content">Listener: Loading Prolog Code</A>
+  <A HREF="prqktutr.htm#Modules" TARGET="content">Quick Tutorial: Modules</A>
+  <A HREF="prqktutr.htm#RunningaModularApplication" TARGET="content">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="rfdatabs.htm#add" TARGET="content">Prolog Database: add , [user]</A>
+  <A HREF="rfdatabs.htm#consult" TARGET="content">Prolog Database: consult(FileA), consult([F1, F2, ...]), [F1, F2, ...]</A>
+<A HREF="rfrunenv.htm#consultproject" TARGET="content">consult_project</A>
+<B>Consulting</B>
+  <A HREF="prprojct.htm#BuildingAProject" TARGET="content">Projects: Consulting / Loading</A>
+  <A HREF="prlisten.htm#ConsultingFilesfromtheCommandL" TARGET="content">Listener: Consulting Files</A>
+<A HREF="prlisten.htm#Consultinguser" TARGET="content">Consulting User</A>
+<B>Control</B>
+  <A HREF="prmemgmt.htm#StacksandDatabaseSpace" TARGET="content">Managing Memory: Stacks and Database Space</A>
+  <A HREF="rfrunenv.htm#procontrolTopPos" TARGET="content">Runtime and Environment: pro_control(Top, Pos)</A>
+  <A HREF="rfrunenv.htm#stacksizesHeapControlLocalTrai" TARGET="content">Runtime and Environment: stack_sizes(Heap, Control, Local, Trail)</A>
+<A HREF="prwinide.htm#EditMenu" TARGET="content">Copy</A>
+<A HREF="rfarithm.htm#cosX" TARGET="content">cos</A>
+<A HREF="rfexecut.htm#Counters" TARGET="content">Counters</A>
+<B>cputime</B>
+  <A HREF="rfarithm.htm#BuiltinAtoms" TARGET="content">Arithmetic: Built-in Atoms</A>
+  <A HREF="rfprterm.htm#BuiltinAtoms" TARGET="content">Prolog Terms: Built-in Atoms</A>
+  <A HREF="rfrunenv.htm#timerTicks" TARGET="content">Runtime and Environment: timer(Ticks)</A>
+<B>Creep</B>
+  <A HREF="prdebugr.htm#BoxModelofProcedureFlow" TARGET="content">Debugger: Box Model</A>
+  <A HREF="prdebugr.htm#DebuggerExample" TARGET="content">Debugger: Example</A>
+  <A HREF="prdebugr.htm#DebugPortOptions" TARGET="content">Debugger: Debug Port Options</A>
+<A HREF="rfexpred.htm#curdirDirL" TARGET="content">curdir</A>
+<A HREF="rfinpout.htm#CurrentStreams" TARGET="content">Current Streams</A>
+<A HREF="rfstrlst.htm#currentatomAtom" TARGET="content">current_atom</A>
+<A HREF="rfrunenv.htm#currentprologflagFlagAVValueNV" TARGET="content">current_prolog_flag</A>
+<B>current_streams</B>
+  <A HREF="rfinpout.htm#StreamManagement" TARGET="content">Input and Output: Stream Management</A>
+  <A HREF="rfinpout.htm#currentstreamsInputIDOutputIDE" TARGET="content">Input and Output: current_streams(Input_ID, Output_ID, Error_ID)</A>
+<A HREF="rfinpout.htm#currentuserUserInIDUserOutIDUs" TARGET="content">current_user</A>
+<A HREF="rfexecut.htm#onceGoal" TARGET="content">cut</A>
+<A HREF="rfexecut.htm#tagTermandcuttagTerm" TARGET="content">cut_tag</A>
+
+
+<B><A NAME="D"></A>  <FONT COLOR=yellow SIZE=4>D</FONT></B><P>
+<B>Database References</B>
+  <A HREF="rfprterm.htm#DatabaseReferences" TARGET="content">Prolog Terms</A>
+  <A HREF="rfdatabs.htm#KeystotheDatabase" TARGET="content">Prolog Database: Keys</A>
+<A HREF="rfrunenv.htm#dateMonthNVDayNVYearNV" TARGET="content">date</A>
+<A HREF="rfdatabs.htm#dbrefHeadBodyDbref" TARGET="content">db_ref</A>
+<A HREF="rfdcgsup.htm#DefiniteClauseGrammarsDCGs" TARGET="content">DCG</A>
+<A HREF="rfdcgsup.htm#dcgterminalLISTDIFFLISTDIFFLIS" TARGET="content">dcg_terminal</A>
+<B>debug</B>
+  <A HREF="prlisten.htm#OtherCommandLineServices" TARGET="content">Listener: Other Command-Line Services</A>
+  <A HREF="rfrunenv.htm#debug" TARGET="content">Runtime and Environment</A>
+<A HREF="prwinide.htm#ListenerMenu" TARGET="content">Debug Off</A>
+<A HREF="prwinide.htm#ListenerMenu" TARGET="content">Debug On</A>
+<B>Debugger</B>
+  <A HREF="prqkover.htm#Debugger" TARGET="content">Quick Overview</A>
+  <A HREF="prdebugr.htm#TheDebugger" TARGET="content">Debugger</A>
+  <A HREF="rfrunenv.htm#debug" TARGET="content">Runtime and Environment: debug</A>
+<B>Debugging</B>
+  <A HREF="prdebugr.htm#DebuggerExample" TARGET="content">Debugger: Example</A>
+  <A HREF="prdbgprg.htm#DebuggerLikeIO" TARGET="content">Debugging Your Programs: Debugger-Like Output</A>
+  <A HREF="prqktutr.htm#Debugging" TARGET="content">Quick Tutorial</A>
+  <A HREF="prdbgprg.htm#DebuggingLogicServerAPIFunctio" TARGET="content">Debugging Your Programs: Tracking LSAPI Errors</A>
+  <A HREF="prdbgprg.htm#DebuggingYourPrograms" TARGET="content">Debugging Your Programs</A>
+  <A HREF="prdbgprg.htm#Logging" TARGET="content">Debugging Your Programs: Logging</A>
+  <A HREF="prdbgprg.htm#catchandthrow" TARGET="content">Debugging Your Programs: catch and throw</A>
+<A HREF="rfmantrm.htm#defined" TARGET="content">defined</A>
+<A HREF="prwinide.htm#EditMenu" TARGET="content">Delete</A>
+<A HREF="rfexpred.htm#delfilePathLErr" TARGET="content">delfile</A>
+<A HREF="prqktutr.htm#InterfacingwithOtherTools" TARGET="content">Delphi</A>
+<A HREF="prdebugr.htm#DebuggerDisplay" TARGET="content">Depth</A>
+<B>destbuf</B>
+  <A HREF="prruntim.htm#CFGParameters" TARGET="content">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="prcomplr.htm#CompilationErrors" TARGET="content">Compiler: Errors</A>
+<A HREF="rfdcgsup.htm#DefiniteClauseGrammarsDCGs" TARGET="content">Difference Lists</A>
+<A HREF="prcomplr.htm#CompilerDirectives" TARGET="content">Directives</A>
+<A HREF="rfexpred.htm#FileampDirectoryPredicates" TARGET="content">Directories</A>
+<B>discontiguous</B>
+  <A HREF="prcomplr.htm#CompilerDirectives" TARGET="content">Compiler: Directives</A>
+  <A HREF="prcomplr.htm#DiscontiguousClauses" TARGET="content">Compiler: Discontiguous Directive</A>
+<B>display</B>
+  <A HREF="rfprterm.htm#Lists" TARGET="content">Prolog Terms: Lists</A>
+  <A HREF="rfinpout.htm#displayTerm" TARGET="content">Input and Output: display(Term)</A>
+<A HREF="rfmantrm.htm#DissectingTerms" TARGET="content">Dissecting Terms</A>
+<B>Distributing</B>
+  <A HREF="prqktutr.htm#DistributinganApplication" TARGET="content">Quick Tutorial: Distributing an Application</A>
+  <A HREF="prdstprg.htm#DistributingYourPrograms" TARGET="content">Distributing Your Programs</A>
+  <A HREF="prdstprg.htm#RedistributableFiles" TARGET="content">Distributing Your Programs: Redistributable Files</A>
+<B>Division</B>
+  <A HREF="rfarithm.htm#X//Y" TARGET="content">Arithmetic: X / / Y</A>
+  <A HREF="rfarithm.htm#X/Y" TARGET="content">Arithmetic: X / Y</A>
+  <A HREF="rfarithm.htm#XdivsY" TARGET="content">Arithmetic: X divs Y</A>
+  <A HREF="rfarithm.htm#XdivuY" TARGET="content">Arithmetic: X divu Y</A>
+<A HREF="rfarithm.htm#XdivsY" TARGET="content">divs</A>
+<A HREF="rfarithm.htm#XdivuY" TARGET="content">divu</A>
+<B>dll Files</B>
+  <A HREF="prqkover.htm#AQuickOverview" TARGET="content">Quick Overview</A>
+  <A HREF="prqkover.htm#LIBDLL" TARGET="content">Quick Overview: Dynamic / Shared Libraries</A>
+<B>Duck World</B>
+  <A HREF="prqktutr.htm#Compiling" TARGET="content">Quick Tutorial: Compiling</A>
+  <A HREF="prqktutr.htm#ConsultingaSourceFile" TARGET="content">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="prqktutr.htm#CreatingaSourceFile" TARGET="content">Quick Tutorial: Creating a Source File</A>
+  <A HREF="prqktutr.htm#Debugging" TARGET="content">Quick Tutorial: Debugging</A>
+  <A HREF="prqktutr.htm#DistributinganApplication" TARGET="content">Quick Tutorial: Distributing an Application</A>
+  <A HREF="prqktutr.htm#DuckWorld" TARGET="content">Quick Tutorial</A>
+  <A HREF="prqktutr.htm#LinkingandEXEGeneration" TARGET="content">Quick Tutorial: Linking and Running</A>
+  <A HREF="prqktutr.htm#Modules" TARGET="content">Quick Tutorial: Modules</A>
+  <A HREF="prqktutr.htm#RunningaModularApplication" TARGET="content">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="prqktutr.htm#UsingalisandBATFiles" TARGET="content">Quick Tutorial: Using alis and BAT Files</A>
+  <A HREF="prqktutr.htm#UsingProjectsintheIDE" TARGET="content">Quick Tutorial: Using Projects</A>
+  <A HREF="prqktutr.htm#UsingtheListener" TARGET="content">Quick Tutorial: Using the Listener</A>
+<A HREF="rfstrlst.htm#removedupsListNoDupsList" TARGET="content">Duplicates</A>
+<B>dynamic</B>
+  <A HREF="prcomplr.htm#CompilerDirectives" TARGET="content">Compiler: Directives</A>
+  <A HREF="prcomplr.htm#DynamicClausesinCompiledCode" TARGET="content">Compiler: Dynamic Clauses in Compiled Code</A>
+  <A HREF="prqktutr.htm#Modules" TARGET="content">Quick Tutorial: Modules</A>
+  <A HREF="rfdatabs.htm#dynamicNameArity" TARGET="content">Prolog Database: :- dynamic Name / Arity.</A>
+<B>Dynamic Database</B>
+  <A HREF="prmemgmt.htm#DynamicDatabase" TARGET="content">Managing Memory</A>
+  <A HREF="prqkover.htm#IntermixingInterpretedandCompi" TARGET="content">Quick Overview: Intermixing Interpreted and Compiled Code</A>
+  <A HREF="rfdatabs.htm#KeystotheDatabase" TARGET="content">Prolog Database: Keys</A>
+  <A HREF="rfdatabs.htm#ModifyingtheDatabase" TARGET="content">Prolog Database: Modifying</A>
+  <A HREF="rfdatabs.htm#PopulatingtheDatabase" TARGET="content">Prolog Database: Populating</A>
+  <A HREF="rfdatabs.htm#PrologDatabase" TARGET="content">Prolog Database</A>
+  <A HREF="prmemgmt.htm#StacksandDatabaseSpace" TARGET="content">Managing Memory: Stacks and Database Space</A>
+  <A HREF="rfrunenv.htm#prodbDB" TARGET="content">Runtime and Environment: pro_db(Allocated, Used)</A>
+<A HREF="prqkover.htm#LIBDLL" TARGET="content">Dynamic Libraries</A>
+
+
+<B><A NAME="E"></A>  <FONT COLOR=yellow SIZE=4>E</FONT></B><P>
+<B>e</B>
+  <A HREF="rfarithm.htm#BuiltinAtoms" TARGET="content">Arithmetic: Built-in Atoms</A>
+  <A HREF="rfprterm.htm#BuiltinAtoms" TARGET="content">Prolog Terms: Built-in Atoms</A>
+<A HREF="prlisten.htm#OtherCommandLineServices" TARGET="content">edit</A>
+<A HREF="prwinide.htm#EditMenu" TARGET="content">Edit Menu</A>
+<A HREF="prwinide.htm#ListenerMenu" TARGET="content">End</A>
+<A HREF="rfinpout.htm#EOFEndofFile" TARGET="content">End of File</A>
+<A HREF="rfmantrm.htm#EqualityofTerms" TARGET="content">Equality of Terms</A>
+<A HREF="rfdatabs.htm#eraseDBref" TARGET="content">erase</A>
+<A HREF="rfdatabs.htm#eraseallKey" TARGET="content">eraseall</A>
+<A HREF="prqkover.htm#AQuickOverview" TARGET="content">err Files</A>
+<A HREF="prruntim.htm#CFGParameters" TARGET="content">errfile</A>
+<A HREF="prdbgprg.htm#PrologErrorFile" TARGET="content">Error Files</A>
+<B>Error Handler</B>
+  <A HREF="prlisten.htm#SyntaxErrors" TARGET="content">Listener: Syntax Errors</A>
+  <A HREF="rfexecut.htm#catchGoalCatcherRecoverandthro" TARGET="content">Prolog Execution: catch(Goal, Catcher, Recover) and throw(Term)</A>
+<B>Errors</B>
+  <A HREF="prdbgprg.htm#CheckingAPIErrorCodes" TARGET="content">Debugging Your Programs: Checking LSAPI Error Codes</A>
+  <A HREF="prcomplr.htm#CompilationErrors" TARGET="content">Compiler</A>
+  <A HREF="prcomplr.htm#LoadtimeErrors" TARGET="content">Compiler: Loadtime Errors</A>
+  <A HREF="prlisten.htm#SyntaxErrors" TARGET="content">Listener: Syntax Errors</A>
+  <A HREF="prdbgprg.htm#TrackingRuntimeErrorsinProlog" TARGET="content">Debugging Your Programs: Tracking Prolog Errors</A>
+<B>Escape Characters</B>
+  <A HREF="rfprterm.htm#EnablingandDisablingEscapeProc" TARGET="content">Prolog Terms: Enabling and Disabling Escape Processing</A>
+  <A HREF="rfprterm.htm#EscapeCharacters" TARGET="content">Prolog Terms</A>
+  <A HREF="rfprterm.htm#EscapeCodes" TARGET="content">Prolog Terms: Escape Codes</A>
+  <A HREF="rfprterm.htm#WhereEscapeCodesCanbeUsed" TARGET="content">Prolog Terms: Using Escape Codes</A>
+<B>Escape Codes</B>
+  <A HREF="rfprterm.htm#EscapeCodeExamples" TARGET="content">Prolog Terms: Examples</A>
+  <A HREF="rfprterm.htm#EscapeCodes" TARGET="content">Prolog Terms</A>
+  <A HREF="rfprterm.htm#WhereEscapeCodesCanbeUsed" TARGET="content">Prolog Terms: Using Escape Codes</A>
+<A HREF="prqktutr.htm#LinkingandEXEGeneration" TARGET="content">EXE Files</A>
+<B>Exit</B>
+  <A HREF="prdebugr.htm#DebuggerDisplay" TARGET="content">Debugger: Display</A>
+  <A HREF="prwinide.htm#FileMenu" TARGET="content">IDE: File Menu</A>
+<A HREF="rfarithm.htm#expX" TARGET="content">exp</A>
+<A HREF="rfdcgsup.htm#expandtermDCGclausePROLOGclaus" TARGET="content">expand_term</A>
+<A HREF="rfarithm.htm#X**Y" TARGET="content">Exponent</A>
+<B>export</B>
+  <A HREF="prcomplr.htm#CompilerDirectives" TARGET="content">Compiler: Directives</A>
+  <A HREF="rfexecut.htm#ComplexGoals" TARGET="content">Prolog Execution: Complex Goals</A>
+  <A HREF="prcomplr.htm#ExportingPredicates" TARGET="content">Compiler: Exporting Predicates</A>
+<B>Extended Predicates</B>
+  <A HREF="prlinker.htm#EnvironmentSpecificandUtilityL" TARGET="content">Linker: Libraries</A>
+  <A HREF="rfexpred.htm#ExtendedPredicates" TARGET="content">Extended Predicates</A>
+  <A HREF="rfmantrm.htm#defined" TARGET="content">Manipulating Terms: defined(ExtendedPredicate)</A>
+
+
+<B><A NAME="F"></A>  <FONT COLOR=yellow SIZE=4>F</FONT></B><P>
+<B>fail</B>
+  <A HREF="prdebugr.htm#BoxModelofProcedureFlow" TARGET="content">Debugger: Box Model</A>
+  <A HREF="rfexecut.htm#fail" TARGET="content">Prolog Execution</A>
+<A HREF="prruntim.htm#fatalerrors" TARGET="content">fatal_errors</A>
+<A HREF="rfinpout.htm#fcloseID" TARGET="content">fclose</A>
+<B>fflush</B>
+  <A HREF="rfinpout.htm#fflushID" TARGET="content">Input and Output: fflush(ID)</A>
+  <A HREF="rfinpout.htm#flushinandflushout" TARGET="content">Input and Output: flush_in and flush_out</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">File Menu</A>
+<B>file_errors</B>
+  <A HREF="prruntim.htm#fileerrors" TARGET="content">Amzi! Runtime</A>
+  <A HREF="rfinpout.htm#fopenHandleFileMode" TARGET="content">Input and Output: fopen(ID, File, Mode)</A>
+<A HREF="rfinpout.htm#fileexistsFilefileexistsFileTy" TARGET="content">file_exists</A>
+<B>Files</B>
+  <A HREF="rfexpred.htm#FileampDirectoryPredicates" TARGET="content">Extended Predicates: Files and Directories</A>
+  <A HREF="rfinpout.htm#Files" TARGET="content">Input and Output: File-Only I / O</A>
+<A HREF="prwinide.htm#EditMenu" TARGET="content">Find</A>
+<A HREF="prwinide.htm#EditMenu" TARGET="content">Find Next</A>
+<B>findall</B>
+  <A HREF="rfexecut.htm#ComplexGoals" TARGET="content">Prolog Execution: Complex Goals</A>
+  <A HREF="prcomplr.htm#HiddenPredicates" TARGET="content">Compiler: Hidden Predicates</A>
+  <A HREF="rfexecut.htm#findallInstanceGoalList" TARGET="content">Prolog Execution: findall(Instance, Goal, List)</A>
+<A HREF="rfexpred.htm#findfilesMaskAttrFileInfo" TARGET="content">findfiles</A>
+<B>float</B>
+  <A HREF="rfarithm.htm#floatX" TARGET="content">Arithmetic: float(X)</A>
+  <A HREF="rfmantrm.htm#floatX" TARGET="content">Manipulating Terms: float(X)</A>
+<A HREF="rfprterm.htm#FloatingPointNumbers" TARGET="content">Floating Point Numbers</A>
+<A HREF="rfexecut.htm#FlowofControlPredicates" TARGET="content">Flow-of-Control</A>
+<A HREF="rfinpout.htm#flushinandflushout" TARGET="content">flush_in</A>
+<A HREF="rfinpout.htm#flushinandflushout" TARGET="content">flush_out</A>
+<A HREF="rfinpout.htm#fopenHandleFileMode" TARGET="content">fopen</A>
+<A HREF="rfexecut.htm#forIndexStartEndIncrement" TARGET="content">for</A>
+<A HREF="rfinpout.htm#freadIDValueType" TARGET="content">fread</A>
+<A HREF="rfinpout.htm#fseekIDOffsetMethodNewOff" TARGET="content">fseek</A>
+<B>Functor</B>
+  <A HREF="rfexecut.htm#Clauses" TARGET="content">Prolog Execution: Clauses</A>
+  <A HREF="rfmantrm.htm#functorTermFunctorN" TARGET="content">Manipulating Terms: functor(Term, Functor, N)</A>
+<A HREF="rfinpout.htm#fwriteIDValueType" TARGET="content">fwrite</A>
+
+
+<B><A NAME="G"></A>  <FONT COLOR=yellow SIZE=4>G</FONT></B><P>
+<B>Garbage Collection</B>
+  <A HREF="prmemgmt.htm#GarbageCollection" TARGET="content">Managing Memory</A>
+  <A HREF="prruntim.htm#verbose" TARGET="content">Amzi! Runtime: verbose</A>
+<A HREF="prmemgmt.htm#HeapStack" TARGET="content">gc</A>
+<A HREF="rfmantrm.htm#gensymRootSym" TARGET="content">gensym</A>
+<B>get</B>
+  <A HREF="rfinpout.htm#EOFEndofFile" TARGET="content">Input and Output: ! EOF End of File</A>
+  <A HREF="rfinpout.htm#getChargetIDChar" TARGET="content">Input and Output: get(Char), get(ID, Char)</A>
+<B>get_mode</B>
+  <A HREF="prruntim.htm#Modes" TARGET="content">Amzi! Runtime: Modes</A>
+  <A HREF="rfrunenv.htm#getmodeModeValue" TARGET="content">Runtime and Environment: get_mode(Mode, Value)</A>
+<A HREF="rfexecut.htm#getpredsPredList" TARGET="content">get_preds</A>
+<B>get0</B>
+  <A HREF="rfinpout.htm#EOFEndofFile" TARGET="content">Input and Output: ! EOF End of File</A>
+  <A HREF="rfinpout.htm#getChargetIDChar" TARGET="content">Input and Output: get(Char), get(ID, Char)</A>
+<A HREF="rfinpout.htm#getKey" TARGET="content">get1</A>
+<A HREF="rfexpred.htm#getdriveDrive" TARGET="content">getdrive</A>
+<B>Goals</B>
+  <A HREF="rfexecut.htm#BacktrackingSearch" TARGET="content">Prolog Execution: Backtracking Search</A>
+  <A HREF="prlisten.htm#ProvingGoals" TARGET="content">Listener: Proving Goals</A>
+<B>goto</B>
+  <A HREF="prqktutr.htm#Modules" TARGET="content">Quick Tutorial: Modules</A>
+  <A HREF="prqktutr.htm#UsingtheListener" TARGET="content">Quick Tutorial: Using the Listener</A>
+
+
+<B><A NAME="H"></A>  <FONT COLOR=yellow SIZE=4>H</FONT></B><P>
+<B>halt</B>
+  <A HREF="prlisten.htm#LeavingtheListener" TARGET="content">Listener: Exiting</A>
+  <A HREF="rfrunenv.htm#abortSeverity" TARGET="content">Runtime and Environment: abort(Severity)</A>
+  <A HREF="rfexecut.htm#halt" TARGET="content">Prolog Execution</A>
+<B>handle_name</B>
+  <A HREF="rfinpout.htm#IObyIds" TARGET="content">Input and Output: I / O by Ids</A>
+  <A HREF="rfinpout.htm#handlenameHandleDeviceName" TARGET="content">Input and Output: handle_name(Handle, DeviceName)</A>
+<B>Head</B>
+  <A HREF="rfexecut.htm#Clauses" TARGET="content">Prolog Execution: Clauses</A>
+  <A HREF="rfdatabs.htm#clauseHeadBody" TARGET="content">Prolog Database: clause(Head, Body)</A>
+  <A HREF="rfdatabs.htm#dbrefHeadBodyDbref" TARGET="content">Prolog Database: db_ref(Head, Body, Dbref)</A>
+<B>Heap</B>
+  <A HREF="prmemgmt.htm#HeapStack" TARGET="content">Managing Memory: Heap Stack</A>
+  <A HREF="prmemgmt.htm#StacksandDatabaseSpace" TARGET="content">Managing Memory: Stacks and Database Space</A>
+  <A HREF="rfrunenv.htm#stacksizesHeapControlLocalTrai" TARGET="content">Runtime and Environment: stack_sizes(Heap, Control, Local, Trail)</A>
+<A HREF="prruntim.htm#CFGParameters" TARGET="content">heapbumper</A>
+<A HREF="rfrunenv.htm#highwater" TARGET="content">highwater</A>
+
+
+<B><A NAME="I"></A>  <FONT COLOR=yellow SIZE=4>I</FONT></B><P>
+<A HREF="rfinpout.htm#IObyIds" TARGET="content">I / O by Ids</A>
+<A HREF="rfinpout.htm#IObyStreams" TARGET="content">I / O by Streams</A>
+<B>IDE</B>
+  <A HREF="prqktutr.htm#ConsultingaSourceFile" TARGET="content">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="prqkover.htm#IDE" TARGET="content">Quick Overview</A>
+  <A HREF="prwinide.htm#IDEInteractiveDevelopmentEnvir" TARGET="content">IDE</A>
+  <A HREF="prwinide.htm#IDEInterface" TARGET="content">IDE: Interface</A>
+  <A HREF="prcomplr.htm#StartingtheCompilerfromtheWind" TARGET="content">Compiler: Running from the IDE</A>
+  <A HREF="prlinker.htm#StartingtheLinkerfromtheWindow" TARGET="content">Linker: Running from the IDE</A>
+  <A HREF="prlisten.htm#StartingtheListener" TARGET="content">Listener: Running in the IDE</A>
+  <A HREF="prqktutr.htm#StartingtheListener" TARGET="content">Quick Tutorial: Starting the Listener</A>
+  <A HREF="prqktutr.htm#UsingProjectsintheIDE" TARGET="content">Quick Tutorial: Using Projects</A>
+<A HREF="rfexecut.htm#IfThenElse" TARGET="content">if-then</A>
+<B>import</B>
+  <A HREF="prcomplr.htm#CompilerDirectives" TARGET="content">Compiler: Directives</A>
+  <A HREF="rfexecut.htm#ComplexGoals" TARGET="content">Prolog Execution: Complex Goals</A>
+  <A HREF="prcomplr.htm#ImportingPredicates" TARGET="content">Compiler: Importing Predicates</A>
+<A HREF="prwinide.htm#Help" TARGET="content">Index</A>
+<A HREF="rfprterm.htm#Associativity" TARGET="content">Infix</A>
+<B>Input and Output</B>
+  <A HREF="rfinpout.htm#InputandOutput" TARGET="content">Input and Output</A>
+  <A HREF="rfinpout.htm#IObyIds" TARGET="content">Input and Output: I / O by Ids</A>
+<A HREF="rfdatabs.htm#instanceDBrefTerm" TARGET="content">instance</A>
+<B>integer</B>
+  <A HREF="rfarithm.htm#integerX" TARGET="content">Arithmetic: integer(X)</A>
+  <A HREF="rfmantrm.htm#integerX" TARGET="content">Manipulating Terms: integer(X)</A>
+<B>Integers</B>
+  <A HREF="rfprterm.htm#Integers" TARGET="content">Prolog Terms</A>
+  <A HREF="rfstrlst.htm#stringintegerStringInteger" TARGET="content">Atoms, Lists and Strings: string_integer(String, Integer)</A>
+<A HREF="prqkover.htm#IntermixingInterpretedandCompi" TARGET="content">Intermixing Interpreted and Compiled Code</A>
+<B>is</B>
+  <A HREF="rfarithm.htm#ManipulatingTerms" TARGET="content">Arithmetic</A>
+  <A HREF="rfarithm.htm#XisY" TARGET="content">Arithmetic: X is Y</A>
+<A HREF="rfstrlst.htm#ismember" TARGET="content">is_member</A>
+<A HREF="rfmantrm.htm#islistX" TARGET="content">islist</A>
+<A HREF="prmemgmt.htm#IterationvsRecursion" TARGET="content">Iteration</A>
+
+
+<B><A NAME="K"></A>  <FONT COLOR=yellow SIZE=4>K</FONT></B><P>
+<A HREF="rfinpout.htm#Keyboard" TARGET="content">Keyboard</A>
+<B>Keys</B>
+  <A HREF="rfdatabs.htm#KeystotheDatabase" TARGET="content">Prolog Database</A>
+  <A HREF="rfdatabs.htm#dbrefHeadBodyDbref" TARGET="content">Prolog Database: db_ref(Head, Body, Dbref)</A>
+  <A HREF="rfdatabs.htm#eraseallKey" TARGET="content">Prolog Database: eraseall(Key)</A>
+  <A HREF="rfdatabs.htm#eraseDBref" TARGET="content">Prolog Database: erase(DBref)</A>
+  <A HREF="rfdatabs.htm#instanceDBrefTerm" TARGET="content">Prolog Database: instance(DBref, Term)</A>
+  <A HREF="rfdatabs.htm#recordaKeyTermDbref" TARGET="content">Prolog Database: recorda(Key, Term, Dbref)</A>
+  <A HREF="rfdatabs.htm#recordedKeyTermDbref" TARGET="content">Prolog Database: recorded(Key, Term, Dbref)</A>
+  <A HREF="rfdatabs.htm#recordzKeyTermDbref" TARGET="content">Prolog Database: recordz(Key, Term, Dbref)</A>
+
+
+<B><A NAME="L"></A>  <FONT COLOR=yellow SIZE=4>L</FONT></B><P>
+<A HREF="prcomplr.htm#LatentExpressions" TARGET="content">Latent Expressions</A>
+<B>Leap</B>
+  <A HREF="prdebugr.htm#BoxModelofProcedureFlow" TARGET="content">Debugger: Box Model</A>
+  <A HREF="prdebugr.htm#DebuggerExample" TARGET="content">Debugger: Example</A>
+  <A HREF="prdebugr.htm#DebugPortOptions" TARGET="content">Debugger: Debug Port Options</A>
+<B>leash</B>
+  <A HREF="prdebugr.htm#BoxModelofProcedureFlow" TARGET="content">Debugger: Box Model</A>
+  <A HREF="prdebugr.htm#DebuggerExample" TARGET="content">Debugger: Example</A>
+  <A HREF="prdebugr.htm#LeashingDebugPorts" TARGET="content">Debugger: Leashing Debug Ports</A>
+<B>lib Files</B>
+  <A HREF="prqkover.htm#AQuickOverview" TARGET="content">Quick Overview</A>
+  <A HREF="prqkover.htm#LIBDLL" TARGET="content">Quick Overview: Dynamic / Shared Libraries</A>
+<B>Libraries</B>
+  <A HREF="prdbgprg.htm#DebuggerLikeIO" TARGET="content">Debugging Your Programs: Debugger-Like Output</A>
+  <A HREF="prlinker.htm#EnvironmentSpecificandUtilityL" TARGET="content">Linker</A>
+  <A HREF="prqkover.htm#alnk" TARGET="content">Quick Overview: Linker</A>
+<A HREF="prdstprg.htm#RedistributableFiles" TARGET="content">Licensing</A>
+<A HREF="prwinide.htm#BuildMenu" TARGET="content">Link</A>
+<B>Linker</B>
+  <A HREF="prlinker.htm#EnvironmentSpecificandUtilityL" TARGET="content">Linker: Libraries</A>
+  <A HREF="prlinker.htm#StartingtheLinkerfromtheComman" TARGET="content">Linker: Running from the Command-Line</A>
+  <A HREF="prlinker.htm#StartingtheLinkerfromtheWindow" TARGET="content">Linker: Running from the IDE</A>
+  <A HREF="prqkover.htm#alnk" TARGET="content">Quick Overview</A>
+  <A HREF="prlinker.htm#alnkTheLinker" TARGET="content">Linker</A>
+<A HREF="prqktutr.htm#LinkingandEXEGeneration" TARGET="content">Linking</A>
+<A HREF="rfmantrm.htm#listX" TARGET="content">list</A>
+<B>Listener</B>
+  <A HREF="prlisten.htm#ProvingGoals" TARGET="content">Listener: Proving Goals</A>
+  <A HREF="rfrunenv.htm#SpecialPredicatesforthePrologListener" TARGET="content">Runtime and Environment: Special Listener Predicates</A>
+  <A HREF="prqktutr.htm#StartingtheListener" TARGET="content">Quick Tutorial: Starting the Listener</A>
+  <A HREF="prqkover.htm#alis" TARGET="content">Quick Overview</A>
+  <A HREF="rfrunenv.htm#quit" TARGET="content">Runtime and Environment: quit</A>
+<A HREF="prwinide.htm#ListenerMenu" TARGET="content">Listener Menu</A>
+<B>listing</B>
+  <A HREF="prcomplr.htm#DisadvantagesofCompiling" TARGET="content">Compiler: Disadvantages</A>
+  <A HREF="prlisten.htm#ListingClauses" TARGET="content">Listener: Listing Clauses</A>
+  <A HREF="prqktutr.htm#UsingtheListener" TARGET="content">Quick Tutorial: Using the Listener</A>
+  <A HREF="rfdatabs.htm#listing" TARGET="content">Prolog Database: listing, listing(Name), listing(Name / Arity)</A>
+<B>Lists</B>
+  <A HREF="rfprterm.htm#Lists" TARGET="content">Prolog Terms</A>
+  <A HREF="rfmantrm.htm#TermListBunivB" TARGET="content">Manipulating Terms: Term = .. List (univ)</A>
+  <A HREF="rfstrlst.htm#comparelistsListListDiffList" TARGET="content">Atoms, Lists and Strings: compare_lists(List1, List2, DiffList)</A>
+  <A HREF="rfmantrm.htm#islistX" TARGET="content">Manipulating Terms: islist(X)</A>
+  <A HREF="rfstrlst.htm#ismember" TARGET="content">Atoms, Lists and Strings: is_member(Term, List)</A>
+  <A HREF="rfmantrm.htm#listX" TARGET="content">Manipulating Terms: list(X)</A>
+  <A HREF="rfstrlst.htm#removedupsListNoDupsList" TARGET="content">Atoms, Lists and Strings: remove_dups(List, NoDupsList)</A>
+  <A HREF="rfstrlst.htm#sortListSortedList" TARGET="content">Atoms, Lists and Strings: sort(List, SortedList)</A>
+  <A HREF="rfstrlst.htm#stringlistStringList" TARGET="content">Atoms, Lists and Strings: string_list(String, List)</A>
+  <A HREF="rfstrlst.htm#stringsplit" TARGET="content">Atoms, Lists and Strings: string_split(String, DelimitersS, List)</A>
+<A HREF="rfarithm.htm#lnX" TARGET="content">ln</A>
+<B>load</B>
+  <A HREF="prlisten.htm#LoadingPrologCodeFiles" TARGET="content">Listener: Loading Prolog Code</A>
+  <A HREF="rfdatabs.htm#load" TARGET="content">Prolog Database: load(FileA), load([F1, F2, ...])</A>
+<B>Loading</B>
+  <A HREF="prlisten.htm#LoadingPrologCodeFiles" TARGET="content">Listener: Loading Prolog Code</A>
+  <A HREF="prcomplr.htm#LoadtimeErrors" TARGET="content">Compiler: Loadtime Errors</A>
+<A HREF="prqktutr.htm#Modules" TARGET="content">loc</A>
+<B>Local</B>
+  <A HREF="prmemgmt.htm#StacksandDatabaseSpace" TARGET="content">Managing Memory: Stacks and Database Space</A>
+  <A HREF="rfrunenv.htm#prolocalTopPos" TARGET="content">Runtime and Environment: pro_local(Top, Pos)</A>
+  <A HREF="rfrunenv.htm#stacksizesHeapControlLocalTrai" TARGET="content">Runtime and Environment: stack_sizes(Heap, Control, Local, Trail)</A>
+<A HREF="rfinpout.htm#LogFiles" TARGET="content">Log Files</A>
+<B>logfile</B>
+  <A HREF="prruntim.htm#CFGParameters" TARGET="content">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="prdbgprg.htm#TracingAPICalls" TARGET="content">Debugging Your Programs: Tracing LSAPI Calls</A>
+<B>Logging</B>
+  <A HREF="prdbgprg.htm#Logging" TARGET="content">Debugging Your Programs</A>
+  <A HREF="prdebugr.htm#Logging" TARGET="content">Debugger</A>
+<A HREF="rfmantrm.htm#longX" TARGET="content">long</A>
+<B>LSAPI</B>
+  <A HREF="prdbgprg.htm#CheckingAPIErrorCodes" TARGET="content">Debugging Your Programs: Checking LSAPI Error Codes</A>
+  <A HREF="prdbgprg.htm#DebuggingLogicServerAPIFunctio" TARGET="content">Debugging Your Programs: Tracking LSAPI Errors</A>
+  <A HREF="prdbgprg.htm#TracingAPICalls" TARGET="content">Debugging Your Programs: Tracing LSAPI Calls</A>
+<A HREF="prdbgprg.htm#CheckingAPIErrorCodes" TARGET="content">lsGetExceptMsg</A>
+<A HREF="prdbgprg.htm#CheckingAPIErrorCodes" TARGET="content">lsGetExceptReadBuffer</A>
+<A HREF="prdbgprg.htm#ExaminingPrologTerms" TARGET="content">lsTermToStr</A>
+<A HREF="prruntim.htm#CFGParameters" TARGET="content">lsxload</A>
+<A HREF="rfmantrm.htm#defined" TARGET="content">LSXs</A>
+
+
+<B><A NAME="M"></A>  <FONT COLOR=yellow SIZE=4>M</FONT></B><P>
+<B>main</B>
+  <A HREF="prlisten.htm#ConsultingFilesfromtheCommandL" TARGET="content">Listener: Consulting Files</A>
+  <A HREF="prlisten.htm#ExecutingmainfromtheCommandLin" TARGET="content">Listener: Executing main / 0</A>
+  <A HREF="prcomplr.htm#LoadtimeErrors" TARGET="content">Compiler: Loadtime Errors</A>
+  <A HREF="prcomplr.htm#MainPredicate" TARGET="content">Compiler: Main Predicate</A>
+  <A HREF="prqktutr.htm#Modules" TARGET="content">Quick Tutorial: Modules</A>
+  <A HREF="prqktutr.htm#RunningaModularApplication" TARGET="content">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="prqktutr.htm#UsingalisandBATFiles" TARGET="content">Quick Tutorial: Using alis and BAT Files</A>
+<A HREF="rfmantrm.htm#ManipulatingTerms" TARGET="content">Manipulating Terms</A>
+<A HREF="prruntim.htm#CFGParameters" TARGET="content">maxatoms</A>
+<B>maxclauses</B>
+  <A HREF="prruntim.htm#CFGParameters" TARGET="content">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="prcomplr.htm#CompilationErrors" TARGET="content">Compiler: Errors</A>
+<A HREF="prruntim.htm#CFGParameters" TARGET="content">maxmem</A>
+<A HREF="prruntim.htm#CFGParameters" TARGET="content">maxvars</A>
+<B>member</B>
+  <A HREF="rfprterm.htm#CharacterLists" TARGET="content">Prolog Terms: Character Lists</A>
+  <A HREF="prcomplr.htm#HiddenPredicates" TARGET="content">Compiler: Hidden Predicates</A>
+<B>Memory</B>
+  <A HREF="prmemgmt.htm#BacktrackPoints" TARGET="content">Managing Memory: Backtrack Points</A>
+  <A HREF="prmemgmt.htm#DynamicDatabase" TARGET="content">Managing Memory: Dynamic Database</A>
+  <A HREF="prmemgmt.htm#HeapStack" TARGET="content">Managing Memory: Heap Stack</A>
+  <A HREF="prmemgmt.htm#IterationvsRecursion" TARGET="content">Managing Memory: Iteration vs. Recursion</A>
+  <A HREF="prmemgmt.htm#ReducingMemoryDemands" TARGET="content">Managing Memory: Reducing Memory Demands</A>
+  <A HREF="prmemgmt.htm#StacksandDatabaseSpace" TARGET="content">Managing Memory: Stacks and Database Space</A>
+<A HREF="prcomplr.htm#CompilerMessages" TARGET="content">Messages</A>
+<A HREF="rfrunenv.htm#MiscellaneousPredicates" TARGET="content">Miscellaneous Predicates</A>
+<A HREF="rfexpred.htm#mkdirDirLErr" TARGET="content">mkdir</A>
+<A HREF="rfarithm.htm#XmodY" TARGET="content">mod</A>
+<B>Modes</B>
+  <A HREF="prruntim.htm#Modes" TARGET="content">Amzi! Runtime</A>
+  <A HREF="rfrunenv.htm#SettingRuntimeModes" TARGET="content">Runtime and Environment: Setting Runtime Modes</A>
+  <A HREF="rfrunenv.htm#getmodeModeValue" TARGET="content">Runtime and Environment: get_mode(Mode, Value)</A>
+  <A HREF="rfrunenv.htm#setmodeModeValue" TARGET="content">Runtime and Environment: set_mode(Mode, Value)</A>
+<A HREF="rfarithm.htm#XmodsY" TARGET="content">mods</A>
+<A HREF="rfarithm.htm#XmoduY" TARGET="content">modu</A>
+<B>Modules</B>
+  <A HREF="prqktutr.htm#Modules" TARGET="content">Quick Tutorial</A>
+  <A HREF="prcomplr.htm#ModulesExample" TARGET="content">Compiler: Modules Example</A>
+  <A HREF="prqktutr.htm#RunningaModularApplication" TARGET="content">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="prcomplr.htm#UsingModules" TARGET="content">Compiler: Using Modules</A>
+<B>Modulus</B>
+  <A HREF="rfarithm.htm#XmodsY" TARGET="content">Arithmetic: X mods Y</A>
+  <A HREF="rfarithm.htm#XmoduY" TARGET="content">Arithmetic: X modu Y</A>
+  <A HREF="rfarithm.htm#XmodY" TARGET="content">Arithmetic: X mod Y</A>
+<A HREF="prqktutr.htm#UsingtheListener" TARGET="content">move</A>
+<B>multifile</B>
+  <A HREF="prcomplr.htm#CompilerDirectives" TARGET="content">Compiler: Directives</A>
+  <A HREF="prcomplr.htm#MultifileClauses" TARGET="content">Compiler: Multifile Directive</A>
+<A HREF="rfarithm.htm#X*Y" TARGET="content">Multiplication</A>
+
+
+<B><A NAME="N"></A>  <FONT COLOR=yellow SIZE=4>N</FONT></B><P>
+<B>name</B>
+  <A HREF="rfstrlst.htm#atomcodesAtomCharList" TARGET="content">Atoms, Lists and Strings: atom_codes(Atom, CharList)</A>
+  <A HREF="rfstrlst.htm#nameAtomCharList" TARGET="content">Atoms, Lists and Strings: name(Atom, CharList)</A>
+<A HREF="rfdcgsup.htm#DefiniteClauseGrammarsDCGs" TARGET="content">Natural Language</A>
+<A HREF="rfexecut.htm#Clauses" TARGET="content">Neck</A>
+<A HREF="rfarithm.htm#NegativeX" TARGET="content">Negative</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">New File</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">New Project</A>
+<A HREF="rfinpout.htm#nlnlID" TARGET="content">nl</A>
+<B>nllog</B>
+  <A HREF="prdbgprg.htm#Logging" TARGET="content">Debugging Your Programs: Logging</A>
+  <A HREF="prdebugr.htm#Logging" TARGET="content">Debugger: Logging</A>
+  <A HREF="rfinpout.htm#nllog" TARGET="content">Input and Output</A>
+<A HREF="rfdcgsup.htm#DefiniteClauseGrammarsDCGs" TARGET="content">Non-Terminals</A>
+<A HREF="rfstrlst.htm#nonblankstringString" TARGET="content">nonblank_string</A>
+<A HREF="rfmantrm.htm#nonvarX" TARGET="content">nonvar</A>
+<A HREF="prdebugr.htm#Spypoints" TARGET="content">nospy</A>
+<A HREF="prdebugr.htm#Spypoints" TARGET="content">nospyall</A>
+<B>not</B>
+  <A HREF="rfexecut.htm#Goal" TARGET="content">Prolog Execution: \+ Goal</A>
+  <A HREF="rfexecut.htm#notGoal" TARGET="content">Prolog Execution: not(Goal)</A>
+<A HREF="rfmantrm.htm#numberX" TARGET="content">number</A>
+<B>Numbers</B>
+  <A HREF="rfprterm.htm#FloatingPointNumbers" TARGET="content">Prolog Terms: Floating Point Numbers</A>
+  <A HREF="rfprterm.htm#Numbers" TARGET="content">Prolog Terms</A>
+  <A HREF="rfmantrm.htm#floatX" TARGET="content">Manipulating Terms: float(X)</A>
+  <A HREF="rfmantrm.htm#integerX" TARGET="content">Manipulating Terms: integer(X)</A>
+  <A HREF="rfmantrm.htm#numberX" TARGET="content">Manipulating Terms: number(X)</A>
+  <A HREF="rfmantrm.htm#shortX" TARGET="content">Manipulating Terms: short(X)</A>
+  <A HREF="rfstrlst.htm#stringintegerStringInteger" TARGET="content">Atoms, Lists and Strings: string_integer(String, Integer)</A>
+<A HREF="rfmantrm.htm#numbervarsTermStartEnd" TARGET="content">numbervars</A>
+
+
+<B><A NAME="O"></A>  <FONT COLOR=yellow SIZE=4>O</FONT></B><P>
+<A HREF="rfexecut.htm#onceGoal" TARGET="content">once</A>
+<B>op</B>
+  <A HREF="prcomplr.htm#LatentExpressions" TARGET="content">Compiler: Latent Expressions</A>
+  <A HREF="rfprterm.htm#PredefinedPrologOperators" TARGET="content">Prolog Terms: Predefined Prolog Operators</A>
+  <A HREF="rfprterm.htm#opPrecedenceTypeOper" TARGET="content">Prolog Terms: op(Precedence, Type, Oper)</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Open File</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Open Project</A>
+<B>openlog</B>
+  <A HREF="prdbgprg.htm#Logging" TARGET="content">Debugging Your Programs: Logging</A>
+  <A HREF="prdebugr.htm#Logging" TARGET="content">Debugger: Logging</A>
+  <A HREF="rfinpout.htm#openlogFname" TARGET="content">Input and Output: openlog(Fname)</A>
+<B>Operators</B>
+  <A HREF="rfprterm.htm#Associativity" TARGET="content">Prolog Terms: Associativity</A>
+  <A HREF="rfprterm.htm#Operators" TARGET="content">Prolog Terms</A>
+  <A HREF="rfprterm.htm#Precedence" TARGET="content">Prolog Terms: Precedence</A>
+  <A HREF="rfprterm.htm#PredefinedPrologOperators" TARGET="content">Prolog Terms: Predefined Prolog Operators</A>
+<A HREF="rfexecut.htm#XorY" TARGET="content">or</A>
+
+
+<B><A NAME="P"></A>  <FONT COLOR=yellow SIZE=4>P</FONT></B><P>
+<A HREF="prqktutr.htm#LinkingandEXEGeneration" TARGET="content">Packaging</A>
+<B>Parsing</B>
+  <A HREF="rfstrlst.htm#stringsplit" TARGET="content">Atoms, Lists and Strings: string_split(String, DelimitersS, List)</A>
+  <A HREF="rfstrlst.htm#stringtokens" TARGET="content">Atoms, Lists and Strings: string_tokens(String, TokenList), string_tokens(String, TokenList, DelimitersS)</A>
+  <A HREF="rfstrlst.htm#stringtrim" TARGET="content">Atoms, Lists and Strings: string_trim(String, TrimmedString)</A>
+<A HREF="prwinide.htm#EditMenu" TARGET="content">Paste</A>
+<B>pi</B>
+  <A HREF="rfarithm.htm#BuiltinAtoms" TARGET="content">Arithmetic: Built-in Atoms</A>
+  <A HREF="rfprterm.htm#BuiltinAtoms" TARGET="content">Prolog Terms: Built-in Atoms</A>
+<B>plm Files</B>
+  <A HREF="prqkover.htm#AQuickOverview" TARGET="content">Quick Overview</A>
+  <A HREF="prlinker.htm#EnvironmentSpecificandUtilityL" TARGET="content">Linker: Libraries</A>
+  <A HREF="rfdatabs.htm#load" TARGET="content">Prolog Database: load(FileA), load([F1, F2, ...])</A>
+  <A HREF="rfdatabs.htm#unload" TARGET="content">Prolog Database: unload(FileA), unload([F1, F2, ...])</A>
+<A HREF="prdebugr.htm#portrayGOAL" TARGET="content">portray</A>
+<B>Ports</B>
+  <A HREF="prdebugr.htm#DebuggerDisplay" TARGET="content">Debugger: Display</A>
+  <A HREF="prdbgprg.htm#DebuggerLikeIO" TARGET="content">Debugging Your Programs: Debugger-Like Output</A>
+  <A HREF="prdebugr.htm#DebugPortOptions" TARGET="content">Debugger: Debug Port Options</A>
+  <A HREF="prdebugr.htm#LeashingDebugPorts" TARGET="content">Debugger: Leashing Debug Ports</A>
+  <A HREF="prdebugr.htm#Logging" TARGET="content">Debugger: Logging</A>
+<A HREF="rfprterm.htm#Associativity" TARGET="content">Postfix</A>
+<A HREF="rfarithm.htm#X**Y" TARGET="content">Power</A>
+<B>pp</B>
+  <A HREF="prlisten.htm#ListingClauses" TARGET="content">Listener: Listing Clauses</A>
+  <A HREF="rfrunenv.htm#SpecialPredicatesforthePrologListener" TARGET="content">Runtime and Environment: Special Listener Predicates</A>
+  <A HREF="rfrunenv.htm#ppTermuserppTerm" TARGET="content">Runtime and Environment: pp(Term), user_pp(Term)</A>
+<B>ppj Files</B>
+  <A HREF="prqkover.htm#AQuickOverview" TARGET="content">Quick Overview</A>
+  <A HREF="prprojct.htm#CreatingAProject" TARGET="content">Projects: Creating a Project</A>
+<A HREF="rfprterm.htm#Precedence" TARGET="content">Precedence</A>
+<A HREF="rfprdsum.htm" TARGET="content">Predicate Summary</A>
+<B>Predicates</B>
+  <A HREF="prcomplr.htm#ComplexPredicates" TARGET="content">Compiler: Complex Predicates</A>
+  <A HREF="prlinker.htm#EnvironmentSpecificandUtilityL" TARGET="content">Linker: Libraries</A>
+  <A HREF="prcomplr.htm#ExportingPredicates" TARGET="content">Compiler: Exporting Predicates</A>
+  <A HREF="rfexpred.htm#ExtendedPredicates" TARGET="content">Extended Predicates</A>
+  <A HREF="prcomplr.htm#HiddenPredicates" TARGET="content">Compiler: Hidden Predicates</A>
+  <A HREF="prcomplr.htm#ImportingPredicates" TARGET="content">Compiler: Importing Predicates</A>
+  <A HREF="prcomplr.htm#MainPredicate" TARGET="content">Compiler: Main Predicate</A>
+  <A HREF="rfdatabs.htm#abolishNameArity" TARGET="content">Prolog Database: abolish(Name / Arity), abolish(Name, Arity)</A>
+  <A HREF="rfdatabs.htm#add" TARGET="content">Prolog Database: add , [user]</A>
+  <A HREF="rfrunenv.htm#add" TARGET="content">Runtime and Environment: add</A>
+  <A HREF="rfdatabs.htm#consult" TARGET="content">Prolog Database: consult(FileA), consult([F1, F2, ...]), [F1, F2, ...]</A>
+  <A HREF="rfdatabs.htm#dynamicNameArity" TARGET="content">Prolog Database: :- dynamic Name / Arity.</A>
+  <A HREF="rfdatabs.htm#listing" TARGET="content">Prolog Database: listing, listing(Name), listing(Name / Arity)</A>
+  <A HREF="rfdatabs.htm#load" TARGET="content">Prolog Database: load(FileA), load([F1, F2, ...])</A>
+  <A HREF="rfdatabs.htm#reconsult" TARGET="content">Prolog Database: reconsult(FileA), reconsult([F1, F2, ...])</A>
+  <A HREF="rfdatabs.htm#replace" TARGET="content">Prolog Database: replace</A>
+  <A HREF="rfdatabs.htm#unload" TARGET="content">Prolog Database: unload(FileA), unload([F1, F2, ...])</A>
+<A HREF="rfprterm.htm#Associativity" TARGET="content">Prefix</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Print</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Print Preview</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Print Setup</A>
+<B>pro Files</B>
+  <A HREF="prqkover.htm#AQuickOverview" TARGET="content">Quick Overview</A>
+  <A HREF="prqktutr.htm#ConsultingaSourceFile" TARGET="content">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="prqktutr.htm#CreatingaSourceFile" TARGET="content">Quick Tutorial: Creating a Source File</A>
+  <A HREF="rfdatabs.htm#consult" TARGET="content">Prolog Database: consult(FileA), consult([F1, F2, ...]), [F1, F2, ...]</A>
+  <A HREF="rfdatabs.htm#reconsult" TARGET="content">Prolog Database: reconsult(FileA), reconsult([F1, F2, ...])</A>
+<A HREF="rfrunenv.htm#procontrolTopPos" TARGET="content">pro_control</A>
+<B>pro_db</B>
+  <A HREF="prmemgmt.htm#DynamicDatabase" TARGET="content">Managing Memory: Dynamic Database</A>
+  <A HREF="rfrunenv.htm#prodbDB" TARGET="content">Runtime and Environment: pro_db(Allocated, Used)</A>
+<A HREF="rfrunenv.htm#prolocalTopPos" TARGET="content">pro_local</A>
+<A HREF="prdebugr.htm#BoxModelofProcedureFlow" TARGET="content">Procedure Flow</A>
+<B>Projects</B>
+  <A HREF="prprojct.htm#BuildingAProject" TARGET="content">Projects: Consulting / Loading</A>
+  <A HREF="prprojct.htm#CreatingAProject" TARGET="content">Projects: Creating a Project</A>
+  <A HREF="prprojct.htm#ProjectDialogBox" TARGET="content">Projects: Dialog Box</A>
+  <A HREF="prprojct.htm#Projects" TARGET="content">Projects</A>
+  <A HREF="rfrunenv.htm#consultproject" TARGET="content">Runtime and Environment: consult_project(ProjectFile)</A>
+<A HREF="rfdatabs.htm#PrologDatabase" TARGET="content">Prolog Database</A>
+<A HREF="prruntim.htm#protectdb" TARGET="content">protect_db</A>
+<A HREF="rfinpout.htm#putCharputIDChar" TARGET="content">put</A>
+
+
+<B><A NAME="Q"></A>  <FONT COLOR=yellow SIZE=4>Q</FONT></B><P>
+<A HREF="rfrunenv.htm#quit" TARGET="content">quit</A>
+
+
+<B><A NAME="R"></A>  <FONT COLOR=yellow SIZE=4>R</FONT></B><P>
+<B>random</B>
+  <A HREF="rfarithm.htm#BuiltinAtoms" TARGET="content">Arithmetic: Built-in Atoms</A>
+  <A HREF="rfprterm.htm#BuiltinAtoms" TARGET="content">Prolog Terms: Built-in Atoms</A>
+<A HREF="rfarithm.htm#seedrandomI" TARGET="content">Random Numbers</A>
+<B>read</B>
+  <A HREF="rfinpout.htm#EOFEndofFile" TARGET="content">Input and Output: ! EOF End of File</A>
+  <A HREF="rfprterm.htm#WhereEscapeCodesCanbeUsed" TARGET="content">Prolog Terms: Using Escape Codes</A>
+  <A HREF="rfinpout.htm#readTermreadIDTerm" TARGET="content">Input and Output: read(Term), read(ID, Term)</A>
+<A HREF="prlisten.htm#SyntaxErrors" TARGET="content">Read Errors</A>
+<B>read_string</B>
+  <A HREF="rfprterm.htm#WhereEscapeCodesCanbeUsed" TARGET="content">Prolog Terms: Using Escape Codes</A>
+  <A HREF="rfinpout.htm#readstringStringreadstringIDSt" TARGET="content">Input and Output: read_string(String), read_string(ID, String)</A>
+<A HREF="prruntim.htm#CFGParameters" TARGET="content">readbuffer</A>
+<A HREF="prruntim.htm#CFGParameters" TARGET="content">readdepth</A>
+<B>reconsult</B>
+  <A HREF="rfdatabs.htm#reconsult" TARGET="content">Prolog Database: reconsult(FileA), reconsult([F1, F2, ...])</A>
+  <A HREF="rfdatabs.htm#replace" TARGET="content">Prolog Database: replace</A>
+  <A HREF="rfrunenv.htm#replace" TARGET="content">Runtime and Environment: replace</A>
+<A HREF="rfrunenv.htm#reconsultproject" TARGET="content">reconsult_project</A>
+<A HREF="rfdatabs.htm#recordKeyTermDbref" TARGET="content">record</A>
+<B>recorda</B>
+  <A HREF="rfdatabs.htm#recordaKeyTermDbref" TARGET="content">Prolog Database: recorda(Key, Term, Dbref)</A>
+  <A HREF="rfdatabs.htm#recordKeyTermDbref" TARGET="content">Prolog Database: record(Key, Term, Dbref)</A>
+<A HREF="rfdatabs.htm#recordedKeyTermDbref" TARGET="content">recorded</A>
+<A HREF="rfdatabs.htm#recordzKeyTermDbref" TARGET="content">recordz</A>
+<A HREF="prmemgmt.htm#IterationvsRecursion" TARGET="content">Recursion</A>
+<A HREF="prdstprg.htm#RedistributableFiles" TARGET="content">Redistributable Files</A>
+<A HREF="prdebugr.htm#DebuggerDisplay" TARGET="content">Redo</A>
+<B>Remainder</B>
+  <A HREF="rfarithm.htm#XmodsY" TARGET="content">Arithmetic: X mods Y</A>
+  <A HREF="rfarithm.htm#XmoduY" TARGET="content">Arithmetic: X modu Y</A>
+  <A HREF="rfarithm.htm#XmodY" TARGET="content">Arithmetic: X mod Y</A>
+<A HREF="rfstrlst.htm#removedupsListNoDupsList" TARGET="content">remove_dups</A>
+<A HREF="rfexpred.htm#renameOldNameNewNameErr" TARGET="content">rename</A>
+<A HREF="rfexecut.htm#repeat" TARGET="content">repeat</A>
+<B>replace</B>
+  <A HREF="prlisten.htm#add" TARGET="content">Listener: add</A>
+  <A HREF="rfdatabs.htm#replace" TARGET="content">Prolog Database</A>
+  <A HREF="rfrunenv.htm#replace" TARGET="content">Runtime and Environment</A>
+<A HREF="rfinpout.htm#respkeyChar" TARGET="content">respkey</A>
+<A HREF="rfdatabs.htm#retractTerm" TARGET="content">retract</A>
+<A HREF="rfdatabs.htm#retractallTerm" TARGET="content">retractall</A>
+<A HREF="rfexpred.htm#rmdirDirLErr" TARGET="content">rmdir</A>
+<A HREF="prlisten.htm#TypinginaRule" TARGET="content">Rules</A>
+<A HREF="prwinide.htm#BuildMenu" TARGET="content">Run</A>
+
+
+<B><A NAME="S"></A>  <FONT COLOR=yellow SIZE=4>S</FONT></B><P>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Save</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Save All</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Save As</A>
+<A HREF="rfinpout.htm#seeStreamA" TARGET="content">see</A>
+<A HREF="rfarithm.htm#seedrandomI" TARGET="content">seed_random</A>
+<A HREF="rfinpout.htm#seeingSName" TARGET="content">seeing</A>
+<B>seen</B>
+  <A HREF="rfinpout.htm#UserStreams" TARGET="content">Input and Output: User Streams</A>
+  <A HREF="rfinpout.htm#seen" TARGET="content">Input and Output</A>
+<A HREF="rfinpout.htm#seentold" TARGET="content">seentold</A>
+<A HREF="rfinpout.htm#seetellStreamA" TARGET="content">seetell</A>
+<A HREF="prwinide.htm#EditMenu" TARGET="content">Select All</A>
+<A HREF="prwinide.htm#ViewMenu" TARGET="content">Set Font</A>
+<A HREF="rfinpout.htm#seterrorsStreamA" TARGET="content">set_errors</A>
+<B>set_mode</B>
+  <A HREF="prruntim.htm#Modes" TARGET="content">Amzi! Runtime: Modes</A>
+  <A HREF="rfrunenv.htm#setmodeModeValue" TARGET="content">Runtime and Environment: set_mode(Mode, Value)</A>
+<A HREF="rfexpred.htm#setdriveDrive" TARGET="content">setdrive</A>
+<B>setof</B>
+  <A HREF="rfexecut.htm#ComplexGoals" TARGET="content">Prolog Execution: Complex Goals</A>
+  <A HREF="prcomplr.htm#HiddenPredicates" TARGET="content">Compiler: Hidden Predicates</A>
+  <A HREF="rfexecut.htm#setofInstanceGoalList" TARGET="content">Prolog Execution: setof(Instance, Goal, List)</A>
+<B>Shift</B>
+  <A HREF="rfarithm.htm#XgtgtY" TARGET="content">Arithmetic: X &gt ; &gt ; Y</A>
+  <A HREF="rfarithm.htm#XltltY" TARGET="content">Arithmetic: X &lt ; &lt ; Y</A>
+<A HREF="rfmantrm.htm#shortX" TARGET="content">short</A>
+<A HREF="rfarithm.htm#sinX" TARGET="content">sin</A>
+<A HREF="rfprterm.htm#Atoms" TARGET="content">Single Quotes</A>
+<A HREF="rfinpout.htm#skipCharskipIDChar" TARGET="content">skip</A>
+<A HREF="rfstrlst.htm#sortListSortedList" TARGET="content">sort</A>
+<B>Source Files</B>
+  <A HREF="prqktutr.htm#ConsultingaSourceFile" TARGET="content">Quick Tutorial: Consulting a Source File</A>
+  <A HREF="prqktutr.htm#CreatingaSourceFile" TARGET="content">Quick Tutorial: Creating a Source File</A>
+<A HREF="prdebugr.htm#Spypoints" TARGET="content">spy</A>
+<A HREF="prdebugr.htm#Spypoints" TARGET="content">Spypoints</A>
+<A HREF="rfarithm.htm#sqrtX" TARGET="content">sqrt</A>
+<B>srcbuf</B>
+  <A HREF="prruntim.htm#CFGParameters" TARGET="content">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="prcomplr.htm#CompilationErrors" TARGET="content">Compiler: Errors</A>
+<A HREF="rfrunenv.htm#stacksizesHeapControlLocalTrai" TARGET="content">stack_sizes</A>
+<B>Stacks</B>
+  <A HREF="prmemgmt.htm#StacksandDatabaseSpace" TARGET="content">Managing Memory: Stacks and Database Space</A>
+  <A HREF="rfrunenv.htm#procontrolTopPos" TARGET="content">Runtime and Environment: pro_control(Top, Pos)</A>
+  <A HREF="rfrunenv.htm#prolocalTopPos" TARGET="content">Runtime and Environment: pro_local(Top, Pos)</A>
+  <A HREF="rfrunenv.htm#stacksizesHeapControlLocalTrai" TARGET="content">Runtime and Environment: stack_sizes(Heap, Control, Local, Trail)</A>
+<B>Standard</B>
+  <A HREF="rfmantrm.htm#XgtY" TARGET="content">Manipulating Terms: X @&gt ; Y</A>
+  <A HREF="rfmantrm.htm#XlteqY" TARGET="content">Manipulating Terms: X @ = &lt ; Y</A>
+  <A HREF="rfmantrm.htm#XltY" TARGET="content">Manipulating Terms: X @&lt ; Y</A>
+<B>Standard Order</B>
+  <A HREF="rfmantrm.htm#XgteqY" TARGET="content">Manipulating Terms: X @&gt ; = Y</A>
+  <A HREF="rfmantrm.htm#XgtY" TARGET="content">Manipulating Terms: X @&gt ; Y</A>
+  <A HREF="rfmantrm.htm#XlteqY" TARGET="content">Manipulating Terms: X @ = &lt ; Y</A>
+  <A HREF="rfmantrm.htm#XltY" TARGET="content">Manipulating Terms: X @&lt ; Y</A>
+  <A HREF="rfstrlst.htm#sortListSortedList" TARGET="content">Atoms, Lists and Strings: sort(List, SortedList)</A>
+<A HREF="prwinide.htm#ListenerMenu" TARGET="content">Start</A>
+<A HREF="rfdatabs.htm#PrologDatabase" TARGET="content">Static Database</A>
+<A HREF="prqkover.htm#LIBDLL" TARGET="content">Static Libraries</A>
+<A HREF="prwinide.htm#ViewMenu" TARGET="content">Status Bar</A>
+<A HREF="rfstrlst.htm#strcatStringAStringBStringAB" TARGET="content">strcat</A>
+<A HREF="rfinpout.htm#streamtypeIDType" TARGET="content">stream_type</A>
+<A HREF="rfinpout.htm#StreamManagement" TARGET="content">Streams</A>
+<B>string</B>
+  <A HREF="prruntim.htm#CFGParameters" TARGET="content">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="prruntim.htm#stringesc" TARGET="content">Amzi! Runtime: string_esc</A>
+  <A HREF="rfmantrm.htm#stringX" TARGET="content">Manipulating Terms: string(X)</A>
+<A HREF="rfstrlst.htm#stringatomStringAtom" TARGET="content">string_atom</A>
+<A HREF="rfprterm.htm#EnablingandDisablingEscapeProc" TARGET="content">string_esc</A>
+<A HREF="rfstrlst.htm#stringicomp" TARGET="content">string_icomp</A>
+<A HREF="rfstrlst.htm#stringintegerStringInteger" TARGET="content">string_integer</A>
+<A HREF="rfstrlst.htm#stringlengthStringLength" TARGET="content">string_length</A>
+<A HREF="rfstrlst.htm#stringlistStringList" TARGET="content">string_list</A>
+<A HREF="rfstrlst.htm#stringsplit" TARGET="content">string_split</A>
+<B>string_term</B>
+  <A HREF="rfstrlst.htm#stringtermqStringQTerm" TARGET="content">Atoms, Lists and Strings: string_termq(StringQ, Term)</A>
+  <A HREF="rfstrlst.htm#stringtermStringTerm" TARGET="content">Atoms, Lists and Strings: string_term(String, Term)</A>
+<A HREF="rfstrlst.htm#stringtermqStringQTerm" TARGET="content">string_termq</A>
+<A HREF="rfstrlst.htm#stringtokens" TARGET="content">string_tokens</A>
+<A HREF="rfstrlst.htm#stringtrim" TARGET="content">string_trim</A>
+<A HREF="rfstrlst.htm#stringlistconcatStringListStri" TARGET="content">stringlist_concat</A>
+<B>Strings</B>
+  <A HREF="rfprterm.htm#Strings" TARGET="content">Prolog Terms</A>
+  <A HREF="rfstrlst.htm#nonblankstringString" TARGET="content">Atoms, Lists and Strings: nonblank_string(String)</A>
+  <A HREF="rfinpout.htm#readstringStringreadstringIDSt" TARGET="content">Input and Output: read_string(String), read_string(ID, String)</A>
+  <A HREF="rfstrlst.htm#strcatStringAStringBStringAB" TARGET="content">Atoms, Lists and Strings: strcat(StringA, StringB, StringAB)</A>
+  <A HREF="rfstrlst.htm#stringatomStringAtom" TARGET="content">Atoms, Lists and Strings: string_atom(String, Atom)</A>
+  <A HREF="rfstrlst.htm#stringicomp" TARGET="content">Atoms, Lists and Strings: string_icomp(String1, String2)</A>
+  <A HREF="rfstrlst.htm#stringintegerStringInteger" TARGET="content">Atoms, Lists and Strings: string_integer(String, Integer)</A>
+  <A HREF="rfstrlst.htm#stringlengthStringLength" TARGET="content">Atoms, Lists and Strings: string_length(String, Length)</A>
+  <A HREF="rfstrlst.htm#stringlistconcatStringListStri" TARGET="content">Atoms, Lists and Strings: stringlist_concat(StringList, String), stringlist_concat(StringList, Separator, String)</A>
+  <A HREF="rfstrlst.htm#stringlistStringList" TARGET="content">Atoms, Lists and Strings: string_list(String, List)</A>
+  <A HREF="rfstrlst.htm#stringsplit" TARGET="content">Atoms, Lists and Strings: string_split(String, DelimitersS, List)</A>
+  <A HREF="rfstrlst.htm#stringtermqStringQTerm" TARGET="content">Atoms, Lists and Strings: string_termq(StringQ, Term)</A>
+  <A HREF="rfstrlst.htm#stringtermStringTerm" TARGET="content">Atoms, Lists and Strings: string_term(String, Term)</A>
+  <A HREF="rfstrlst.htm#stringtokens" TARGET="content">Atoms, Lists and Strings: string_tokens(String, TokenList), string_tokens(String, TokenList, DelimitersS)</A>
+  <A HREF="rfstrlst.htm#stringtrim" TARGET="content">Atoms, Lists and Strings: string_trim(String, TrimmedString)</A>
+  <A HREF="rfmantrm.htm#stringX" TARGET="content">Manipulating Terms: string(X)</A>
+  <A HREF="rfstrlst.htm#substringStringIndexLengthSubS" TARGET="content">Atoms, Lists and Strings: sub_string(String, Index, Length, SubString)</A>
+<A HREF="rfmantrm.htm#structureX" TARGET="content">structure</A>
+<B>Structures</B>
+  <A HREF="rfprterm.htm#Structures" TARGET="content">Prolog Terms</A>
+  <A HREF="rfmantrm.htm#TermListBunivB" TARGET="content">Manipulating Terms: Term = .. List (univ)</A>
+  <A HREF="rfmantrm.htm#structureX" TARGET="content">Manipulating Terms: structure(X)</A>
+<A HREF="rfstrlst.htm#subatomAtomIndexLengthSubAtom" TARGET="content">sub_atom</A>
+<A HREF="rfstrlst.htm#substringStringIndexLengthSubS" TARGET="content">sub_string</A>
+<A HREF="rfarithm.htm#X-Y" TARGET="content">Subtraction</A>
+<A HREF="prlisten.htm#SyntaxErrors" TARGET="content">Syntax Errors</A>
+<A HREF="rfrunenv.htm#systemCmdA" TARGET="content">system</A>
+
+
+<B><A NAME="T"></A>  <FONT COLOR=yellow SIZE=4>T</FONT></B><P>
+<A HREF="rfinpout.htm#tabNtabIDN" TARGET="content">tab</A>
+<A HREF="rfexecut.htm#tagTermandcuttagTerm" TARGET="content">tag</A>
+<A HREF="rfarithm.htm#tanX" TARGET="content">tan</A>
+<A HREF="rfinpout.htm#tellStreamA" TARGET="content">tell</A>
+<A HREF="rfinpout.htm#tellingSName" TARGET="content">telling</A>
+<A HREF="rfmantrm.htm#TermClassification" TARGET="content">Term Classification</A>
+<A HREF="rfdcgsup.htm#DefiniteClauseGrammarsDCGs" TARGET="content">Terminals</A>
+<B>Terms</B>
+  <A HREF="rfmantrm.htm#ComparisonofTerms" TARGET="content">Manipulating Terms: Comparison of Terms</A>
+  <A HREF="prdebugr.htm#DebuggerDisplay" TARGET="content">Debugger: Display</A>
+  <A HREF="prdbgprg.htm#ExaminingPrologTerms" TARGET="content">Debugging Your Programs: Examining Prolog Terms</A>
+  <A HREF="rfmantrm.htm#TermListBunivB" TARGET="content">Manipulating Terms: Term = .. List (univ)</A>
+  <A HREF="rfprterm.htm#Variables" TARGET="content">Prolog Terms: Variables</A>
+  <A HREF="rfmantrm.htm#XeqeqY" TARGET="content">Manipulating Terms: X = = Y</A>
+  <A HREF="rfmantrm.htm#XeqY" TARGET="content">Manipulating Terms: X = Y</A>
+  <A HREF="rfmantrm.htm#XgteqY" TARGET="content">Manipulating Terms: X @&gt ; = Y</A>
+  <A HREF="rfmantrm.htm#XgtY" TARGET="content">Manipulating Terms: X @&gt ; Y</A>
+  <A HREF="rfmantrm.htm#XlteqY" TARGET="content">Manipulating Terms: X @ = &lt ; Y</A>
+  <A HREF="rfmantrm.htm#XltY" TARGET="content">Manipulating Terms: X @&lt ; Y</A>
+  <A HREF="rfmantrm.htm#XneqeqY" TARGET="content">Manipulating Terms: X \ = = Y</A>
+  <A HREF="rfmantrm.htm#XneqY" TARGET="content">Manipulating Terms: X \ = Y</A>
+  <A HREF="rfmantrm.htm#argNTermArgument" TARGET="content">Manipulating Terms: arg(N, Term, Argument)</A>
+  <A HREF="rfdatabs.htm#assertaTerm" TARGET="content">Prolog Database: asserta(Term)</A>
+  <A HREF="rfdatabs.htm#assertzTerm" TARGET="content">Prolog Database: assertz(Term)</A>
+  <A HREF="rfmantrm.htm#atomicX" TARGET="content">Manipulating Terms: atomic(X)</A>
+  <A HREF="rfmantrm.htm#atomX" TARGET="content">Manipulating Terms: atom(X)</A>
+  <A HREF="rfmantrm.htm#compareResultTermTerm" TARGET="content">Manipulating Terms: compare(Result, Term1, Term2)</A>
+  <A HREF="rfinpout.htm#displayTerm" TARGET="content">Input and Output: display(Term)</A>
+  <A HREF="rfmantrm.htm#floatX" TARGET="content">Manipulating Terms: float(X)</A>
+  <A HREF="rfmantrm.htm#functorTermFunctorN" TARGET="content">Manipulating Terms: functor(Term, Functor, N)</A>
+  <A HREF="rfmantrm.htm#integerX" TARGET="content">Manipulating Terms: integer(X)</A>
+  <A HREF="rfmantrm.htm#islistX" TARGET="content">Manipulating Terms: islist(X)</A>
+  <A HREF="rfmantrm.htm#listX" TARGET="content">Manipulating Terms: list(X)</A>
+  <A HREF="rfmantrm.htm#longX" TARGET="content">Manipulating Terms: long(X)</A>
+  <A HREF="rfmantrm.htm#nonvarX" TARGET="content">Manipulating Terms: nonvar(X)</A>
+  <A HREF="rfmantrm.htm#numbervarsTermStartEnd" TARGET="content">Manipulating Terms: numbervars(Term, Start, End)</A>
+  <A HREF="rfmantrm.htm#numberX" TARGET="content">Manipulating Terms: number(X)</A>
+  <A HREF="rfdatabs.htm#retractallTerm" TARGET="content">Prolog Database: retractall(Term)</A>
+  <A HREF="rfdatabs.htm#retractTerm" TARGET="content">Prolog Database: retract(Term)</A>
+  <A HREF="rfmantrm.htm#shortX" TARGET="content">Manipulating Terms: short(X)</A>
+  <A HREF="rfstrlst.htm#stringtermqStringQTerm" TARGET="content">Atoms, Lists and Strings: string_termq(StringQ, Term)</A>
+  <A HREF="rfstrlst.htm#stringtermStringTerm" TARGET="content">Atoms, Lists and Strings: string_term(String, Term)</A>
+  <A HREF="rfmantrm.htm#stringX" TARGET="content">Manipulating Terms: string(X)</A>
+  <A HREF="rfmantrm.htm#structureX" TARGET="content">Manipulating Terms: structure(X)</A>
+  <A HREF="rfmantrm.htm#varlistList" TARGET="content">Manipulating Terms: varlist(List)</A>
+  <A HREF="rfmantrm.htm#varsofTermList" TARGET="content">Manipulating Terms: varsof(Term, List)</A>
+  <A HREF="rfmantrm.htm#varX" TARGET="content">Manipulating Terms: var(X)</A>
+<A HREF="prruntim.htm#CFGParameters" TARGET="content">thingblksz</A>
+<B>throw</B>
+  <A HREF="prdbgprg.htm#catchandthrow" TARGET="content">Debugging Your Programs: catch and throw</A>
+  <A HREF="rfexecut.htm#catchGoalCatcherRecoverandthro" TARGET="content">Prolog Execution: catch(Goal, Catcher, Recover) and throw(Term)</A>
+<A HREF="prwinide.htm#WindowMenu" TARGET="content">Tile Horizontally</A>
+<A HREF="prwinide.htm#WindowMenu" TARGET="content">Tile Vertically</A>
+<B>time</B>
+  <A HREF="rfrunenv.htm#timeHourMinSec" TARGET="content">Runtime and Environment: time(Hour, Min, Sec)</A>
+  <A HREF="rfrunenv.htm#timerTicks" TARGET="content">Runtime and Environment: timer(Ticks)</A>
+<B>told</B>
+  <A HREF="rfinpout.htm#UserStreams" TARGET="content">Input and Output: User Streams</A>
+  <A HREF="rfinpout.htm#told" TARGET="content">Input and Output</A>
+<A HREF="prwinide.htm#ViewMenu" TARGET="content">Tool Bar</A>
+<A HREF="prdbgprg.htm#TracingAPICalls" TARGET="content">Tracing</A>
+<B>Trail</B>
+  <A HREF="prmemgmt.htm#StacksandDatabaseSpace" TARGET="content">Managing Memory: Stacks and Database Space</A>
+  <A HREF="rfrunenv.htm#stacksizesHeapControlLocalTrai" TARGET="content">Runtime and Environment: stack_sizes(Heap, Control, Local, Trail)</A>
+<A HREF="rfexecut.htm#true" TARGET="content">true</A>
+<B>Tutorial</B>
+  <A HREF="prqktutr.htm#Compiling" TARGET="content">Quick Tutorial: Compiling</A>
+  <A HREF="prqktutr.htm#CreatingaSourceFile" TARGET="content">Quick Tutorial: Creating a Source File</A>
+  <A HREF="prqktutr.htm#Debugging" TARGET="content">Quick Tutorial: Debugging</A>
+  <A HREF="prqktutr.htm#DuckWorld" TARGET="content">Quick Tutorial: Duck World</A>
+  <A HREF="prqktutr.htm#LinkingandEXEGeneration" TARGET="content">Quick Tutorial: Linking and Running</A>
+  <A HREF="prqktutr.htm#Modules" TARGET="content">Quick Tutorial: Modules</A>
+  <A HREF="prqktutr.htm#RunningaModularApplication" TARGET="content">Quick Tutorial: Running a Modular Application</A>
+  <A HREF="prqktutr.htm#UsingalisandBATFiles" TARGET="content">Quick Tutorial: Using alis and BAT Files</A>
+  <A HREF="prqktutr.htm#UsingProjectsintheIDE" TARGET="content">Quick Tutorial: Using Projects</A>
+  <A HREF="prqktutr.htm#UsingtheListener" TARGET="content">Quick Tutorial: Using the Listener</A>
+
+
+<B><A NAME="U"></A>  <FONT COLOR=yellow SIZE=4>U</FONT></B><P>
+<A HREF="prwinide.htm#EditMenu" TARGET="content">Undo</A>
+<B>Unicode</B>
+  <A HREF="rfprterm.htm#Atoms" TARGET="content">Prolog Terms: Atoms</A>
+  <A HREF="rfprterm.htm#CharacterConstants" TARGET="content">Prolog Terms: Character Constants</A>
+  <A HREF="prqkover.htm#IDE" TARGET="content">Quick Overview: IDE</A>
+  <A HREF="prwinide.htm#UnicodeAndASCII" TARGET="content">IDE: Unicode and ASCII</A>
+  <A HREF="prqkover.htm#arun" TARGET="content">Quick Overview: Amzi ! Runtime</A>
+  <A HREF="rfinpout.htm#fopenHandleFileMode" TARGET="content">Input and Output: fopen(ID, File, Mode)</A>
+<B>Unification</B>
+  <A HREF="rfexecut.htm#Unification" TARGET="content">Prolog Execution</A>
+  <A HREF="rfmantrm.htm#XeqY" TARGET="content">Manipulating Terms: X = Y</A>
+  <A HREF="rfmantrm.htm#XneqY" TARGET="content">Manipulating Terms: X \ = Y</A>
+<A HREF="rfmantrm.htm#TermListBunivB" TARGET="content">univ</A>
+<A HREF="rfdatabs.htm#unload" TARGET="content">unload</A>
+<A HREF="prwinide.htm#FileMenu" TARGET="content">Unlock</A>
+<A HREF="rfprterm.htm#TermTerm" TARGET="content">User-Defined Operators</A>
+<A HREF="rfinpout.htm#UserStreams" TARGET="content">User Streams</A>
+<B>user_pp</B>
+  <A HREF="rfrunenv.htm#SpecialPredicatesforthePrologListener" TARGET="content">Runtime and Environment: Special Listener Predicates</A>
+  <A HREF="rfrunenv.htm#ppTermuserppTerm" TARGET="content">Runtime and Environment: pp(Term), user_pp(Term)</A>
+<A HREF="rfinpout.htm#StreamManagement" TARGET="content">user_stream</A>
+
+
+<B><A NAME="V"></A>  <FONT COLOR=yellow SIZE=4>V</FONT></B><P>
+<A HREF="rfmantrm.htm#varX" TARGET="content">var</A>
+<B>Variables</B>
+  <A HREF="rfprterm.htm#Variables" TARGET="content">Prolog Terms</A>
+  <A HREF="rfmantrm.htm#nonvarX" TARGET="content">Manipulating Terms: nonvar(X)</A>
+  <A HREF="rfmantrm.htm#numbervarsTermStartEnd" TARGET="content">Manipulating Terms: numbervars(Term, Start, End)</A>
+  <A HREF="rfmantrm.htm#varlistList" TARGET="content">Manipulating Terms: varlist(List)</A>
+  <A HREF="rfmantrm.htm#varsofTermList" TARGET="content">Manipulating Terms: varsof(Term, List)</A>
+  <A HREF="rfmantrm.htm#varX" TARGET="content">Manipulating Terms: var(X)</A>
+<A HREF="rfmantrm.htm#varlistList" TARGET="content">varlist</A>
+<A HREF="rfmantrm.htm#varsofTermList" TARGET="content">varsof</A>
+<B>verbose</B>
+  <A HREF="prruntim.htm#CFGParameters" TARGET="content">Amzi! Runtime: Configuration Parameters</A>
+  <A HREF="prruntim.htm#verbose" TARGET="content">Amzi! Runtime</A>
+<A HREF="rfrunenv.htm#versionString" TARGET="content">version</A>
+<A HREF="prwinide.htm#ViewMenu" TARGET="content">View Menu</A>
+
+
+<B><A NAME="W"></A>  <FONT COLOR=yellow SIZE=4>W</FONT></B><P>
+<A HREF="rfexpred.htm#wgetfileFileStr" TARGET="content">w_getfiler</A>
+<A HREF="rfexpred.htm#wmsgboxTerm" TARGET="content">w_msgbox</A>
+<A HREF="rfexpred.htm#wtfmsgboxTerm" TARGET="content">w_tfmsgbox</A>
+<A HREF="prqkover.htm#IDE" TARGET="content">wideA</A>
+<A HREF="prqkover.htm#IDE" TARGET="content">wideW</A>
+<A HREF="rfinpout.htm#writeTermwriteIDTerm" TARGET="content">write</A>
+<B>writelog</B>
+  <A HREF="prdbgprg.htm#Logging" TARGET="content">Debugging Your Programs: Logging</A>
+  <A HREF="prdebugr.htm#Logging" TARGET="content">Debugger: Logging</A>
+  <A HREF="rfinpout.htm#writelogX" TARGET="content">Input and Output: writelog(X)</A>
+<A HREF="rfinpout.htm#writeqTermwriteqIDTerm" TARGET="content">writeq</A>
+
+
+<B><A NAME="X"></A>  <FONT COLOR=yellow SIZE=4>X</FONT></B><P>
+<A HREF="prqkover.htm#AQuickOverview" TARGET="content">xpl Files</A>
+</PRE>
+</BODY>
+</HTML>

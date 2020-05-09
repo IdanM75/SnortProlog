@@ -1,0 +1,287 @@
+<HTML>
+<BODY BGCOLOR=#000055 TEXT=yellow LINK=white VLINK=aqua ALINK=red>
+
+<P>
+<B><FONT COLOR="yellow">Amzi! Logic Server User's Guide &amp; Reference</FONT></B>
+<P><A HREF="lsindex.htm"><B>Index</B></A><P>
+
+<PRE>
+Contents &amp; Purpose
+ <A HREF="lstop.htm#Contents" TARGET="content">Contents</A>
+ <A HREF="lstop.htm#Purpose" TARGET="content">Purpose</A>
+
+Overview
+ <A HREF="lsovervw.htm#Overview" TARGET="content">Overview</A>
+  <A HREF="lsovervw.htm#PrologLogicBases" TARGET="content">Prolog Logic-Bases</A>
+  <A HREF="lsovervw.htm#AmziArchitecture" TARGET="content">Architecture</A>
+  <A HREF="lsovervw.htm#TheLogicServerEngineandAPI" TARGET="content">Logic Server Engine and LSAPI</A>
+  <A HREF="lsovervw.htm#ExtendingProlog" TARGET="content">Extending Prolog</A>
+  <A HREF="lsovervw.htm#SupportedEnvironments" TARGET="content">Supported Environments</A>
+
+Programmer's Guide
+ <A HREF="lsprguid.htm#LogicServerProgrammersGuide" TARGET="content">Programmer's Guide</A>
+  <A HREF="lsprguid.htm#MainEntryPoints" TARGET="content">Main Entry Points</A>
+   <A HREF="lsprguid.htm#EngineIDParameter" TARGET="content">Engine ID Parameter</A>
+  <A HREF="lsprguid.htm#LogicServerReturnCodes" TARGET="content">Logic Server Return Codes</A>
+   <A HREF="lsprguid.htm#RCErrorCheckingReturnCodes" TARGET="content">RC-Error Checking Return Codes</A>
+   <A HREF="lsprguid.htm#TFSuccessFailureReturnCodes" TARGET="content">TF - Success / Failure Return Codes</A>
+  <A HREF="lsprguid.htm#PrologTerms" TARGET="content">Prolog Terms</A>
+   <A HREF="lsprguid.htm#TheInternalsofComplexTerms" TARGET="content">Internals of Complex Terms</A>
+  <A HREF="lsprguid.htm#StringPassingInterface" TARGET="content">String Passing Interface</A>
+   <A HREF="lsprguid.htm#CallingPrologwithaStringQuery" TARGET="content">Calling Prolog with a String Query</A>
+   <A HREF="lsprguid.htm#ConvertingTermstoStrings" TARGET="content">Converting Terms to Strings</A>
+   <A HREF="lsprguid.htm#BacktrackingthroughMultipleAns" TARGET="content">Backtracking through Multiple Answers</A>
+   <A HREF="lsprguid.htm#Puttingitalltogther" TARGET="content">Putting it All Togther</A>
+   <A HREF="lsprguid.htm#Examples" TARGET="content">Examples</A>
+  <A HREF="lsprguid.htm#ScopeOfLogicServerTerms" TARGET="content">Scope of Logic Server Terms</A>
+   <A HREF="lsprguid.htm#TheSafeScopingAnswer" TARGET="content">Safe Scoping Answer</A>
+   <A HREF="lsprguid.htm#TheNestedScopingAnswer" TARGET="content">Nested Scoping Answer</A>
+  <A HREF="lsprguid.htm#ImplementingASimplePrologListener" TARGET="content">Implementing a Simple Prolog Listener</A>
+  <A HREF="lsprguid.htm#CallingTerms" TARGET="content">Calling Terms</A>
+  <A HREF="lsprguid.htm#MappingPrologArgumentsToHostVariables" TARGET="content">Mapping Prolog Arguments to Host Variables</A>
+   <A HREF="lsprguid.htm#Example" TARGET="content">Example</A>
+  <A HREF="lsprguid.htm#MakingSimpleTerms" TARGET="content">Making Simple Terms</A>
+  <A HREF="lsprguid.htm#HandlingVaryingPrologTypes" TARGET="content">Handling Varying Prolog Types</A>
+  <A HREF="lsprguid.htm#ManipulatingStructures" TARGET="content">Manipulating Structures</A>
+  <A HREF="lsprguid.htm#ManipulatingLists" TARGET="content">Manipulating Lists</A>
+  <A HREF="lsprguid.htm#AssertingAndRetracting" TARGET="content">Asserting and Retracting to and from the Prolog Database</A>
+  <A HREF="lsprguid.htm#ConsultingPrologSource" TARGET="content">Consulting Prolog Source Code</A>
+  <A HREF="lsprguid.htm#MultipleEngines" TARGET="content">Multiple Engines</A>
+  <A HREF="lsprguid.htm#WritingExtendedPredicates" TARGET="content">Writing Extended Predicates</A>
+   <A HREF="lsprguid.htm#DefiningExtendedPredicates" TARGET="content">Defining Extended Predicates</A>
+   <A HREF="lsprguid.htm#InitializingtheExtendedPredica" TARGET="content">Initializing the Extended Predicates</A>
+   <A HREF="lsprguid.htm#ExtendedPredicateExample" TARGET="content">Example</A>
+  <A HREF="lsprguid.htm#ExtendedPredicateLibraries" TARGET="content">Extended Predicate Libraries (LSXs)</A>
+   <A HREF="lsprguid.htm#UsingLSXs" TARGET="content">Using LSXs</A>
+   <A HREF="lsprguid.htm#LSXExample" TARGET="content">Example</A>
+  <A HREF="lsprguid.htm#CapturingPrologI/O" TARGET="content">Capturing Prolog I / O</A>
+   <A HREF="lsprguid.htm#TheIOFunctions" TARGET="content">I / O Functions</A>
+   <A HREF="lsprguid.htm#ConnectingYourFunctions" TARGET="content">Connecting Your Functions</A>
+   <A HREF="lsprguid.htm#MakingStreamtheDefault" TARGET="content">Making Stream 3 the Default</A>
+   <A HREF="lsprguid.htm#RedirectingIOStreamsExample" TARGET="content">Redirecting I / O Streams Example</A>
+  <A HREF="lsprguid.htm#ErrorHandling" TARGET="content">Error Handling</A>
+   <A HREF="lsprguid.htm#PrologErrorHandling" TARGET="content">Prolog Error Handling</A>
+   <A HREF="lsprguid.htm#LSAPIErrorHandling" TARGET="content">LSAPI Error Handling</A>
+   <A HREF="lsprguid.htm#CPPErrorHandling" TARGET="content">C++ Error Handling</A>
+   <A HREF="lsprguid.htm#HostLanguageErrorHandling" TARGET="content">Host Language Error Handling</A>
+   <A HREF="lsprguid.htm#BreakHandling" TARGET="content">Break Handling</A>
+   <A HREF="lsprguid.htm#ReturnCodes" TARGET="content">Return Codes</A>
+  <A HREF="lsprguid.htm#MiscellaneousAPIFunctions" TARGET="content">Miscellaneous Functions</A>
+
+LSAPI Introduction
+ <A HREF="lsaintro.htm#LSAPIIntroduction" TARGET="content">LSAPI Introduction</A>
+  <A HREF="lsaintro.htm#Libraries" TARGET="content">Libraries</A>
+  <A HREF="lsaintro.htm#GettingStarted" TARGET="content">Getting Started</A>
+  <A HREF="lsaintro.htm#ReferenceSections" TARGET="content">Reference Sections</A>
+
+Hello Prolog
+ <A HREF="lsahello.htm#HelloProlog" TARGET="content">Hello Prolog</A>
+  <A HREF="lsahello.htm#ThePrologSideofHelloProlog" TARGET="content">Prolog Side of Hello Prolog</A>
+   <A HREF="lsahello.htm#CompilingandLinkingHELLOPRO" TARGET="content">Compiling and Linking</A>
+  <A HREF="lsahello.htm#TheHostLanguageSideofHelloProl" TARGET="content">Host Language Side of Hello Prolog</A>
+
+LSAPI
+ <A HREF="lsapirf.htm#FunctionalList" TARGET="content">Functional List of LSAPI Functions</A>
+   <A HREF="lsapirf.htm#Parametermanipulatingfunctions" TARGET="content">Parameter manipulating functions for building extended predicates</A>
+   <A HREF="lsapirf.htm#CallingPrologfromthehostlangua" TARGET="content">Calling Prolog from the host language</A>
+   <A HREF="lsapirf.htm#Dynamicdatabaseassertingandret" TARGET="content">Dynamic database asserting and retracting</A>
+   <A HREF="lsapirf.htm#StringTermconversionfunctions" TARGET="content">String / Term conversion functions</A>
+   <A HREF="lsapirf.htm#MakingPrologtypes" TARGET="content">Making Prolog types</A>
+   <A HREF="lsapirf.htm#GettingCvaluesfromPrologterms" TARGET="content">Getting C values from Prolog terms</A>
+   <A HREF="lsapirf.htm#Structurehackingfunctions" TARGET="content">Structure manipulation functions</A>
+   <A HREF="lsapirf.htm#Listhackingfunctions" TARGET="content">List manipulation functions</A>
+   <A HREF="lsapirf.htm#StreamIOfunctions" TARGET="content">Stream I / O functions</A>
+   <A HREF="lsapirf.htm#Miscellaneousfunctions" TARGET="content">Miscellaneous functions</A>
+   <A HREF="lsapirf.htm#Errorhandling" TARGET="content">Error handling</A>
+ <A HREF="lsapirf.htm#DataTypes" TARGET="content">LSAPI&nbsp; Data Types</A>
+ <A HREF="lsapirf.htm#LSAPIFunctionDescriptions" TARGET="content">LSAPI Function Descriptions</A>
+  <A HREF="lsapirf.htm#lsAddLSX" TARGET="content">lsAddLSX</A>
+  <A HREF="lsapirf.htm#lsAddPred" TARGET="content">lsAddPred</A>
+  <A HREF="lsapirf.htm#lsAsserta" TARGET="content">lsAsserta</A>
+  <A HREF="lsapirf.htm#lsAssertaStr" TARGET="content">lsAssertaStr</A>
+  <A HREF="lsapirf.htm#lsAssertz" TARGET="content">lsAssertz</A>
+  <A HREF="lsapirf.htm#lsAssertzStr" TARGET="content">lsAssertzStr</A>
+  <A HREF="lsapirf.htm#lsCall" TARGET="content">lsCall</A>
+  <A HREF="lsapirf.htm#lsCallStr" TARGET="content">lsCallStr</A>
+  <A HREF="lsapirf.htm#lsClearCall" TARGET="content">lsClearCall</A>
+  <A HREF="lsapirf.htm#lsClose" TARGET="content">lsClose</A>
+  <A HREF="lsapirf.htm#lsErrRaise" TARGET="content">lsErrRaise</A>
+  <A HREF="lsapirf.htm#lsExec" TARGET="content">lsExec</A>
+  <A HREF="lsapirf.htm#lsExecStr" TARGET="content">lsExecStr</A>
+  <A HREF="lsapirf.htm#lsGetArg" TARGET="content">lsGetArg</A>
+  <A HREF="lsapirf.htm#lsGetArgType" TARGET="content">lsGetArgType</A>
+  <A HREF="lsapirf.htm#lsGetExceptCallStack" TARGET="content">lsGetExceptCallStack</A>
+  <A HREF="lsapirf.htm#lsGetExceptMsg" TARGET="content">lsGetExceptMsg</A>
+  <A HREF="lsapirf.htm#lsGetExceptReadBuffer" TARGET="content">lsGetExceptReadBuffer</A>
+  <A HREF="lsapirf.htm#lsGetExceptReadFileName" TARGET="content">lsGetExceptReadFileName</A>
+  <A HREF="lsapirf.htm#lsGetExceptReadLineno" TARGET="content">lsGetExceptReadLineno</A>
+  <A HREF="lsapirf.htm#lsGetExceptType" TARGET="content">lsGetExceptType</A>
+  <A HREF="lsapirf.htm#lsGetExceptRC" TARGET="content">lsGetExceptRC</A>
+  <A HREF="lsapirf.htm#lsGetFA" TARGET="content">lsGetFA</A>
+  <A HREF="lsapirf.htm#lsGetHead" TARGET="content">lsGetHead</A>
+  <A HREF="lsapirf.htm#lsGetParm" TARGET="content">lsGetParm</A>
+  <A HREF="lsapirf.htm#lsGetParmType" TARGET="content">lsGetParmType</A>
+  <A HREF="lsapirf.htm#lsGetStream" TARGET="content">lsGetStream</A>
+  <A HREF="lsapirf.htm#lsGetTail" TARGET="content">lsGetTail</A>
+  <A HREF="lsapirf.htm#lsGetTerm" TARGET="content">lsGetTerm</A>
+  <A HREF="lsapirf.htm#lsGetTermType" TARGET="content">lsGetTermType</A>
+  <A HREF="lsapirf.htm#lsGetVersion" TARGET="content">lsGetVersion</A>
+  <A HREF="lsapirf.htm#lsInit" TARGET="content">lsInit</A>
+  <A HREF="lsapirf.htm#lsInit2" TARGET="content">lsInit2</A>
+  <A HREF="lsapirf.htm#lsInitLSX" TARGET="content">lsInitLSX</A>
+  <A HREF="lsapirf.htm#lsInitPreds" TARGET="content">lsInitPreds</A>
+  <A HREF="lsapirf.htm#lsLoad" TARGET="content">lsLoad</A>
+  <A HREF="lsapirf.htm#lsMain" TARGET="content">lsMain</A>
+  <A HREF="lsapirf.htm#lsMakeAddr" TARGET="content">lsMakeAddr</A>
+  <A HREF="lsapirf.htm#lsMakeAtom" TARGET="content">lsMakeAtom</A>
+  <A HREF="lsapirf.htm#lsMakeFA" TARGET="content">lsMakeFA</A>
+  <A HREF="lsapirf.htm#lsMakeFloat" TARGET="content">lsMakeFloat</A>
+  <A HREF="lsapirf.htm#lsMakeInt" TARGET="content">lsMakeInt</A>
+  <A HREF="lsapirf.htm#lsMakeList" TARGET="content">lsMakeList</A>
+  <A HREF="lsapirf.htm#lsMakeStr" TARGET="content">lsMakeStr</A>
+  <A HREF="lsapirf.htm#lsPopList" TARGET="content">lsPopList</A>
+  <A HREF="lsapirf.htm#lsPushList" TARGET="content">lsPushList</A>
+  <A HREF="lsapirf.htm#lsRedo" TARGET="content">lsRedo</A>
+  <A HREF="lsapirf.htm#lsReset" TARGET="content">lsReset</A>
+  <A HREF="lsapirf.htm#lsRetract" TARGET="content">lsRetract</A>
+  <A HREF="lsapirf.htm#lsRetractStr" TARGET="content">lsRetractStr</A>
+  <A HREF="lsapirf.htm#lsSetCommandArgs" TARGET="content">lsSetCommandArgs</A>
+  <A HREF="lsapirf.htm#lsSetInput" TARGET="content">lsSetInput</A>
+  <A HREF="lsapirf.htm#lsSetIOArg" TARGET="content">lsSetIOArg</A>
+  <A HREF="lsapirf.htm#lsSetOutput" TARGET="content">lsSetOutput</A>
+  <A HREF="lsapirf.htm#lsSetStream" TARGET="content">lsSetStream</A>
+  <A HREF="lsapirf.htm#lsStrArgLen" TARGET="content">lsStrArgLen</A>
+  <A HREF="lsapirf.htm#lsStrParmLen" TARGET="content">lsStrParmLen</A>
+  <A HREF="lsapirf.htm#lsStrTermLen" TARGET="content">lsStrTermLen</A>
+  <A HREF="lsapirf.htm#lsStrToTerm" TARGET="content">lsStrToTerm</A>
+  <A HREF="lsapirf.htm#lsTermToStr" TARGET="content">lsTermToStr</A>
+  <A HREF="lsapirf.htm#lsTermToStrQ" TARGET="content">lsTermToStrQ</A>
+  <A HREF="lsapirf.htm#lsUnify" TARGET="content">lsUnify</A>
+  <A HREF="lsapirf.htm#lsUnifyArg" TARGET="content">lsUnifyArg</A>
+  <A HREF="lsapirf.htm#lsUnifyParm" TARGET="content">lsUnifyParm</A>
+
+C Interface
+ <A HREF="lsac.htm#CInterface" TARGET="content">C Interface</A>
+  <A HREF="lsac.htm#HelloPrologfromC" TARGET="content">Hello Prolog</A>
+  <A HREF="lsac.htm#UnicodeSupport" TARGET="content">Unicode Support</A>
+
+C++ Class
+ <A HREF="lsacpp.htm#CClass" TARGET="content">C++ Class</A>
+   <A HREF="lsacpp.htm#HelloPrologfromC" TARGET="content">Hello Prolog</A>
+   <A HREF="lsacpp.htm#EncapsulatingPrologServices" TARGET="content">Encapsulating Prolog Services</A>
+   <A HREF="lsacpp.htm#MultipleCLogicServers" TARGET="content">Multiple CLogicServers</A>
+   <A HREF="lsacpp.htm#ImplementingExtendedPredicates" TARGET="content">Implementing Extended Predicates</A>
+   <A HREF="lsacpp.htm#UnicodeSupport" TARGET="content">Unicode Support</A>
+
+Delphi Component
+ <A HREF="lsadelph.htm#DelphiComponent" TARGET="content">Delphi Component</A>
+  <A HREF="lsadelph.htm#InstallingTheDelphiComponent" TARGET="content">Installation</A>
+  <A HREF="lsadelph.htm#HelloPrologFromDelphi" TARGET="content">Hello Prolog</A>
+  <A HREF="lsadelph.htm#DelphiComponentOverview" TARGET="content">Overview</A>
+  <A HREF="lsadelph.htm#UsingTheDelphiComponent" TARGET="content">Using the Component</A>
+  <A HREF="lsadelph.htm#ImplementingExtendedPredicatesInDelphi" TARGET="content">Implementing Extended Predicates</A>
+  <A HREF="lsadelph.htm#DelphiComponentReference" TARGET="content">Reference</A>
+   <A HREF="lsadelph.htm#LogicServerTypes" TARGET="content">Logic Server Types</A>
+   <A HREF="lsadelph.htm#FunctionsToSetUpLogicServer" TARGET="content">Logic Server Set-Up</A>
+   <A HREF="lsadelph.htm#FunctionsForExtendedPredicates" TARGET="content">Extended Predicates</A>
+   <A HREF="lsadelph.htm#FunctionsForCallingProlog" TARGET="content">Calling Prolog</A>
+   <A HREF="lsadelph.htm#FunctionsForDynamicDatabase" TARGET="content">Dynamic Database</A>
+   <A HREF="lsadelph.htm#FunctionsForStringTermConversion" TARGET="content">Converting Strings / Terms</A>
+   <A HREF="lsadelph.htm#FunctionsForMakingGettingPrologTypes" TARGET="content">Making / Getting Prolog Types</A>
+   <A HREF="lsadelph.htm#FunctionsForManipulatingStructures" TARGET="content">Manipulating Structures</A>
+   <A HREF="lsadelph.htm#FunctionsForManipulatingLists" TARGET="content">Manipulating Lists</A>
+   <A HREF="lsadelph.htm#FunctionsForPrologStreamIO" TARGET="content">Prolog Stream I / O</A>
+   <A HREF="lsadelph.htm#MiscellaneousFunctions" TARGET="content">Miscellaneous Functions</A>
+
+Java Class
+ <A HREF="lsajava.htm#JavaClass" TARGET="content">Java Class</A>
+  <A HREF="lsajava.htm#WheretoLearnAboutJava" TARGET="content">Where to Learn About Java</A>
+  <A HREF="lsajava.htm#InstallingtheJavaClass" TARGET="content">Installation</A>
+  <A HREF="lsajava.htm#HelloPrologfromJava" TARGET="content">Hello Prolog</A>
+  <A HREF="lsajava.htm#JavaClassOverview" TARGET="content">Overview</A>
+   <A HREF="lsajava.htm#ObjectOriented" TARGET="content">Object Oriented</A>
+   <A HREF="lsajava.htm#PointerlessMethods" TARGET="content">Pointerless Methods</A>
+   <A HREF="lsajava.htm#IssuingPrologQueries" TARGET="content">Issuing Prolog Queries</A>
+   <A HREF="lsajava.htm#StringConversion" TARGET="content">String Conversion</A>
+   <A HREF="lsajava.htm#Exceptions" TARGET="content">Exceptions</A>
+   <A HREF="lsajava.htm#MultiThreaded" TARGET="content">Multi-Threaded</A>
+  <A HREF="lsajava.htm#UsingtheJavaClass" TARGET="content">Using the Java Class</A>
+  <A HREF="lsajava.htm#ImplementingExtendedPredicatesInJava" TARGET="content">Implementing Extended Predicates</A>
+  <A HREF="lsajava.htm#JavaLogicServerandLSExceptionM" TARGET="content">LogicServer and LSException Methods</A>
+   <A HREF="lsajava.htm#SetUptheLogicServer" TARGET="content">Logic Server Set-Up</A>
+   <A HREF="lsajava.htm#CallingProlog" TARGET="content">Calling Prolog</A>
+   <A HREF="lsajava.htm#ManipulatingtheDynamicDatabase" TARGET="content">Dynamic Database</A>
+   <A HREF="lsajava.htm#ConvertingStringTerm" TARGET="content">Converting Strings / Terms</A>
+   <A HREF="lsajava.htm#MakingGettingPrologTypes" TARGET="content">Making / Getting Prolog Types</A>
+   <A HREF="lsajava.htm#ManipulatingStructures" TARGET="content">Manipulating Structures</A>
+   <A HREF="lsajava.htm#ExtendedPredicates" TARGET="content">Manipulating Parameters for Extended Predicates</A>
+   <A HREF="lsajava.htm#ManipulatingLists" TARGET="content">Manipulating Lists</A>
+   <A HREF="lsajava.htm#ErrorHandling" TARGET="content">Error Handling</A>
+   <A HREF="lsajava.htm#MiscellaneousMethods" TARGET="content">Miscellaneous Methods</A>
+
+Visual Basic Module
+ <A HREF="lsavb.htm#VisualBasicModule" TARGET="content">Visual Basic Module</A>
+  <A HREF="lsavb.htm#HelloPrologFromVisualBasic" TARGET="content">Hello Prolog</A>
+  <A HREF="lsavb.htm#LogicServerVBModuleOverview" TARGET="content">Overview</A>
+  <A HREF="lsavb.htm#VisualBasicCallingTheLogicServerAPI" TARGET="content">Using the Module</A>
+  <A HREF="lsavb.htm#ImplementingExtendedPredicatesInVB" TARGET="content">Implementing Extended Predicates</A>
+  <A HREF="lsavb.htm#VBModuleReference" TARGET="content">Reference</A>
+   <A HREF="lsavb.htm#LogicServerConstants" TARGET="content">Logic Server Constants</A>
+   <A HREF="lsavb.htm#FunctionsToSetUpLogicServer" TARGET="content">Logic Server Set-Up</A>
+   <A HREF="lsavb.htm#FunctionsForExtendedPredicates" TARGET="content">Extended Predicates</A>
+   <A HREF="lsavb.htm#FunctionsForCallingProlog" TARGET="content">Calling Prolog</A>
+   <A HREF="lsavb.htm#FunctionsForDynamicDatabase" TARGET="content">Dynamic Database</A>
+   <A HREF="lsavb.htm#FunctionsForStringTermConversion" TARGET="content">Converting Strings / Terms</A>
+   <A HREF="lsavb.htm#FunctionsForMakingGettingPrologTypes" TARGET="content">Making / Getting Prolog Types</A>
+   <A HREF="lsavb.htm#FunctionsForManipulatingStructures" TARGET="content">Manipulating Structures</A>
+   <A HREF="lsavb.htm#FunctionsForManipulatingLists" TARGET="content">Manipulating Lists</A>
+   <A HREF="lsavb.htm#MiscellaneousFunctions" TARGET="content">Miscellaneous Functions</A>
+  <A HREF="lsavb.htm#VBLogicServerExample" TARGET="content">Examples</A>
+
+MS-Office Interface
+ <A HREF="lsamsoff.htm#AccessInterface" TARGET="content">MS-Office Interface</A>
+
+CGI Interface
+ <A HREF="lsacgi.htm#CGIInterface" TARGET="content">CGI Interface</A>
+  <A HREF="lsacgi.htm#Libraries" TARGET="content">Introduction</A>
+  <A HREF="lsacgi.htm#BuildingTheCProgram" TARGET="content">Building the C Program</A>
+  <A HREF="lsacgi.htm#WritingThePrologScript" TARGET="content">Writing the Prolog Script</A>
+  <A HREF="lsacgi.htm#CGIVariables" TARGET="content">CGI Variables</A>
+  <A HREF="lsacgi.htm#CGIPredicates" TARGET="content">CGI Predicates</A>
+
+LSX Introduction
+ <A HREF="lsxintro.htm#LSXIntroduction" TARGET="content">LSX Introduction</A>
+
+ODBC Support
+ <A HREF="lsxodbc.htm#ODBCSupport" TARGET="content">ODBC Support</A>
+  <A HREF="lsxodbc.htm#PrologInterface" TARGET="content">Prolog Interface</A>
+  <A HREF="lsxodbc.htm#PrologInterfaceExample" TARGET="content">Prolog Interface Example</A>
+  <A HREF="lsxodbc.htm#ExtendedPredicates" TARGET="content">Extended Predicates</A>
+
+Sockets LSX
+ <A HREF="lsxsock.htm#SocketsLSX" TARGET="content">Sockets LSX</A>
+  <A HREF="lsxsock.htm#Executables" TARGET="content">Executables</A>
+  <A HREF="lsxsock.htm#SourceCode" TARGET="content">Source Code</A>
+  <A HREF="lsxsock.htm#Examples" TARGET="content">Examples</A>
+  <A HREF="lsxsock.htm#ExtendedPredicates" TARGET="content">Extended Predicates</A>
+   <A HREF="lsxsock.htm#StartupShutdownPredicates" TARGET="content">Startup / Shutdown Predicates</A>
+   <A HREF="lsxsock.htm#ConversionPredicates" TARGET="content">Conversion Predicates</A>
+   <A HREF="lsxsock.htm#DatabasePredicates" TARGET="content">Database Predicates</A>
+   <A HREF="lsxsock.htm#SocketPredicates" TARGET="content">Socket Predicates</A>
+
+Extended Predicates
+ <A HREF="lsxexprd.htm#DOSExtendedPredicates" TARGET="content">Extended Predicates</A>
+
+Delphi GUI Predicates
+ <A HREF="lsxdelgu.htm#DelphiGUIPredicates" TARGET="content">Delphi GUI Predicates</A>
+  <A HREF="lsxdelgu.htm#UsingDelGUI" TARGET="content">Using DelGUI</A>
+  <A HREF="lsxdelgu.htm#FlowofControlIssue" TARGET="content">Flow of Control Issue</A>
+  <A HREF="lsxdelgu.htm#TheExtendedPredicates" TARGET="content">Extended Predicates</A>
+  <A HREF="lsxdelgu.htm#ThePrologPredicates" TARGET="content">Prolog Predicates</A>
+  <A HREF="lsxdelgu.htm#Sample" TARGET="content">Sample</A>
+
+Command-Line Runtime Shell
+ <A HREF="lsxcmdsh.htm#DOSRuntimeShell" TARGET="content">Command-Line Runtime Shell</A>
+</PRE>
+</BODY>
+</HTML>

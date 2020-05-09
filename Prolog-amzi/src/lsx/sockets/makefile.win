@@ -1,0 +1,14 @@
+all: _sockets
+
+_sockets:
+	NMAKE /a /f "wsock.mak" CFG="wsock - Win32 Release"
+	acmp asock.pro
+	copy asock.plm $(AMZI_DEV_DIR)\abin\asock.plm
+
+clean:
+	-del /Q Release\*.*
+	-del /Q Debug\*.*
+	-del /Q *.plm
+
+remove_cvs:
+	-rmdir /S /Q CVS

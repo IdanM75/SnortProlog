@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Distributing Your Programs</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="DistributingYourPrograms"></A><FONT COLOR="#D2AA00">Distributing 
+  Your Programs</FONT> </h1>
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>This section
+pertains only to users who are licensed to redistribute the Amzi! Prolog
+Runtime.</I> </P>
+
+<P><!AMZI_INDEX = Distributing; arun>In order package up your .plm files into
+a distributable module, you first need to create an .xpl file for your application
+as described in the section on alnk. </P>
+
+<P>For command-line environments like the Windows Console, Solaris or Linux, you 
+  need to create an .exe file. The simplist way to do this is to copy arun.exe 
+  to <I>yourprog</I>.exe, where your compiled and linked Prolog module is called 
+  <I>yourprog</I>.xpl. When <I>yourprog</I>.exe is run, it will automatically 
+  run <I>yourprog</I>.xpl. The source code for arun is included in the src/acore/arun 
+  directory. It is in file arun.cpp. A make file is included as well.</P>
+
+<P>To ship your program to other users, the following files are required:
+</P>
+
+<UL>
+<LI>A host program written in C/C++, Java,&nbsp;Delphi, Visual Basic or
+any other language or tool that calls the Amzi! dynamic library runtime.
+(For command-line programs, it can simply be the .exe file copied or created
+from arun.)</LI>
+
+  <LI>The Amzi! Prolog dynamic library runtime (.dll&nbsp;or .so):</LI>
+  <UL>
+    <LI>amzi.dll for Windows applications</LI>
+    <LI>libamzi.so for Unix applications</LI>
+  </UL>
+
+<LI>Your .xpl file (from alnk, which contains a .plm file with a <B>main/0</B>
+predicate).</LI>
+
+  <LI>Optionally, any required Logic Server Extensions such as aosutils.lsx, asock.lsx, 
+    aodbc.lsx, etc.</LI>
+
+  <LI>Optionally, any other supporting files, such as user-modifiable .pro Files. 
+  </LI>
+
+<LI>Optionally, an .cfg file for setting stack sizes and other options.
+</LI>
+</UL>
+
+<P>Your users simply copy these files into a directory and run the program
+by typing its name at the operating system prompt. If that directory is
+in their PATH statement, they can run your application from any directory
+on their machine. </P>
+
+<H2><A NAME="RedistributableFiles"></A><FONT COLOR="#0000FF">Redistributable
+Files</FONT></H2>
+
+<P><!AMZI_INDEX = Distributing; Redistributable Files; Licensing>The following
+files may be distributed with your Amzi! Prolog application: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">arun.exe, arun
+amzi.dll, libamzi.so
+amzijni.dll, amzijni.so
+*.lsx</FONT></PRE>
+</UL>
+
+<P>You may distribute the contents of the following files if they are linked
+into your .xpl file (alib.plm is always linked in): </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">acgi.plm, alib.plm, asock.plm, list.plm, 
+aodbc.plm, misc.plm</FONT></PRE>
+</UL>
+
+<P>You may distribute the following files if they are linked into your
+EXE file: </P>
+
+<UL>
+  <PRE><FONT COLOR="#000080">amzi.lib</FONT></PRE>
+</UL>
+
+<P>You may incorporate all or part of any of the sample (in the samples subdirectory) 
+  into your applications, but you may not distribute the source code in any form 
+  (see your License Agreement for details). </P>
+
+<P><IMG SRC="arrowrt.gif" HEIGHT=18 WIDTH=18 ALIGN=BOTTOM> <I>You may not distribute 
+  any other files not explicitly listed here without the prior written authorization 
+  of Amzi! inc. This includes, but is not limited to the system software files, 
+  abld.exe, alis.exe, alis.xpl, acmp.exe, acmp.xpl, wideA.exe, wideW.exe, alnk.exe, 
+  alnk.dll, and source code for files that support the development of Logic Server 
+  applications, such as amzi.h, amzi.bas, and amzi.pas.</I> </P>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+</BODY>
+</HTML>

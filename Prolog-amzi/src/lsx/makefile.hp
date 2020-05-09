@@ -1,0 +1,14 @@
+SRC = $(AMZI_DEV_DIR)/src/lsx
+
+all: _sockets
+
+_sockets:
+	echo --- making sockets ---
+	cd $(SRC)/sockets; make -f makefile.hp
+
+clean:
+	cd $(SRC)/sockets; make -f makefile.hp clean
+
+   
+
+

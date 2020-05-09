@@ -1,0 +1,919 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; U) [Netscape]">
+   <TITLE>Samples</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<H1>
+<FONT COLOR="#D2AA00">Samples</FONT></H1>
+
+<HR WIDTH="100%">
+
+<P>The Amzi! samples are stored in the 'samples' subdirectory. The 'samples' subdirectory 
+  has further subdirectories organized primarily by programming environment. The 
+  sample names in this document reflect that directory structure. For example, 
+  the sample C++ Hello console is in the directory amzi/samples/cpp/hello/console.
+<P>The samples in most of the directories are Logic Server API samples, with some 
+  Prolog code and some environment-specific code. The environment-specific code 
+  might be in a language, such as Delphi or C++, or use some other programming 
+  interface, such as ODBC or CGI. 
+<P>The Prolog subdirectory has samples that are pure Prolog.
+
+<P>In many cases a sample will be repeated in different environments. For
+example, there is a pure Prolog version of the Rubik's cube program and
+one that runs under a multi-threaded C++ front-end. The Hello Prolog program
+is provided for most host language environments.
+
+<P>Many of the samples include a doc.html file with notes on the architecture 
+  of the sample and how to build/deploy it. Most samples include some sort of 
+  make file so they can be rebuilt easily. Makefiles ending in .win are for Windows, 
+  .sol for Solaris, .lnx for Linux, etc. In general files that are Windows-only 
+  (such as Windows IDE project files) all start with a 'w'. Most of the make files 
+  require the environment variable AMZI_DIR to be set to your top-level amzi directory. 
+  All samples include full source. 
+<P>If you encounter any difficulties building or executing any of the samples,
+send e-mail to <A HREF="mailto:support@amzi.com">support@amzi.com</A>.
+<UL><A HREF="#contents">Contents</A> - Alphabetical list of samples.
+
+<P><A HREF="#topics">Topics</A> - Topical arrangement of samples.</UL>
+
+<HR>
+<H2>
+<A NAME="contents"></A><FONT COLOR="#0000FF">Contents</FONT></H2>
+
+<MENU> 
+  <LI> <A HREF="#c_hello">C Hello</A> - Hello Prolog from C.</LI>
+  <LI> <A HREF="#c_pets">C Pets</A> - Multiple engines running Pets from the console.</LI>
+  <LI> <A HREF="#cpp_hello_borland">C++ Hello Borland</A> - Hello Prolog from 
+    Borland C++.</LI>
+  <LI> <A HREF="#cpp_hello_borland_builder">C++ Hello Borland C++ Builder</A> 
+    - Hello Prolog from Borland's C++ Builder.</LI>
+  <LI> <A HREF="#cpp_hello_console">C++ Hello Console</A> - Hello Prolog from 
+    the console.</LI>
+  <LI> <A HREF="#cpp_hello_dialog">C++ Hello Win32_MFC</A> - Hello Prolog in a 
+    dialog box.</LI>
+  <LI> <A HREF="#cpp_pets">C++ Pets</A> - Multiple Logic Servers running Pets 
+    from the console.</LI>
+  <LI> <A HREF="#cpp_petscb">C++ Pets_Callback</A> - Pets with callback extended 
+    predicates.</LI>
+  <LI> <A HREF="#cpp_rubikmt">C++ Win32_Rubik_Multi</A> - Multiple cubes solving 
+    in multiple threads simultaneously.</LI>
+  <LI> <A HREF="#delphi_delgui">Delphi DelGUI</A> - Simple test of Delphi GUI 
+    library.</LI>
+  <LI> <A HREF="#delphi_eq">Delphi Eq</A> - A Program that lays out equations 
+    as they might appear in a text book.</LI>
+  <LI> <A HREF="#delphi_hello">Delphi Hello</A> - Hello Prolog from Delphi.</LI>
+  <LI> <A HREF="#delphi_proxs">Delphi ProXS</A> - A goal-driven identification 
+    expert system from Delphi.</LI>
+  <LI> <A HREF="#delphi_ssched">Delphi SSched</A> - A round-robin sports scheduler 
+    with a Delphi user interface.</LI>
+  <LI> <A HREF="#delphi_test">Delphi Test</A> - A Delphi test application illustrating 
+    a variety of Logic Server features.</LI>
+  <LI><a href="#internet_cgi_hello">Internet CGI Hello</a> - The simplist Amzi! 
+    CGI script.</LI>
+  <LI> <A HREF="#internet_cgi_infoform">Internet CGI Infoform</A> - A simple CGI 
+    sample that use Prolog to manage an HTML information form.</LI>
+  <LI> <A HREF="#internet_sockets">Internet Sockets</A> - A number of examples 
+    showing how to use Sockets and Prolog.</LI>
+  <LI> <A HREF="#java_hello">Java Hello</A> - Hello Prolog from Java.</LI>
+  <LI> <A HREF="#java_pets_localcb">Java Pets_Callback</A> - The simple Pets expert 
+    system using extended predicates written in Java.</LI>
+  <LI> <A HREF="#java_ship">Java Ship</A> - A prototype package shipping advisor 
+    in Java.</LI>
+  <LI> <A HREF="#lsx_xarray">LSX Xarray</A> - A simple example of a Logic Server 
+    Extendsion DLL (.lsx).</LI>
+  <LI> <A HREF="#odbc_dbgene">ODBC DBGene</A> - C++ front, ODBC back, Prolog genealogy 
+    middle.</LI>
+  <LI> <A HREF="#odbc_events">ODBC Events</A> - Illustrates the use of date and 
+    time fields in ODBC.</LI>
+  <LI> <A HREF="#vb_odbcgene">ODBC VBGene</A> - Family tree sample using ODBC 
+    and Visual Basic.</LI>
+  <LI> <A HREF="#prolog_babel">Prolog Babel</A> - Text interface to a Unicode, 
+    multi-language translation sample.</LI>
+  <LI> <A HREF="#prolog_ducks">Prolog Ducks</A> - The simple Duck World adventure 
+    game used in the Prolog User's Guide tutorial.</LI>
+  <LI> <A HREF="#prolog_logic">Prolog Logic</A> - The C&amp;M Formal Logic to 
+    Prolog translator, using Unicode characters for Logic Symbols.</LI>
+  <LI> <A HREF="#prolog_misc">Prolog Misc</A> - A collection of Prolog programs 
+    that have not been cataloged in this overview file.</LI>
+  <LI> <A HREF="#prolog_rubik">Prolog Rubik</A> - Text interface cube solver.</LI>
+  <LI> <A HREF="#internet_sockets">Prolog Sockets</A> - Using sockets from Prolog.</LI>
+  <LI> <A HREF="#vb_extpred">VB ExtPred</A> - A simple example of using extended 
+    predicates for Prolog to call VB procedures.</LI>
+  <LI> <A HREF="#vb_hello">VB Hello</A> - Hello Prolog from Visual Basic.</LI>
+  <LI> <A HREF="#vb_test">VB Test</A> - VB Program that exercises a number of 
+    Logic Server features.</LI>
+  <LI> <A HREF="#vb_wgene">VB WGene</A> - Visual Basic front end on Prolog genealogy.</LI>
+</MENU>
+
+<H2>
+<A NAME="topics"></A><FONT COLOR="#0000FF">Topics</FONT></H2>
+
+<DIR>
+<LI>
+<A HREF="#c">C</A></LI>
+
+<LI>
+<A HREF="#cpp">C++</A></LI>
+
+<LI>
+<A HREF="#delphi">Delphi</A></LI>
+
+<LI>
+<A HREF="#expert_systems">Expert Systems</A></LI>
+
+<LI>
+<A HREF="#extended_predicates">Extended Predicates</A></LI>
+
+<LI>
+<A HREF="#genealogy">Genealogy</A></LI>
+
+<LI>
+<A HREF="#graphical_layout">Graphical Layout</A></LI>
+
+<LI>
+<A HREF="#gui_applications">GUI Applications</A></LI>
+
+<LI>
+<A HREF="#hello_prolog">Hello Prolog</A></LI>
+
+<LI>
+<A HREF="#java">Java</A></LI>
+
+<LI>
+<A HREF="#multiple_engines">Multiple Engines</A></LI>
+
+<LI>
+<A HREF="#natural_language">Natural Language</A></LI>
+
+<LI>
+<A HREF="#odbc">ODBC</A></LI>
+
+<LI>
+<A HREF="#pets">Pets</A></LI>
+
+<LI>
+<A HREF="#prolog">Prolog</A></LI>
+
+<LI>
+<A HREF="#rubiks_cube">Rubik's Cube</A></LI>
+
+<LI>
+<A HREF="#sockets">Sockets</A></LI>
+
+<LI>
+<A HREF="#unicode">Unicode</A></LI>
+
+<LI>
+<A HREF="#visual_basic">Visual Basic</A></LI>
+</DIR>
+
+<HR>
+<H2>
+<A NAME="SamplesByTopic"></A><FONT COLOR="#0000FF">Samples by Topic</FONT></H2>
+
+<H3>
+<A NAME="c"></A><FONT COLOR="#000080">C</FONT></H3>
+The C samples illustrate the use of the native Logic Server API (LSAPI)
+calls and error handling using return codes.
+
+<P>The C samples are implemented using Microsoft Visual C/C++ 5.0, but
+because the Logic Server is a DLL, it can be linked to from any C environment
+that can link with a Windows DLL.
+
+<P>The samples include an .exe file which can be run directly. They also
+include a VC++ 5.0 .MAK file which can be used to rebuild the project.
+<MENU>
+<LI>
+<A HREF="#c_hello">C Hello</A> - Hello Prolog from C.</LI>
+
+<LI>
+<A HREF="#c_pets">C Pets</A> - Multiple engines running Pets from the console.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="cpp"></A><FONT COLOR="#000080">C++</FONT></H3>
+The C++ examples illustrate the technique of deriving application specific
+classes from the Logic Server class, as well as error handling using C++
+catch/throw and Logic Server exceptions.
+
+<P>The C++ samples are implemented using Microsoft Visual C/C++ 5.0, but
+because the Logic Server is a DLL, it can be linked to from any C++ environment
+that can link with a Windows DLL.
+
+<P>They include a .exe file which can be run directly as well as a VC++
+5.0 .MAK file which can be used to rebuild the project.
+<MENU>
+<LI>
+<A HREF="#cpp_hello_borland">C++ Hello Borland</A> - Hello Prolog from
+Borland C++.</LI>
+
+<LI>
+<A HREF="#cpp_hello_borland_builder">C++ Hello Borland C++ Builder</A>
+- Hello Prolog from Borland's C++ Builder.</LI>
+
+<LI>
+<A HREF="#cpp_hello_console">C++ Hello Console</A> - Hello Prolog from
+the console.</LI>
+
+<LI>
+<A HREF="#cpp_hello_dialog">C++ Hello Win32_MFC</A> - Hello Prolog in a dialog
+box.</LI>
+
+<LI>
+<A HREF="#cpp_pets">C++ Pets</A> - Multiple Logic Servers running Pets
+from the console.</LI>
+
+<LI>
+<A HREF="#cpp_petscb">C++ Pets_Callback</A> - Pets with callback extended predicates.</LI>
+
+<LI>
+<A HREF="#cpp_rubikmt">C++ Win32_Rubik_Multi</A> - Multiple cubes solving in multiple
+threads simultaneously.</LI>
+
+<LI>
+<A HREF="#odbc_dbgene">ODBC DBGene</A> - C++ front, ODBC back, Prolog genealogy
+middle.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="console_applications"></A><FONT COLOR="#000080">Console Applications</FONT></H3>
+By linking with AMZI.LIB/DLL, you can create console (UNIX terminal or DOS Box) 
+applications that support normal Prolog reads and writes to the console. 
+<P>The console samples provide uncluttered code that illustrate the interaction
+between the Logic Server and the host language.
+
+<P>It is usually best to run the console applications from the console,
+otherwise the console window might appear and disappear before you can
+see the results.
+<MENU>
+<LI>
+<A HREF="#c_pets">C Pets</A> - Multiple engines running Pets from the console.</LI>
+
+<LI>
+<A HREF="#cpp_hello_console">C++ Hello Console</A> - Hello Prolog from
+the console.</LI>
+
+<LI>
+<A HREF="#cpp_hello_borland_builder">C++ Hello Borland C++ Builder</A>
+- Hello Prolog from Borland's C++ Builder.</LI>
+
+<LI>
+<A HREF="#cpp_pets">C++ Pets</A> - Multiple Logic Servers running Pets
+from the console.</LI>
+
+<LI>
+<A HREF="#cpp_petscb">C++ Pets_Callback</A> - Pets with callback extended predicates.</LI>
+
+<LI>
+<A HREF="#java_hello">Java Hello</A> - Hello Prolog from Java.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="delphi"></A><FONT COLOR="#000080">Delphi</FONT></H3>
+The Delphi samples were implemented using Delphi 3.0 and illustrate the
+use of the Delphi Logic Server component. They include a .exe file so you
+can run them directly and a Delphi project file so you can rebuild the
+project.
+<MENU>
+<LI>
+<A HREF="#delphi_delgui">Delphi DelGUI</A> - Simple test of Delphi GUI
+library that uses extended predicates.</LI>
+
+<LI>
+<A HREF="#delphi_eq">Delphi Eq</A> - A Program that lays out equations
+as they might appear in a text book.</LI>
+
+<LI>
+<A HREF="#delphi_hello">Delphi Hello</A> - Hello Prolog from Delphi.</LI>
+
+<LI>
+<A HREF="#delphi_proxs">Delphi ProXS</A> - A goal-driven identification
+expert system with a Delphi user interface.</LI>
+
+<LI>
+<A HREF="#delphi_test">Delphi Test</A> - A Delphi test application illustrating
+a variety of Logic Server features.</LI>
+
+<LI>
+<A HREF="#delphi_ssched">Delphi SSched</A> - A round-robin sports scheduling
+system with a highly graphic interface.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="extended_predicates"></A><FONT COLOR="#000080">Extended Predicates</FONT></H3>
+
+<UL>
+<LI>
+<A HREF="#cpp_petscb">C++ Pets_Callback</A> - Pets with callback extended predicates.</LI>
+
+<LI>
+<A HREF="#delphi_delgui">Delphi DelGUI</A> - Simple test of Delphi GUI
+library implemented with extended predicates.</LI>
+
+<LI>
+<A HREF="#java_pets_localcb">Java Pets_Callback</A> - The simple Pets expert
+system using extended predicates written in Java.</LI>
+
+<LI>
+<A HREF="#vb_extpred">VB ExtPred</A> - A simple example of using extended
+predicates for Prolog to call VB procedures.</LI>
+</UL>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="expert_systems"></A><FONT COLOR="#000080">Expert Systems</FONT></H3>
+These samples illustrate the use of Prolog for expert system applications
+that dispense advice.
+<MENU>
+<LI>
+<A HREF="#c_pets">C Pets</A> - Multiple engines running Pets from the console.</LI>
+
+<LI>
+<A HREF="#cpp_pets">C++ Pets</A> - Multiple Logic Servers running Pets
+from the console.</LI>
+
+<LI>
+<A HREF="#cpp_petscb">C++ Pets_Callback</A> - Pets with callback extended predicates
+written in C++.</LI>
+
+<LI>
+<A HREF="#java_pets_localcb">Java Pets_Callback</A> - Pets with callback
+extended predicates written in Java.</LI>
+
+<LI>
+<A HREF="#java_ship">Java Ship</A> - A prototype package shipping advisor
+in Java.</LI>
+
+<LI>
+<A HREF="#delphi_proxs">Delphi ProXS</A> - A goal-driven identification
+expert system with a Delphi user interface.</LI>
+
+<LI>
+<A HREF="#delphi_ssched">Delphi SSched</A> - A round-robin sports scheduling
+system with a Delphi front-end.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="genealogy"></A><FONT COLOR="#000080">Genealogy</FONT></H3>
+A classic application of Prolog is the definition of family relationships
+based on data about parents and children. This application is presented
+in various formats in Amzi! samples.
+<MENU>
+<LI>
+<A HREF="#odbc_dbgene">ODBC DBGene</A> - C++ front, ODBC back, Prolog genealogy
+middle.</LI>
+
+<LI>
+<A HREF="#vb_odbcgene">ODBC VBGene</A> - Family tree sample using ODBC
+and Visual Basic.</LI>
+
+<LI>
+<A HREF="#vb_wgene">VB WGene</A> - Visual Basic front end on Prolog genealogy.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="graphical_layout"></A><FONT COLOR="#000080">Graphical Layout</FONT></H3>
+Prolog can be used to reason over spatial relationships as well as anything
+else. These samples show the use of Prolog reasoning for graphical layout.
+<MENU>
+<LI>
+<A HREF="#delphi_eq">Delphi Eq</A> - A Program that lays out equations
+as they might appear in a text book.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="gui_applications"></A><FONT COLOR="#000080">GUI Applications</FONT></H3>
+One of the motivations behind the Logic Server architecture was the desire
+to allow various GUI tools to be used to develop user interfaces for Prolog
+applications. These samples illustrate GUIs and the Logic Server.
+<MENU>
+<LI>
+<A HREF="#cpp_hello_dialog">C++ Hello Win32_MFC</A> - Hello Prolog in a dialog
+box.</LI>
+
+<LI>
+<A HREF="#cpp_rubikmt">C++ Win32_Rubik_Multi</A> - Multiple cubes solving in multiple
+threads simultaneously.</LI>
+
+<LI>
+<A HREF="#delphi_delgui">Delphi DelGUI</A> - Simple test of Delphi GUI
+library.</LI>
+
+<LI>
+<A HREF="#delphi_eq">Delphi Eq</A> - A Program that lays out equations
+as they might appear in a text book.</LI>
+
+<LI>
+<A HREF="#delphi_hello">Delphi Hello</A> - Hello Prolog from Delphi.</LI>
+
+<LI>
+<A HREF="#delphi_proxs">Delphi ProXS</A> - A goal-driven identification
+expert system with a Delphi user interface.</LI>
+
+<LI>
+<A HREF="#delphi_ssched">Delphi SSched</A> - A round-robin sports scheduling
+system with a highly graphic interface.</LI>
+
+<LI>
+<A HREF="#java_ship">Java Ship</A> - A prototype package shipping advisor
+in Java.</LI>
+
+<LI>
+<A HREF="#odbc_dbgene">ODBC DBGene</A> - C++ front, ODBC back, Prolog genealogy
+middle.</LI>
+
+<LI>
+<A HREF="#vb_hello">VB Hello</A> - Hello Prolog from Visual Basic.</LI>
+
+<LI>
+<A HREF="#vb_wgene">VB WGene</A> - Visual Basic front end on Prolog genealogy.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="hello_prolog"></A><FONT COLOR="#000080">Hello Prolog</FONT></H3>
+The Hello Prolog program is a very simple Prolog program designed to be
+used as a first test case for calling Prolog from various environments.
+<MENU>
+<LI>
+<A HREF="#c_hello">C Hello</A> - Hello Prolog from C.</LI>
+
+<LI>
+<A HREF="#cpp_hello_borland">C++ Hello Borland</A> - Hello Prolog from
+Borland C++.</LI>
+
+<LI>
+<A HREF="#cpp_hello_borland_builder">C++ Hello Borland C++ Builder</A>
+- Hello Prolog from Borland's C++ Builder.</LI>
+
+<LI>
+<A HREF="#cpp_hello_console">C++ Hello Console</A> - Hello Prolog from
+the console.</LI>
+
+<LI>
+<A HREF="#cpp_hello_dialog">C++ Hello Win32_MFC</A> - Hello Prolog in a dialog
+box.</LI>
+
+<LI>
+<A HREF="#delphi_hello">Delphi Hello</A> - Hello Prolog from Delphi.</LI>
+
+<LI>
+<A HREF="#java_hello">Java Hello</A> - Hello Prolog from Java.</LI>
+
+<LI>
+<A HREF="#vb_hello">VB Hello</A> - Hello Prolog from Visual Basic.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="java"></A><FONT COLOR="#000080">Java</FONT></H3>
+To use the Java samples you must have installed Sun's Java Development
+Kit 1.1 and installed the Amzi! Java class. See the <A HREF="ls/lsajava.htm">Java
+Class</A> for details.
+<MENU>
+<LI>
+<A HREF="#java_hello">Java Hello</A> - Hello Prolog from Java.</LI>
+
+<LI>
+<A HREF="#java_pets_localcb">Java Pets_Callback</A> - Pets with callback
+extended predicates written in Java.</LI>
+
+<LI>
+<A HREF="#java_ship">Java Ship</A> - A prototype package shipping advisor.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="multiple_engines"></A><FONT COLOR="#000080">Multiple Engines</FONT></H3>
+Starting with the 4.0 release, Amzi! supports the running of multiple simultaneous
+Logic Servers. These samples show host language applications using multiple
+Logic Servers.
+<MENU>
+<LI>
+<A HREF="#c_pets">C Pets</A> - Multiple engines running Pets from the console.</LI>
+
+<LI>
+<A HREF="#java_pets_localcb">Java Pets_Callback</A> - Pets with callback
+extended predicates written in Java.</LI>
+
+<LI>
+<A HREF="#cpp_pets">C++ Pets</A> - Multiple Logic Servers running Pets
+from the console.</LI>
+
+<LI>
+<A HREF="#cpp_petscb">C++ Pets_Callback</A> - Pets with callback extended predicates.</LI>
+
+<LI>
+<A HREF="#cpp_rubikmt">C++ Win32_Rubik_Multi</A> - Multiple cubes solving in multiple
+threads simultaneously.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="natural_language"></A><FONT COLOR="#000080">Natural Language</FONT></H3>
+Prolog is an excellent tool for parsing natural language. (It was originally
+designed with this type of application in mind.)
+<MENU>
+<LI>
+<A HREF="#prolog_babel">Prolog Babel</A> - Text interface to a Unicode,
+multi-language translation sample.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="odbc"></A><FONT COLOR="#000080">ODBC</FONT></H3>
+The ODBC Logic Server Extension, LS4ODCBC.LSX, allows Prolog programs to
+access data directly from any ODBC database. These samples illustrate that.
+
+<P>To use the samples, you must have ODBC 2.0 installed and the appropriate
+drivers for the database.
+<MENU>
+<LI>
+<A HREF="#odbc_dbgene">ODBC DBGene</A> - C++ front, ODBC back, Prolog genealogy
+middle.</LI>
+
+<LI>
+<A HREF="#odbc_events">ODBC Events</A> - Illustrates the use of date and
+time fields in ODBC.</LI>
+
+<LI>
+<A HREF="#vb_odbcgene">ODBC VBGene</A> - Family tree sample using ODBC
+and Visual Basic.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="pets"></A><FONT COLOR="#000080">Pets</FONT></H3>
+The Pets sample is a trivial expert system that can be used as a starting
+point. It is implemented in various environments.
+<MENU>
+<LI>
+<A HREF="#c_pets">C Pets</A> - Multiple engines running Pets from the console.</LI>
+
+<LI>
+<A HREF="#cpp_pets">C++ Pets</A> - Multiple Logic Servers running Pets
+from the console.</LI>
+
+<LI>
+<A HREF="#cpp_petscb">C++ Pets_Callback</A> - Pets with callback extended predicates.</LI>
+
+<LI>
+<A HREF="#java_pets_localcb">Java Pets_Callback</A> - Pets with callback
+extended predicates written in Java.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="prolog"></A><FONT COLOR="#000080">Prolog</FONT></H3>
+The pure Prolog samples are designed to be run from the Windows IDE or
+the command line.
+<MENU>
+<LI>
+<A HREF="#prolog_babel">Prolog Babel</A><FONT COLOR="#000080"> - A</FONT>simple
+machine translation demo that recognizes the input language of a sentence
+and translates it into all of the other supported languages using Unicode
+to represent the characters in the languages.</LI>
+
+<LI>
+<A HREF="#prolog_ducks">Prolog Ducks</A> - The Ducks adventure game example
+used in the Prolog programmer's guide short tutorial.</LI>
+
+<LI>
+<A HREF="#prolog_logic">Prolog Logic</A> - Translates formal logic into
+Prolog clauses using Unicode logic symbols for 'not', 'and', 'exists',
+etc.</LI>
+
+<LI>
+<A HREF="#prolog_misc">Prolog Misc</A> - Prolog-only versions of ProXS,
+Ship and SSched, a mailing list translator, income tax program and the
+Warren Planner.</LI>
+
+<LI>
+<A HREF="#prolog_rubik">Prolog Rubik</A> - Text interface cube solver.</LI>
+
+<LI>
+<A HREF="#prolog_sockets">Prolog Sockets</A> - Using sockets from Prolog.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="rubiks_cube"></A><FONT COLOR="#000080">Rubik's Cube</FONT></H3>
+The Prolog code to solve Rubik's cube can be run in various environments
+and with various interfaces.
+<MENU>
+<LI>
+<A HREF="#cpp_rubikmt">C++ Win32_Rubik_Multi</A> - Multiple cubes solving in multiple
+threads simultaneously.</LI>
+
+<LI>
+<A HREF="#prolog_rubik">Prolog Rubik</A> - Text interface cube solver.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="sockets"></A><FONT COLOR="#000080">Sockets</FONT></H3>
+The Logic Server LSX implementing sockets support can be used to implement
+client/server connections directly from Prolog. For details on Amzi! Sockets
+support see <A HREF="ls/lsxsock.htm">Sockets LSX</A>.
+<MENU>
+<LI>
+<A HREF="#internet_sockets">Internet Sockets</A> - Using sockets from Prolog.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="unicode"></A><FONT COLOR="#000080">Unicode</FONT></H3>
+Internally, Amzi! uses Unicode strings. They are directly accessible from
+environments that support Unicode, such as Windows NT. These applications
+highlight the use of Unicode and Prolog. (Multibyte to Unicode string conversion
+functions enable multibyte applications to run under other environments,
+such as Windows 95).
+<MENU>
+<LI>
+<A HREF="#prolog_babel">Prolog Babel</A> - Text interface to a Unicode,
+multi-language translation sample.</LI>
+
+<LI>
+<A HREF="#prolog_logic">Prolog Logic</A> - The Clocksin &amp; Mellish Formal
+Logic to Prolog translator, using Unicode characters for Logic Symbols.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="visual_basic"></A><FONT COLOR="#000080">Visual Basic</FONT></H3>
+The Visual Basic samples are implemented using VB 5.0.
+<MENU>
+<LI>
+<A HREF="#vb_extpred">VB ExtPred</A> - A simple example of using extended
+predicates for Prolog to call VB procedures.</LI>
+
+<LI>
+<A HREF="#vb_hello">VB Hello</A> - Hello Prolog from Visual Basic.</LI>
+
+<LI>
+<A HREF="#vb_odbcgene">ODBC VBGene</A> - Family tree sample using ODBC
+and Visual Basic.</LI>
+
+<LI>
+<A HREF="#vb_test">VB Test</A> - VB Program that exercises a number of
+Logic Server features.</LI>
+
+<LI>
+<A HREF="#vb_wgene">VB WGene</A> - Visual Basic front end on Prolog genealogy.</LI>
+</MENU>
+<A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+
+<P>
+<HR>
+<H2>
+<A NAME="SamplesByName"></A><FONT COLOR="#0000FF">Samples by Name</FONT></H2>
+
+<H3>
+<A NAME="c_hello"></A><FONT COLOR="#000080">C Hello</FONT></H3>
+The Hello Prolog example implemented a C console application.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="c_pets"></A><FONT COLOR="#000080">C Pets</FONT></H3>
+The trivial Pets expert system with two Prolog engines working at identifying
+different pets. Should be run from the console.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="cpp_hello_borland"></A><FONT COLOR="#000080">C++ Hello Borland</FONT></H3>
+The Hello Prolog example implemented as a C++ class using Borland C++.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="cpp_hello_borland_builder"></A><FONT COLOR="#000080">C++ Hello
+Borland C++ Builder</FONT></H3>
+The Hello Prolog example implemented as a C++ class and GUI using Borland's
+C++ Builder
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="cpp_hello_console"></A><FONT COLOR="#000080">C++ Hello Console</FONT></H3>
+The Hello Prolog example implemented as a C++ class running as a console
+application. Should be run from the console.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="cpp_hello_dialog"></A><FONT COLOR="#000080">C++ Hello Win32_MFC</FONT></H3>
+The Hello Prolog example implemented as a C++ class running in a simple
+MFC dialog application.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="cpp_pets"></A><FONT COLOR="#000080">C++ Pets</FONT></H3>
+The trivial Pets expert system with two Prolog Logic Servers working at
+identifying different pets. Should be run from the console.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="cpp_petscb"></A><FONT COLOR="#000080">C++ Pets_Callback</FONT></H3>
+A slightly more complex version of Pets in which the Prolog program has
+a prompt/2 predicate used to get information from the user. In the example,
+it is used to ask the user for the sound the pet makes.
+
+<P>prompt/2 is implemented as an extended predicate in the C++ class derived
+from CLogicServer, illustrating the technique of having extended predicates
+associated with instances of classes derived from the Logic Server.
+
+<P>This is a trivial console example, where there is no real point in having
+multiple instances of the prompt/2 predicate, but the technique is important
+for GUI applications where, for example, different instances of the Logic
+Server might be associated with different windows on the screen.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="cpp_rubikmt"></A><FONT COLOR="#000080">C++ Win32_Rubik_Multi</FONT></H3>
+The Win32_Rubik_Multi (MultiThreaded) sample is an MDI MFC application. Each child
+window has an unfolded view of a Rubik's cube and a 'Solve' button. When
+the button is pressed, the cube is randomly scrambled and then solved.
+
+<P>The FILE/NEW menu item causes new child windows to be created, and each
+one is associated with a new Logic Server, running in a separate thread.
+
+<P>When you click the 'Solve' button in multiple windows, each one shows
+a cube being solved at the same (or as close to same as NT multi-threading
+allows) time.
+
+<P>This demo was derived from the Microsoft multi-threaded 'Bounce' sample,
+with solving Rubik's cube replacing the bouncing balls.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="delphi_delgui"></A><FONT COLOR="#000080">Delphi DelGUI</FONT></H3>
+DelGUI is a collection of extended GUI predicates implemented in Delphi
+for use with Prolog applications embedded in Delphi. The test sample here
+just puts up a button and a window to verify that the Amzi! Delphi component
+and DelGUI library are working.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="delphi_eq"></A><FONT COLOR="#000080">Delphi Eq</FONT></H3>
+The Eq Delphi sample demonstrates Prologs ability to do graphical layout
+in conjunction with Delphi drawing functions. The particular example takes
+equations written programmatically and renders them as they might appear
+in a mathematics textbook.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="delphi_hello"></A><FONT COLOR="#000080">Delphi Hello</FONT></H3>
+Hello Prolog from Delphi, as a simple dialog application.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="delphi_proxs"></A><FONT COLOR="#000080">Delphi ProXS</FONT></H3>
+The ProXS Delphi sample demonstrates how to put a GUI front-end onto a
+sophisticated expert system written in Prolog. This sample uses bird identification
+as its knowledgebase, but it the Prolog portion of the sample is a general
+goal-driven engine that can be readily adapted to other applications.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="delphi_ssched"></A><FONT COLOR="#000080">Delphi SSched</FONT></H3>
+An expert system that does round-robin scheduling of teams (sports scheduling).
+It uses a graphical Delphi front-end to build and display the schedule,
+and a simplified version of the scheduling program used for college basketball.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="delphi_test"></A><FONT COLOR="#000080">Delphi Test</FONT></H3>
+An application that illustrates a number of Logic Server features in a
+simple test program. Features include asserts, queries, extended predicates,
+and message boxes.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3> <a name="internet_cgi_hello"></a><font color="#000080">Internet CGI Hello</font></H3>
+The simplist Amzi! CGI script. 
+<p><a href="#contents">Contents</a> <a href="#topics">Topics</a> 
+<H3> <A NAME="internet_cgi_infoform"></A><FONT COLOR="#000080">Internet CGI Infoform</FONT></H3>
+An simple example of using the Amzi! CGI script capabilities with an HTML information 
+request form. 
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="internet_sockets"></A><FONT COLOR="#000080">Internet Sockets</FONT></H3>
+A5SOCK.LSX implements extended predicates that connect Prolog to Windows
+Sockets. The sample programs show how to implement a finger client, and
+a simple client/server application using just Prolog running from the IDE.
+For details on A5SOCK.LSX see <A HREF="ls/lsxsock.htm">Sockets LSX</A>.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="java_hello"></A><FONT COLOR="#000080">Java Hello</FONT></H3>
+Hello Prolog from Java, used to see if you've got all of the Java stuff
+installed correctly. See <A HREF="ls/lsajava.htm">Java Class</A> for details.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="java_pets_localcb"></A><FONT COLOR="#000080">Java Pets_Callback</FONT></H3>
+The Pets expert system, illustrating multiple engines and extended predicates
+in a console Java application. See <A HREF="ls/lsajava.htm">Java Class</A>
+for details.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="java_ship"></A><FONT COLOR="#000080">Java Ship</FONT></H3>
+A prototype expert system for recommending package shipping options based
+on package weight, destination and priority. It uses a GUI developed in
+Java. See <A HREF="ls/lsajava.htm">Java Class</A> for details.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="lsx_xarray"></A><FONT COLOR="#000080">LSX Xarray</FONT></H3>
+A simple example implementing a Logic Server Extension (.lsx) DLL with extended
+predicate definitions. In this case the extended predicates provide simple
+array capabilities to Prolog.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="odbc_dbgene"></A><FONT COLOR="#000080">ODBC DBGene</FONT></H3>
+The ODBC Logic Server Extension, LS4ODBC.LSX, implements extended predicates
+that connect Prolog to ODBC data sources. The DBGene sample uses an Access
+database to store data about people, Prolog to represent the rules for
+different family relationships, and Visual C++ for a GUI front-end.
+
+<P>The program illustrates C++ calling Prolog with a query, Prolog resolving
+the query using both Prolog rules and ODBC queries, and returning values
+displayed in Visual C++ list boxes.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="odbc_events"></A><FONT COLOR="#000080">ODBC Events</FONT></H3>
+Illustrates the use of date and time fields from Prolog with ODBC.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="vb_odbcgene"></A><FONT COLOR="#000080">ODBC VBGene</FONT></H3>
+An example of a VB program calling a Prolog program of family relationships
+that calls an ODBC database for family data.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="prolog_babel"></A><FONT COLOR="#000080">Prolog Babel</FONT></H3>
+Babel is a simple machine translation demo that recognizes the input language
+of a sentence and translates it into all of the other supported languages.
+It uses Unicode to represent the characters in the languages.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="prolog_ducks"></A><FONT COLOR="#000080">Prolog Ducks</FONT></H3>
+The Ducks adventure game example used in the Prolog programmer's guide
+short tutorial.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="prolog_logic"></A><FONT COLOR="#000080">Prolog Logic</FONT></H3>
+This is a version of the Clocksin &amp; Mellish program that translates
+formal logic into Prolog clauses. The only difference is the program takes
+advantage of Amzi! Unicode support, and uses the real logic symbols for
+'not', 'and', 'exists', etc.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="prolog_misc"></A><FONT COLOR="#000080">Prolog Misc</FONT></H3>
+A collection of Prolog programs that haven't been cataloged. Look at the
+text file in this sample directory for descriptions of the sample programs.
+Includes Prolog-only versions of ProXS, Ship and SSched, a mailing list
+translator, income tax program and the Warren Planner.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="prolog_rubik"></A><FONT COLOR="#000080">Prolog Rubik</FONT></H3>
+The Rubik's Cube solver runs by itself in the IDE, or from the console,
+using a text based representation of the cube as its solved. Simple choose
+build/run and select rubik.xpl to see it run.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="vb_extpred"></A><FONT COLOR="#000080">VB ExtPred</FONT></H3>
+This example shows how to create Prolog predicates that are implemented
+by Visual Basic procedures using VB 5.0 or later.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="vb_hello"></A><FONT COLOR="#000080">VB Hello</FONT></H3>
+Hello Prolog from Visual Basic.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="vb_test"></A><FONT COLOR="#000080">VB Test</FONT></H3>
+A VB program that exercises a number of features of the Logic Server API.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A>
+<H3>
+<A NAME="vb_wgene"></A><FONT COLOR="#000080">VB WGene</FONT></H3>
+The Genealogy application implemented with a VB front-end. The people data
+and the rules are both stored in Prolog.
+
+<P><A HREF="#contents">Contents</A> <A HREF="#topics">Topics</A> 
+<P>&nbsp;
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --> 
+<hr>
+<div align="center"><a href="http://babelfish.altavista.com/translate.dyn">Deutsch&nbsp;&nbsp; 
+  Espa&ntilde;ol&nbsp;&nbsp; Fran&ccedil;ais&nbsp;&nbsp; Italiano&nbsp;&nbsp; 
+  Portugu&ecirc;s</a> 
+  <hr>
+<p align="center"><i><font size=-1>Copyright &copy;1995-2000 Amzi! inc. All Rights 
+  Reserved. <a href="mailto:info@amzi.com">info@amzi.com</a></font></i>
+</div>
+<p align="center"><font size="-2"><i>Amzi! is a registered trademark and Adventure 
+  in Prolog, Logic Server, Logic Explorer, Adventure in Prolog, SupportKT, Subscription 
+  Plus and WebLS are trademarks of Amzi! inc.</i></font> 
+<p></p>
+<p align="center">&nbsp; 
+<!-- #EndLibraryItem --> 
+<P>&nbsp;
+</BODY>
+</HTML>

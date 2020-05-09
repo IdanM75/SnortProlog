@@ -1,0 +1,79 @@
+
+lsInit(007C1990, acmp)
+   returns OK
+lsInitLSX(007C1990, 00000000)
+  returns OK
+lsLoad(007C1990, acmp)
+  returns OK
+lsSetCommandArgs(007C1990)
+  returns OK
+lsMain(007C1990)
+Amzi! Prolog Compiler 5.0.24 Windows
+Apr 30 2001 13:54:06
+
+Copyright (c)1987-2000 Amzi! inc. All Rights Reserved.
+
+
+Compiling... aodbc.pro
+:- export db_open / 1 ',' db_open / 2 ',' db_open / 3 ',' db_close / 0 ',' db_execquery / 5 ',' db_getnext / 2 ',' db_getonce / 2 ',' db_query / 2 ',' db_queryonce / 2:- export db_open / 1 ',' db_open / 2 ',' db_open / 3 ',' db_close / 0 ',' db
+:- import db_table / 3:- import db_table / 3
+:- import db_init / 0 ',' db_connect / 4 ',' db_disconnect / 1 ',' db_free / 0 ',' db$hconnect / 1 ',' db_query / 5 ',' db_fetch / 2 ',' db_freeq / 1 ',' db$qflag / 1:- import db_init / 0 ',' db_connect / 4 ',' db_disconnect / 1 ',' db_free / 
+db_open(H265) :- db$open(H265,,)db_open(H265) :- db$open(H265,,)
+|-- db_open / 1
+db_open(H265,H266) :- db$open(H265,H266,)db_open(H265,H266) :- db$open(H265,H266,)
+|-- db_open / 2
+db_open(H265,H266,H267) :- db$open(H265,H266,H267)db_open(H265,H266,H267) :- db$open(H265,H266,H267)
+|-- db_open / 3
+db$open(H265,H266,H267) :- db_init ',' retractall(db$hconnect(H273)) ',' db_connect(H281,H265,H266,H267) ',' assert(db$hconnect(H281))db$open(H265,H266,H267) :- db_init ',' retractall(db$hconnect(H273)) ',' db_c
+|-- db$open / 3
+db_close :- retract(db$hconnect(H265)) ',' db_disconnect(H265) ',' db_freedb_close :- retract(db$hconnect(H265)) ',' db_disconnect(H265) ',' db_free
+|-- db_close / 0
+db_query(H265,H266) :- db$build_query(H265,H266,H273,H274,H275,H276) ',' db$hconnect(H285) ',' db_query(H285,H290,H273,H274,H275) ',' db_fetch(H290,H302) ',' db$next(H290,H302,H276)db_query(H265,H266) :- db$build_query(H265,H266,H273,H274,H275,H276) ',' db$h
+|-- db_query / 2
+db$next(H265,H266,H266)db$next(H265,H266,H266)
+|-- db$next / 3
+db$next(H265,H266,H267) :- db_fetch(H265,H274) ',' db$next(H265,H274,H267)db$next(H265,H266,H267) :- db_fetch(H265,H274) ',' db$next(H265,H274,H267)
+|-- db$next / 3
+db_queryonce(H265,H266) :- db$build_query(H265,H266,H273,H274,H275,H276) ',' db$hconnect(H285) ',' db_query(H285,H290,H273,H274,H275) ',' db_fetch(H290,H302) ',' db$next(H290,H302,H276) ',' '!' ',' db_freeq(H290)db_queryonce(H265,H266) :- db$build_query(H265,H266,H273,H274,H275,H276) ',' 
+|-- db_queryonce / 2
+db$build_query(H265,H266,H267,H268,H269,H270) :- db$bq(H265,H266,H281,H282,H268,H269,H270) ',' fix$where(H282,H296) ',' fix$select(H265,H281,H303) ',' append(H303,H296,H311) ',' string$words(H267,H311)db$build_query(H265,H266,H267,H268,H269,H270) :- db$bq(H265,H266,H281,H282,H2
+|-- db$build_query / 6
+db$bq(H265,'[]','[]','[]','[]','[]','[]')db$bq(H265,'[]','[]','[]','[]','[]','[]')
+|-- db$bq / 7
+db$bq(H265,[H268 : H269 | H271],[H268 | H277],H282,H283,[H284 | H285],[H269 | H291]) :- var(H269) ',' db_table(H265,H268,H284) ',' db$bq(H265,H271,H277,H282,H283,H285,H291)db$bq(H265,[H268 : H269 | H271],[H268 | H277],H282,H283,[H284 | H285],[H269 |
+|-- db$bq / 7
+db$bq(H265,[H268 : H269 | H271],H276,[H268,' = ',? | H280],[H269 | H290],H295,H296) :- nonvar(H269) ',' db$bq(H265,H271,H276,H280,H290,H295,H296)db$bq(H265,[H268 : H269 | H271],H276,[H268,' = ',? | H280],[H269 | H290],H295
+|-- db$bq / 7
+db$bq(H265,[H268 = H269 | H271],[H268 | H277],H282,H283,[H284 | H285],[H269 | H291]) :- var(H269) ',' db_table(H265,H268,H284) ',' db$bq(H265,H271,H277,H282,H283,H285,H291)db$bq(H265,[H268 = H269 | H271],[H268 | H277],H282,H283,[H284 | H285],[H269 |
+|-- db$bq / 7
+db$bq(H265,[H268 = H269 | H271],H276,[H268,' = ',? | H280],[H269 | H290],H295,H296) :- nonvar(H269) ',' db$bq(H265,H271,H276,H280,H290,H295,H296)db$bq(H265,[H268 = H269 | H271],H276,[H268,' = ',? | H280],[H269 | H290],H295
+|-- db$bq / 7
+fix$select(H265,'[]',['select null from ',H265])fix$select(H265,'[]',['select null from ',H265])
+|-- fix$select / 3
+fix$select(H265,H266,['select ' | H268]) :- fix$sel(H265,H266,H268)fix$select(H265,H266,['select ' | H268]) :- fix$sel(H265,H266,H268)
+|-- fix$select / 3
+fix$sel(H265,[H266],[H266,' from ',H265]) :- '!'fix$sel(H265,[H266],[H266,' from ',H265]) :- '!'
+|-- fix$sel / 3
+fix$sel(H265,[H266 | H267],[H266,', ' | H274]) :- fix$sel(H265,H267,H274)fix$sel(H265,[H266 | H267],[H266,', ' | H274]) :- fix$sel(H265,H267,H274)
+|-- fix$sel / 3
+fix$where('[]','[]')fix$where('[]','[]')
+|-- fix$where / 2
+fix$where(H265,[' where ' | H267]) :- fix$wh(H265,H267)fix$where(H265,[' where ' | H267]) :- fix$wh(H265,H267)
+|-- fix$where / 2
+fix$wh([H265,' = ',?],[H265,' = ',?]) :- '!'fix$wh([H265,' = ',?],[H265,' = ',?]) :- '!'
+|-- fix$wh / 2
+fix$wh([H265,' = ',? | H268],[H265,' = ',?,' and ' | H281]) :- fix$wh(H268,H281)fix$wh([H265,' = ',? | H268],[H265,' = ',?,' and ' | H281]) :- fix$wh(H268,H2
+|-- fix$wh / 2
+string$words(H265,H266) :- atomlist_concat(H266,H272) ',' string_atom(H265,H272)string$words(H265,H266) :- atomlist_concat(H266,H272) ',' string_atom(H265,H2
+|-- string$words / 2
+append('[]',H267,H267)append('[]',H267,H267)
+|-- append / 3
+append([H265 | H266],H271,[H265 | H273]) :- append(H266,H271,H273)append([H265 | H266],H271,[H265 | H273]) :- append(H266,H271,H273)
+|-- append / 3
+'!EOF''!EOF'
+
+[CodeSize 2883 Bytes, Compile time 0.12 seconds.]
+Done
+
+  returns TRUE
+lsClose(007C1990)

@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Arithmetic</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.01Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="ManipulatingTerms"></A><FONT COLOR="#D2AA00">Arithmetic</FONT> </h1>
+<P><!AMZI_INDEX= Arithmetic; is>To allow for normal math functions, Prolog
+supports arithmetic evaluation of certain built-in predicates. </P>
+
+<P>Arithmetic evaluation means that a structure, such as 5 + 3, is not
+treated as Prolog normally would, that is as '+'(5, 3) which is no different
+from foo(5, 3). Instead, in this case, it is evaluated arithmetically.
+</P>
+
+<P>This section documents a number of built-in predicates that all perform
+arithmetic evaluations on structures. If a structure is not amenable to
+being evaluated arithmetically, then it fails. This allows you to check
+for this type of error condition. </P>
+
+<P>The most commonly used predicate for arithmetic evaluation is <B>is/2</B>.
+It evaluates a structure on its right and unifies the result with the left.
+For example </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- X is 3 + 5.
+X = 8</FONT></PRE>
+</UL>
+
+<P>The behavior of <B>is/2</B> is very different from normal Prolog unification,
+in which </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">?- X = 3 + 5.
+X = 3 + 5.</FONT></PRE>
+</UL>
+
+<P>There is no assignment in Prolog, so you need to use more than one variable
+to express the normal programming construct of incrementing a variable.
+Here, for example, is a simple loop that writes something N times. </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">write_n(0, _).
+write_n(N, X) :- write(X), NN is N - 1, write_n(NN, X).</FONT></PRE>
+</UL>
+
+<P>Note that the various arithmetic operators are only evaluated when used
+by a predicate that evaluates arithmetic expressions. So, for example,
+the trigonometric functions might look like predicates, but they are actually
+simply evaulatable expressions. In an arithmetic expression, <B>sin</B>(X)
+is replaced with the value of <B>sin</B>(X). Used anywhere else it is a
+meaningless functor and argument. </P>
+
+<H3><A NAME="XisY"></A><FONT COLOR="#000080">X is Y</FONT></H3>
+
+<P><!AMZI_INDEX= is>Succeeds if X can be unified with the value of Y evaluated
+as an arithmetic expression. </P>
+
+<H2><A NAME="ArithmeticComparisons"></A><FONT COLOR="#000080">Arithmetic
+Comparisons</FONT></H2>
+
+<H3><!AMZI_INDEX= Arithmetic Comparisons><A NAME="XgteY"></A><FONT COLOR="#000080">X
+&gt;= Y</FONT></H3>
+
+<P><!AMZI_INDEX=  &gt=>Greater or equal. </P>
+
+<H3><A NAME="XlteY"></A><FONT COLOR="#000080">X =&lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= =&lt>Less than or equal. </P>
+
+<H3><A NAME="XgtY"></A><FONT COLOR="#000080">X &gt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= &gt>Greater than. </P>
+
+<H3><A NAME="XltY"></A><FONT COLOR="#000080">X &lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= &lt>Less than. </P>
+
+<H3><A NAME="X=:=Y"></A><FONT COLOR="#000080">X =:= Y</FONT></H3>
+
+<P><!AMZI_INDEX= =:=>X <B>=:=</B> Y succeeds if X evaluated is arithmetically
+equal to Y evaluated; else it fails. </P>
+
+<H3><A NAME="X=\=Y"></A><FONT COLOR="#000080">X =\= Y</FONT></H3>
+
+<P><!AMZI_INDEX= =\=>X <B>=\=</B> Y succeeds if X evaluated is not arithmetically
+equal to Y; else it fails. </P>
+
+<P>Note that in evaluating arithmetic comparisons, X and Y are first evaluated
+and the appropriate test then succeeds or fails according to the inequalities'
+being true or false. </P>
+
+<P>It is a bad Prolog practice to test for numerical (in)equality by using
+=, \=, == or \==. </P>
+
+<H2><A NAME="ArithmeticOperators"></A><FONT COLOR="#000080">Arithmetic
+Operators</FONT></H2>
+
+<H3><!AMZI_INDEX= Arithmetic Operators><A NAME="X+Y"></A><FONT COLOR="#000080">X
++ Y</FONT></H3>
+
+<P><!AMZI_INDEX= Addition; +>Sum of values of X and Y. </P>
+
+<H3><A NAME="X-Y"></A><FONT COLOR="#000080">X - Y</FONT></H3>
+
+<P><!AMZI_INDEX= Subtraction; ->Value of X minus value of Y. </P>
+
+<H3><A NAME="X*Y"></A><FONT COLOR="#000080">X * Y</FONT></H3>
+
+<P><!AMZI_INDEX= Multiplication; *>Value of X multiplied by value of Y.
+</P>
+
+<H3><A NAME="X/Y"></A><FONT COLOR="#000080">X / Y</FONT></H3>
+
+<P><!AMZI_INDEX= Division; />Value of X divided by value of Y. Always returns
+a double precision floating point value<B>.</B> </P>
+
+<H3><A NAME="X//Y"></A><FONT COLOR="#000080">X // Y</FONT></H3>
+
+<P><!AMZI_INDEX= Division; //>Integer division of X by Y-truncates result
+to the absolute integer. That is, 11 // 4 =:= 2 and -11 // 4 =:= -2. </P>
+
+<H3><A NAME="XdivsY"></A><FONT COLOR="#000080">X divs Y</FONT></H3>
+
+<P><!AMZI_INDEX= Division; divs>Integer division such that the remainder
+is &gt;= -Y/2 and &lt; Y/2. </P>
+
+<H3><A NAME="XdivuY"></A><FONT COLOR="#000080">X divu Y</FONT></H3>
+
+<P><!AMZI_INDEX= Division; divu>Integer division such that the remainder
+is positive. </P>
+
+<H3><A NAME="XmodY"></A><FONT COLOR="#000080">X mod Y</FONT></H3>
+
+<P><!AMZI_INDEX= Modulus; Remainder; mod>The remainder after dividing the
+value of X by the value of Y. </P>
+
+<H3><A NAME="XmodsY"></A><FONT COLOR="#000080">X mods Y</FONT></H3>
+
+<P><!AMZI_INDEX= Modulus; Remainder; mods>The remainder, constrained so
+that the result is &gt;= -Y/2 and &lt; Y/2. </P>
+
+<H3><A NAME="XmoduY"></A><FONT COLOR="#000080">X modu Y</FONT></H3>
+
+<P><!AMZI_INDEX= Modulus; Remainder; modu>The remainder, constrained so
+that the result is positive. </P>
+
+<P>For the following bitwise operators the arguments must be 16 bit integers.
+</P>
+
+<H3><A NAME="X/\Y"></A><FONT COLOR="#000080">X /\ Y</FONT></H3>
+
+<P><!AMZI_INDEX= And; /\ >Bitwise &quot;and&quot; of value of X and value
+of Y. </P>
+
+<H3><A NAME="X\/Y"></A><FONT COLOR="#000080">X \/ Y</FONT></H3>
+
+<P><!AMZI_INDEX= Or; \/>Bitwise &quot;or&quot; of value of X and value
+of Y. </P>
+
+<H3><A NAME="XltltY"></A><FONT COLOR="#000080">X &lt;&lt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Shift; &lt;&lt;>Evaluates to X bit-shifted left by Y places.
+Note this is an arithmetic shift (does not include the sign bit). So 0
+is 1 &lt;&lt; 16. </P>
+
+<H3><A NAME="XgtgtY"></A><FONT COLOR="#000080">X &gt;&gt; Y</FONT></H3>
+
+<P><!AMZI_INDEX= Shift; &gt;&gt;>Evaluates to X bit-shifted right by Y
+places. Again watch the sign bit e.g. -4 &gt;&gt; 1 =:= -2 . </P>
+
+<H3><A NAME="X**Y"></A><FONT COLOR="#000080">X ** Y</FONT></H3>
+
+<P><!AMZI_INDEX= Exponent; Power; **>Evaluates to X raised to the Y power.
+</P>
+
+<H3><A NAME="ComplementX"></A><FONT COLOR="#000080">\ X</FONT></H3>
+
+<P><!AMZI_INDEX= Complement; \ >Evaluates to the bitwise complement of
+X (i.e., all those bits which were 1 become 0 and vice versa). </P>
+
+<H3><A NAME="NegativeX"></A><FONT COLOR="#000080">- X</FONT></H3>
+
+<P><!AMZI_INDEX= Negative; - >Evaluates to the negative of X evaluated.
+</P>
+
+<H2><A NAME="ArithmeticFunctions"></A><FONT COLOR="#000080">Arithmetic
+Functions</FONT></H2>
+
+<H3><!AMZI_INDEX= Arithmetic Functions><A NAME="acosX"></A><FONT COLOR="#000080">acos(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  acos><B>acos</B> evaluates to the angle (in radians)
+whose arccosine is X. </P>
+
+<H3><A NAME="asinX"></A><FONT COLOR="#000080">asin(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  asin><B>asin</B> evaluates to the angle (in radians)
+whose arcsine is X. </P>
+
+<H3><A NAME="atanX"></A><FONT COLOR="#000080">atan(X)</FONT></H3>
+
+<P><!AMZI_INDEX= atan><B>atan</B> evaluates to the angle (in radians) whose
+arctangent is X. </P>
+
+<H3><A NAME="cosX"></A><FONT COLOR="#000080">cos(X)</FONT></H3>
+
+<P><!AMZI_INDEX=   cos><B>cos</B> evaluates to the cosine of X (in radians)
+</P>
+
+<H3><A NAME="expX"></A><FONT COLOR="#000080">exp(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  exp><B>exp</B> evaluates to e raised to the power of
+X evaluated. </P>
+
+<H3><A NAME="floatX"></A><FONT COLOR="#000080">float(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  float><B>float</B> converts X to a double precision floating
+point number. </P>
+
+<H3><A NAME="integerX"></A><FONT COLOR="#000080">integer(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  integer><B>integer</B> converts X to an integer (truncating
+any fractional part). </P>
+
+<H3><A NAME="lnX"></A><FONT COLOR="#000080">ln(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  ln><B>ln</B> evaluates to the natural log (loge()) of
+X evaluated. </P>
+
+<H3><A NAME="seedrandomI"></A><FONT COLOR="#000080">seed_random(I)</FONT></H3>
+
+<P><!AMZI_INDEX=  seed_random; Random Numbers><B>seed_random/1</B> is a
+predicate that seeds the random number generator. It takes an integer argument.
+</P>
+
+<H3><A NAME="sinX"></A><FONT COLOR="#000080">sin(X)</FONT></H3>
+
+<P><!AMZI_INDEX=  sin><B>sin</B> evaluates to the sine of X (in radians).
+</P>
+
+<H3><A NAME="sqrtX"></A><FONT COLOR="#000080">sqrt(X)</FONT></H3>
+
+<P><!AMZI_INDEX= sqrt><B>sqrt</B> evaluates to the square root of X. </P>
+
+<H3><A NAME="tanX"></A><FONT COLOR="#000080">tan(X)</FONT></H3>
+
+<P><!AMZI_INDEX= tan><B>tan</B> evaluates to the tangent of X (in radians).
+</P>
+
+<H2><A NAME="BuiltinAtoms"></A><FONT COLOR="#000080">Built-in Atoms</FONT></H2>
+
+<P><!AMZI_INDEX= Built-In Atoms; Atoms; cputime; e; pi; random>There are
+a number of built-in atoms, which have predetermined values that can be
+used in arithmetic expression. </P>
+
+<DL>
+<DT><B>cputime</B> </DT>
+
+<DD>A floating point number with the number of CPU seconds expired. It
+is useful for timing functions, for example: </DD>
+
+<DD>?- T1 is cputime, dothing, T is T1 - cputime, write(time:T). </DD>
+
+<DT><B>e </B></DT>
+
+<DD>The value &quot;e&quot; (2.718282..) </DD>
+
+<DT><B>pi </B></DT>
+
+<DD>The value &quot;pi&quot; (3.14159 ..) </DD>
+
+<DT><B>random</B> </DT>
+
+<DD>A random floating point number &gt;= 0.0 and &lt; 1.0 </DD>
+</DL>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+<P><I></I> </P>
+
+</BODY>
+</HTML>

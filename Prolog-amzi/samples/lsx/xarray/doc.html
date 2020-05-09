@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>xarray - lsx sample</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<h1>xarray - lsx sample</h1>
+<p>Xarray is a simple example of a Logic Server eXtension (LSX) shared object 
+  / dll. It implements, in C, three predicates for dealing with arrays from Prolog. 
+  The program is built as a DLL under Windows and a shared object under Unix.</p>
+<h2>Windows build</h2>
+<p>Under Windows, open up Visual C++ and build the project xarray.dsw. If you 
+  don't have Visual C++, you can create a project in the C development tool of 
+  your choice, with the following parameters:</p>
+<ul>
+  <li>Environment variable AMZI_DIR pointing to a valid amzi distribution.</li>
+  <li>A single source file, xarray.c</li>
+  <li>Link with $(AMZI_DIR)/lib/amzi.lib (Borland users use amzib.lib)</li>
+  <li>Include directory $(AMZI_DIR)/include</li>
+  <li>Output DLL is in current directory and named xarray.lsx</li>
+</ul>
+<h2>Unix build</h2>
+<p>Use the makefile, makefile.lnx, to build xarray.lsx in the source directory.</p>
+<pre>make -f makefile.lnx</pre>
+<h2>Running</h2>
+<p>Given that xarray.lsx built correctly in the xarray directory, you need to 
+  ensure that it gets loaded by Prolog. One way to do this is by having the following 
+  line in amzi.cfg, which is how the sample is configured:</p>
+<pre>lsxload = xarray</pre>
+<p>test the program from alis:</p>
+<pre>alis</pre>
+<p>Under Windows you'll see a message box appear indicating the xarray was loaded 
+  OK.</p>
+<p>Then consult and run the test program, xarray.pro, which creates an array, 
+  sets and gets two values, and deletes the array:</p>
+<pre>?- [xarray].
+yes
+?- main.
+element 3 is 9
+element 4 is 16</pre>
+</body>
+</html>

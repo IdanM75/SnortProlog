@@ -1,0 +1,12 @@
+all: _osutils
+
+_osutils:
+	NMAKE /a /f "wosutils.mak" CFG="wosutils - Win32 Release"
+
+clean:
+	-del /Q Release\*.*
+	-del /Q Debug\*.*
+
+remove_cvs:
+	-rmdir /S /Q CVS
+

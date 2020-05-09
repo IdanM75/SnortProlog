@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+   <TITLE>Managing Memory</TITLE>
+   <META NAME="GENERATOR" CONTENT="Mozilla/3.0Gold (Win95; I) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF">
+<h1><A NAME="ManagingMemory"></A><FONT COLOR="#D2AA00">Managing Memory</FONT> 
+</h1>
+<P>Prolog programs use memory in two ways: </P>
+
+<UL>
+<LI>Memory which holds the static and dynamic databases (i.e., compiled
+and interpreted Prolog programs). </LI>
+
+<LI>Memory required to execute the programs-to keep track of variable bindings,
+backtracking information, predicate calls, etc. </LI>
+</UL>
+
+<P>This memory must be managed, i.e., allocated when required and freed
+for use when no longer required. To a certain degree this is performed
+automatically by the Prolog system, but the Prolog programmer must be aware
+of how memory is used by Prolog. </P>
+
+<H3><A NAME="StacksandDatabaseSpace"></A><FONT COLOR="#000080">Stacks and
+Database Space</FONT></H3>
+
+<P><!AMZI_INDEX = Stacks; Dynamic Database; Memory; Heap; Control; Local; Trail>Memory
+used by Prolog is partitioned into a number of different areas: </P>
+
+<UL>
+<LI>Code Space </LI>
+
+<LI>Stack Space </LI>
+
+<LI>Dynamic Space </LI>
+
+<LI>Table Space </LI>
+</UL>
+
+<P><I>Code Space</I> is memory used to store compiled Prolog clauses. It
+will vary in size over the execution-life of a Prolog program. </P>
+
+<P><I>Stack Space</I> contains a number of fixed size areas called stacks. The 
+  size of these areas may be set when alis or an application is invoked, but once 
+  set they cannot be changed. Most problems with memory usage arise in the use 
+  of these stacks. The stack sizes can be controlled by an <A HREF="prruntim.htm">configuration 
+  (.cfg) file</A> </P>
+
+<P><I>Dynamic Space</I> is memory used to store dynamic database items
+as well as internal Prolog requirements. Atom names and strings are also
+stored here. </P>
+
+<P><I>Table Space</I> is a fixed-size piece of memory containing tables required 
+  by Prolog. The sizes of some of these tables can be controlled by an <A HREF="prruntim.htm">configuration 
+  (.cfg) file</A>. </P>
+
+<P>Code space and dynamic space are allocated as needed from memory left
+over in the computer after Prolog has loaded. As objects in one or the
+other space are &quot;freed&quot; the memory is returned to general use,
+so it is possible for the same piece of memory to contain a piece of compiled
+code and a string or an atom name over the course of execution of a program.
+</P>
+
+<P>Stack space is divided into four areas. </P>
+
+<UL>
+<LI>Heap Stack </LI>
+
+<LI>Control Stack </LI>
+
+<LI>Local Stack </LI>
+
+<LI>Trail Stack </LI>
+</UL>
+
+<P><I>Heap Stack</I> is used to hold terms constructed at run time. For
+example during the execution of &quot;foo(1,2,3) =.. X,&quot; X will be
+bound to a list which did not exist previously. This list is built on the
+heap. </P>
+
+<P>The heap expands as programs execute and contracts <I>only</I> on backtracking.
+An automatic facility called garbage collection will try to clear the heap
+stack of unwanted items but it cannot always succeed (see below). Thus
+this stack is often one of the first data areas to become filled. </P>
+
+<P><I>Local Stack</I> is used to store variables used in clauses. This
+stack is not likely to overflow its maximum permissible size. </P>
+
+<P><I>Control Stack</I> is used to store information required to restore
+backtrack points in the execution and to store information about the choice
+of clauses in a proof. </P>
+
+<P>The control stack shrinks both on backtracking and on successfully proving
+goals which cannot be backtracked into. </P>
+
+<P><I>Trail Stack</I> contains addresses of variables which need to be
+unbound on backtracking. This stack does not usually overflow its default
+size. </P>
+
+<P>The built-in predicates <B>pro_heap</B>, <B>pro_control</B>, <B>pro_local</B>
+and <B>pro_trail</B> return the maximum size of each resource as well as
+the current usage level when the pro_xxx predicate was called. </P>
+
+<H2><A NAME="GarbageCollection"></A><FONT COLOR="#0000FF">Garbage Collection</FONT></H2>
+
+<P><!AMZI_INDEX = Garbage Collection>One of the major productivity benefits
+of a language such as Prolog, is that you do not have to allocate and free
+memory for various program data structures. By simply referring to something,
+you cause Prolog to automatically manage the memory needed for that thing.
+</P>
+
+<P>During the course of execution, items are left in memory that are no
+longer used. Occupied memory which could, in theory, be reused is called
+<I>garbage</I>. Amzi! Prolog employs a technique known as <I>garbage collection</I>
+which attempts to return this space to general use. </P>
+
+<P>In Prolog, the two areas where 'garbage' accumulates are the dynamic
+database, where asserts and retracts take place and where strings, constants
+and consulted code are stored, and the heap, which is the workhorse data
+structure on which Prolog unification takes place. </P>
+
+<H3><A NAME="DynamicDatabase"></A><FONT COLOR="#000080">Dynamic Database</FONT></H3>
+
+<P><!AMZI_INDEX = Dynamic Database;  Memory; pro_db>The dynamic database
+does immediate retracts of many clauses, but some clauses, due to bindings
+it might have, cannot be immediately retracted. These clauses accumulate
+in the dynamic database. You can now optionally cause these clauses to
+be garbage collected whenever the Prolog engine decides it needs to allocate
+another chunk of memory for the dynamic database. The garbage collection
+might avoid the allocation of the new chunk. The downside is programs might
+run a little slower.</P>
+
+<P>To turn on this option, use the .cfg parameter 'dbgc = [on|off]'. Like other 
+  .cfg parameters, it can be set from the original LSAPI call to lsInit2().</P>
+
+<P>(If you use <B>pro_db/2</B> to see the effects of asserts and retracts,
+the information is confused by the fact that an initial assert allocates
+additional data structures beyond just the clause, and the interpreter
+also makes use of the dynamic database. However, the query: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">pro_db(A, U), assert(foo), pro_db(A2, U2), retract(foo), pro_db(A3, U3)</FONT></PRE>
+</UL>
+
+<P>will show U and U3 to be the same after the first time you try it.)
+</P>
+
+<H3><A NAME="HeapStack"></A><FONT COLOR="#000080">Heap Stack</FONT></H3>
+
+<P><!AMZI_INDEX = Heap; Memory; gc>During the execution of a Prolog program
+it is possible for heap space to be used and then never needed again. An
+example of this would be when a program creates a structure on the heap
+stack (using &quot;=..&quot; say), refers to it once, and then never again
+in the course of execution. Unless the program backtracks past the code
+that created the structure, it will remain on the heap stack until the
+program terminates. Since heap space is a rare commodity, we would like
+to be able to reclaim this space for further use by the program. </P>
+
+<P>Garbage collection usually occurs automatically if needed. If, for example,
+the heap stack becomes full before a program terminates then the garbage
+collector will be invoked on the heap stack. If it can free enough heap
+stack to continue execution of the program then execution will continue,
+and all you will notice is a temporary pause (typically less than a second)
+as the garbage collector does its work.<I> </I>If the garbage collector
+cannot free enough stack then a fatal error occurs (see below) and the
+program is aborted. </P>
+
+<H2><A NAME="ReducingMemoryDemands"></A><FONT COLOR="#0000FF">Reducing
+Memory Demands</FONT></H2>
+
+<P><!AMZI_INDEX = Memory>Like many symbolic programming languages, Prolog
+has an appetite for memory. This is particularly apparent on personal computers
+which have rather limited memory. In these cases it may well be necessary
+to fine tune the size of the stacks in order for the program to run to
+completion. Even then there may be cases where programs cause one or more
+stacks to overflow as they execute. The following points may help restructure
+a program so that it runs in available memory: </P>
+
+<H3><A NAME="IterationvsRecursion"></A><FONT COLOR="#000080">Iteration
+vs. Recursion</FONT></H3>
+
+<P><!AMZI_INDEX = Iteration; Recursion; Memory>Iteration is sometimes preferred
+over recursion from the point of view of stack usage. For example, suppose
+that we wished to write a program which simply reads some user input and
+processes it ad infinitum. One approach would be recursive (i.e., a clause
+which &quot;calls itself'): </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">doit :- read(X), process(X), doit.</FONT></PRE>
+</UL>
+
+<P>This is fine Prolog code but it may be expensive in memory requirements.
+Provided there are no choice points in <B>process</B>(X) then Amzi! Prolog
+will consume no control stack space when it comes to prove the final <B>doit</B>.
+Further the garbage collector will try to collect heap cells that it may
+have been left by <B>process</B>(X) (since X is not passed down through
+<B>doit</B> there is no way that heap cells created by <B>process</B>(X)
+can be referenced by the recursive call of <B>doit</B>). </P>
+
+<P>Nonetheless, it is possible that eventually you will run out of memory
+if <B>doit</B> is allowed to run for too long. An equivalent way of performing
+the same task is to use <I>failure</I> rather then <I>recursion</I>:<B>
+</B></P>
+
+<UL>
+<PRE><FONT COLOR="#000080">doit :- repeat, read(X), process(X), fail.</FONT></PRE>
+</UL>
+
+<H3><A NAME="BacktrackPoints"></A><FONT COLOR="#000080">Backtrack Points</FONT></H3>
+
+<P><!AMZI_INDEX = Backtracking Search; Memory>Try to reduce the number
+of backtrack points. Recall that if a clause contains no backtrack points,
+and the goal the clause proves is not itself a backtrack point, then space
+is reclaimed from the local and control stacks when the clause completes
+successfully. If you know that the program will <I>never</I> backtrack
+into a certain goal because of the logic of the program, then a well placed
+cut at the end of each clause proving the goal can help free up space.
+This often occurs when multiple clauses are used as a kind of &quot;case
+statement&quot; but it is known that only one clause will ever be tried.
+Consider the following example: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">goal(&lt;head1&gt;) :- g1, g2.
+goal(&lt;head2&gt;) :- h1, h2.
+goal(&lt;head3&gt;) :- i1, i2.</FONT></PRE>
+</UL>
+
+<P>where the terms <B>&lt;</B>head1&gt;, &lt;head2&gt; and &lt;head3&gt;
+are mutually exclusive. If the goals in the bodies of the clauses have
+no choice points, or we know we will never wish to backtrack into them,
+then the above code can be replaced by the following, which is logically
+and procedurally the same, but will consume less control and local stack
+space: </P>
+
+<UL>
+<PRE><FONT COLOR="#000080">goal(&lt;head1&gt;) :- g1, g2, !.
+goal(&lt;head2&gt;) :- h1, h2, !.
+goal(&lt;head3&gt;) :- i1, i2, !.</FONT></PRE>
+</UL>
+
+<!-- #BeginLibraryItem "/Library/Copyright.lbi" --><p><i><font size=-1>Copyright &copy;1987-2000 Amzi! inc. All Rights Reserved.</font></i></p><!-- #EndLibraryItem --> 
+</BODY>
+</HTML>

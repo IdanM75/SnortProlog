@@ -1,0 +1,60 @@
+
+lsInit(007C1990, acmp)
+   returns OK
+lsInitLSX(007C1990, 00000000)
+  returns OK
+lsLoad(007C1990, acmp)
+  returns OK
+lsSetCommandArgs(007C1990)
+  returns OK
+lsMain(007C1990)
+Amzi! Prolog Compiler 5.0.24 Windows
+Apr 30 2001 13:54:06
+
+Copyright (c)1987-2000 Amzi! inc. All Rights Reserved.
+
+
+Compiling... misc.pro
+:- export compare_nocase / 2 ',' force_ext / 3 ',' freeze / 2 ',' get_flag / 2 ',' melt / 2 ',' newcopy / 2 ',' set_flag / 2:- export compare_nocase / 2 ',' force_ext / 3 ',' freeze / 2 ',' get_flag / 
+:- import append / 3 ',' flag / 2 ',' reverse / 2:- import append / 3 ',' flag / 2 ',' reverse / 2
+compare_nocase(H287,H287) :- '!'compare_nocase(H287,H287) :- '!'
+|-- compare_nocase / 2
+compare_nocase(H287,H288) :- atom_uplow(H287,H294) ',' atom_uplow(H288,H294)compare_nocase(H287,H288) :- atom_uplow(H287,H294) ',' atom_uplow(H288,H294)
+|-- compare_nocase / 2
+force_ext(H287,H288,H289) :- get_mode(string_esc,H296) ',' set_mode(string_esc,off) ',' (force$ext(H287,H288,H289) -> set_mode(string_esc,H296) ; set_mode(string_esc,H296) ',' fail)force_ext(H287,H288,H289) :- get_mode(string_esc,H296) ',' set_mode(string_es
+|-- force_ext / 3
+force$ext(H287,H288,H289) :- string(H287) ',' '!' ',' string_atom(H287,H300) ',' (string(H288) -> string_atom(H288,H310) ; H310 = H288) ',' string_atom(H287,H300) ',' force_ext(H300,H310,H336) ',' string_atom(H289,H336)force$ext(H287,H288,H289) :- string(H287) ',' '!' ',' string_atom(H287,H300) 
+|-- force$ext / 3
+force$ext(H287,H288,H289) :- atom_codes(H287,H296) ',' reverse(H296,H302) ',' remove$ext(H302,H308) ',' reverse(H308,H314) ',' atom_codes(H288,H320) ',' force$dot(H320,H326) ',' append(H314,H326,H333) ',' atom_codes(H289,H333)force$ext(H287,H288,H289) :- atom_codes(H287,H296) ',' reverse(H296,H302) ','
+|-- force$ext / 3
+force$dot([0w002e | H288],[0w002e | H288]) :- '!'force$dot([0w002e | H288],[0w002e | H288]) :- '!'
+|-- force$dot / 2
+force$dot(H287,[0w002e | H287])force$dot(H287,[0w002e | H287])
+|-- force$dot / 2
+remove$ext([0w002e | H288],H288) :- '!'remove$ext([0w002e | H288],H288) :- '!'
+|-- remove$ext / 2
+remove$ext([H287,0w002e | H289],H289) :- '!'remove$ext([H287,0w002e | H289],H289) :- '!'
+|-- remove$ext / 2
+remove$ext([H287,H288,0w002e | H290],H290) :- '!'remove$ext([H287,H288,0w002e | H290],H290) :- '!'
+|-- remove$ext / 2
+remove$ext([H287,H288,H289,0w002e | H291],H291) :- '!'remove$ext([H287,H288,H289,0w002e | H291],H291) :- '!'
+|-- remove$ext / 2
+remove$ext(H287,H287)remove$ext(H287,H287)
+|-- remove$ext / 2
+freeze(H287,H288) :- newcopy(H287,H288) ',' numbervars(H288,1,H301)freeze(H287,H288) :- newcopy(H287,H288) ',' numbervars(H288,1,H301)
+|-- freeze / 2
+get_flag(H287,H288) :- flag(H287,H288)get_flag(H287,H288) :- flag(H287,H288)
+|-- get_flag / 2
+melt(H287,H288) :- string_term(H293,H287) ',' string_term(H293,H288)melt(H287,H288) :- string_term(H293,H287) ',' string_term(H293,H288)
+|-- melt / 2
+newcopy(H287,H288) :- assert(tmp(H287)) ',' retract(tmp(H288))newcopy(H287,H288) :- assert(tmp(H287)) ',' retract(tmp(H288))
+|-- newcopy / 2
+set_flag(H287,H288) :- (retract(flag(H287,H294)) ; true) ',' asserta(flag(H287,H288))set_flag(H287,H288) :- (retract(flag(H287,H294)) ; true) ',' asserta(flag(H28
+|-- set_flag / 2
+'!EOF''!EOF'
+
+[CodeSize 1815 Bytes, Compile time 0.06 seconds.]
+Done
+
+  returns TRUE
+lsClose(007C1990)
